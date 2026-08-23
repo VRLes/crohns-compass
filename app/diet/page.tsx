@@ -1,5 +1,5 @@
 "use client";
-
+import Nav from "../components/Nav";
 // app/diet/page.tsx
 // Crohn's Compass — Diet & Nutrition Page
 
@@ -361,31 +361,7 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
     <div className="min-h-screen" style={{ backgroundColor: "#F0F7F4" }}>
 
       {/* Navigation */}
-      <nav style={{ backgroundColor: "#1B4F3A" }} className="sticky top-0 z-50 shadow-md">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <circle cx="14" cy="14" r="13" stroke="#6EC6A0" strokeWidth="1.5" />
-              <circle cx="14" cy="14" r="3" fill="#6EC6A0" />
-              <line x1="14" y1="2" x2="14" y2="8" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="14" y1="20" x2="14" y2="26" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="2" y1="14" x2="8" y2="14" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="20" y1="14" x2="26" y2="14" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-            <span className="text-xl font-semibold tracking-wide" style={{ color: "#6EC6A0" }}>
-              Crohn&apos;s Compass
-            </span>
-          </Link>
-          <div className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Home</Link>
-            <Link href="/treatments" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Treatments</Link>
-            <Link href="/diet" className="text-sm transition-colors" style={{ color: "#ffffff", fontWeight: "600" }}>Diet</Link>
-            <Link href="/research" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Research</Link>
-            <Link href="/mindfulness" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Mindfulness</Link>
-            <Link href="/ask-the-assistant" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Ask the Assistant</Link>
-          </div>
-        </div>
-      </nav>
+      <Nav active="/diet" />
 
       {/* Header */}
       <div className="max-w-6xl mx-auto px-6 pt-10 pb-6">
