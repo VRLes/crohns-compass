@@ -125,7 +125,19 @@ export default function Home() {
 
       <section className="max-w-6xl mx-auto px-6 pb-20">
         <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-          <h2 className="text-lg font-semibold mb-2 text-center" style={{ color: "#1B4F3A" }}>How we label evidence</h2>
+                {/* UC Coming Soon */}
+      <section className="max-w-6xl mx-auto px-6 pb-8">
+        <div className="rounded-2xl p-8 border text-center" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
+          <p className="text-2xl mb-2">🔬</p>
+          <h2 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>
+            Ulcerative Colitis — Coming Soon
+          </h2>
+          <p className="text-sm leading-relaxed max-w-xl mx-auto" style={{ color: "#3D6B5A" }}>
+            Crohn&apos;s Compass currently focuses on Crohn&apos;s disease. A dedicated Ulcerative Colitis
+            section covering treatments, diet, research and mindfulness tools is currently in development.
+          </p>
+        </div>
+      </section><h2 className="text-lg font-semibold mb-2 text-center" style={{ color: "#1B4F3A" }}>How we label evidence</h2>
           <p className="text-sm text-center mb-6" style={{ color: "#3D6B5A" }}>Every treatment and recommendation is tagged so you always know what the science says.</p>
           <div className="flex flex-wrap justify-center gap-3">
             <span className="px-4 py-1.5 rounded-full text-xs font-medium" style={{ backgroundColor: "#D4EDE4", color: "#1B4F3A" }}>Strong clinical</span>
