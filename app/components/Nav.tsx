@@ -4,7 +4,7 @@
 import Link from "next/link";
 
 export default function Nav({ active }: { active: string }) {
-  const links = [
+    const links = [
     { href: "/", label: "Home" },
     { href: "/treatments", label: "Treatments" },
     { href: "/diet", label: "Diet" },
@@ -12,6 +12,7 @@ export default function Nav({ active }: { active: string }) {
     { href: "/mindfulness", label: "Mindfulness" },
     { href: "/doctor-questions", label: "Doctor Questions" },
     { href: "/ask-the-assistant", label: "Ask the Assistant" },
+    { href: "/about", label: "About" },
   ];
 
   return (

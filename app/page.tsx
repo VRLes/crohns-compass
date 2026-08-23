@@ -126,9 +126,18 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
-        <p className="text-sm" style={{ color: "#3D6B5A" }}>Crohn&apos;s Compass — Evidence-based information with hope at its heart</p>
-        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>Always consult your gastroenterologist before making changes to your treatment.</p>
+            <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
+        <p className="text-sm" style={{ color: "#3D6B5A" }}>
+          Crohn&apos;s Compass — Evidence-based information with hope at its heart
+        </p>
+        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>
+          Always consult your gastroenterologist before making changes to your treatment.
+        </p>
+        <div className="flex justify-center gap-4 mt-3">
+          <Link href="/about" className="text-xs hover:underline" style={{ color: "#6B9E8A" }}>About & Disclaimer</Link>
+          <Link href="/doctor-questions" className="text-xs hover:underline" style={{ color: "#6B9E8A" }}>Doctor Questions</Link>
+          <Link href="/ask-the-assistant" className="text-xs hover:underline" style={{ color: "#6B9E8A" }}>Ask the Assistant</Link>
+        </div>
       </footer>
 
     </div>
