@@ -1,4 +1,3 @@
-import Nav from "./components/Nav";
 // app/page.tsx
 // Crohn's Compass — Home Page
 
@@ -8,7 +7,31 @@ export default function Home() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#F0F7F4" }}>
 
-      <Nav active="/" />
+      <nav style={{ backgroundColor: "#1B4F3A" }} className="sticky top-0 z-50 shadow-md">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle cx="14" cy="14" r="13" stroke="#6EC6A0" strokeWidth="1.5" />
+              <circle cx="14" cy="14" r="3" fill="#6EC6A0" />
+              <line x1="14" y1="2" x2="14" y2="8" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="14" y1="20" x2="14" y2="26" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="2" y1="14" x2="8" y2="14" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="20" y1="14" x2="26" y2="14" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            <span className="text-xl font-semibold tracking-wide" style={{ color: "#6EC6A0" }}>
+              Crohn&apos;s Compass
+            </span>
+          </div>
+          <div className="hidden md:flex items-center gap-6">
+            <Link href="/" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Home</Link>
+            <Link href="/treatments" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Treatments</Link>
+            <Link href="/diet" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Diet</Link>
+            <Link href="/research" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Research</Link>
+            <Link href="/mindfulness" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Mindfulness</Link>
+            <Link href="/ask-the-assistant" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Ask the Assistant</Link>
+          </div>
+        </div>
+      </nav>
 
       <section className="max-w-6xl mx-auto px-6 pt-20 pb-16 text-center">
         <p className="text-sm font-medium uppercase tracking-widest mb-4" style={{ color: "#2E8B6A" }}>
@@ -94,7 +117,20 @@ export default function Home() {
             </div>
             <h3 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>Doctor Questions</h3>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>Walk into your next gastroenterology appointment feeling prepared — with the right questions to ask your specialist.</p>
-            <Link href="/doctor-questions" className="text-sm font-medium hover:underline" style={{ color: "#2E8B6A" }}>Prepare now →</Link>
+                        <Link href="/doctor-questions" className="text-sm font-medium hover:underline" style={{ color: "#2E8B6A" }}>Prepare now →</Link>
+          </div>
+
+          <div className="rounded-2xl p-7 shadow-sm border hover:shadow-md transition-shadow duration-200" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: "#D4EDE4" }}>
+              <svg width="22" height="22" fill="none" viewBox="0 0 22 22">
+                <circle cx="11" cy="11" r="9" stroke="#2E8B6A" strokeWidth="1.8" />
+                <path d="M11 10v6" stroke="#2E8B6A" strokeWidth="1.8" strokeLinecap="round" />
+                <circle cx="11" cy="7" r="1" fill="#2E8B6A" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>About & Disclaimer</h3>
+            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>Our story, principles, evidence standards, medical disclaimer and privacy information — everything about how Crohn's Compass works.</p>
+            <Link href="/about" className="text-sm font-medium hover:underline" style={{ color: "#2E8B6A" }}>Learn more →</Link>
           </div>
 
         </div>
@@ -102,19 +138,7 @@ export default function Home() {
 
       <section className="max-w-6xl mx-auto px-6 pb-20">
         <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-                {/* UC Coming Soon */}
-      <section className="max-w-6xl mx-auto px-6 pb-8">
-        <div className="rounded-2xl p-8 border text-center" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-          <p className="text-2xl mb-2">🔬</p>
-          <h2 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>
-            Ulcerative Colitis — Coming Soon
-          </h2>
-          <p className="text-sm leading-relaxed max-w-xl mx-auto" style={{ color: "#3D6B5A" }}>
-            Crohn&apos;s Compass currently focuses on Crohn&apos;s disease. A dedicated Ulcerative Colitis
-            section covering treatments, diet, research and mindfulness tools is currently in development.
-          </p>
-        </div>
-      </section><h2 className="text-lg font-semibold mb-2 text-center" style={{ color: "#1B4F3A" }}>How we label evidence</h2>
+          <h2 className="text-lg font-semibold mb-2 text-center" style={{ color: "#1B4F3A" }}>How we label evidence</h2>
           <p className="text-sm text-center mb-6" style={{ color: "#3D6B5A" }}>Every treatment and recommendation is tagged so you always know what the science says.</p>
           <div className="flex flex-wrap justify-center gap-3">
             <span className="px-4 py-1.5 rounded-full text-xs font-medium" style={{ backgroundColor: "#D4EDE4", color: "#1B4F3A" }}>Strong clinical</span>
@@ -126,18 +150,9 @@ export default function Home() {
         </div>
       </section>
 
-            <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
-        <p className="text-sm" style={{ color: "#3D6B5A" }}>
-          Crohn&apos;s Compass — Evidence-based information with hope at its heart
-        </p>
-        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>
-          Always consult your gastroenterologist before making changes to your treatment.
-        </p>
-        <div className="flex justify-center gap-4 mt-3">
-          <Link href="/about" className="text-xs hover:underline" style={{ color: "#6B9E8A" }}>About & Disclaimer</Link>
-          <Link href="/doctor-questions" className="text-xs hover:underline" style={{ color: "#6B9E8A" }}>Doctor Questions</Link>
-          <Link href="/ask-the-assistant" className="text-xs hover:underline" style={{ color: "#6B9E8A" }}>Ask the Assistant</Link>
-        </div>
+      <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
+        <p className="text-sm" style={{ color: "#3D6B5A" }}>Crohn&apos;s Compass — Evidence-based information with hope at its heart</p>
+        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>Always consult your gastroenterologist before making changes to your treatment.</p>
       </footer>
 
     </div>
