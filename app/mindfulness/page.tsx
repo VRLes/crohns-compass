@@ -1,0 +1,696 @@
+"use client";
+
+// app/mindfulness/page.tsx
+// Crohn's Compass — Mindfulness Page
+
+import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+
+type Tab = "breathe" | "listen" | "calm";
+type BreathPhase = "inhale" | "hold-in" | "exhale" | "hold-out" | "ready";
+type BiauralCategory = "Pain Relief" | "Sleep" | "Anxiety" | "Flare Support" | "Gentle Focus";
+type NoiseType = "white" | "pink" | "brown";
+type VoiceFile = "john" | "julie" | "les" | "sarah";
+type BodyScanVoice = "ben" | "jane";
+
+interface AromaProfile {
+  oils: string[];
+  description: string;
+}
+
+const aromaProfiles: Record<BiauralCategory, AromaProfile> = {
+  "Pain Relief": { oils: ["Frankincense", "Myrrh"], description: "Deeply grounding and anti-inflammatory. Diffuse together for a warm, resinous calm." },
+  "Sleep": { oils: ["Lavender", "Frankincense"], description: "The most researched oils for sleep. Lavender eases the mind, Frankincense deepens the breath." },
+  "Anxiety": { oils: ["Lavender", "Roman Chamomile"], description: "Gentle and calming. Roman Chamomile has natural anti-spasmodic properties that ease both mind and gut tension." },
+  "Flare Support": { oils: ["Frankincense", "Myrrh"], description: "Ancient healing oils used for thousands of years for inflammation and comfort. Diffuse near your rest space." },
+  "Gentle Focus": { oils: ["Lemongrass", "Peppermint"], description: "Uplifting and clarifying. Peppermint also has evidence for easing nausea and abdominal discomfort." },
+};
+
+const binauralFrequencies: Record<BiauralCategory, { hz: number; description: string }> = {
+  "Pain Relief": { hz: 40, description: "Gamma waves — emerging research suggests 40Hz may help modulate pain perception and promote neural healing." },
+  "Sleep": { hz: 3, description: "Delta waves — the brain frequency of deep, restorative sleep. Let your mind drift and your body heal." },
+  "Anxiety": { hz: 10, description: "Alpha waves — the relaxed, present state. Gentle and grounding without sedation." },
+  "Flare Support": { hz: 6, description: "Theta waves — deep rest and body awareness. Supports the rest-and-digest nervous system response." },
+  "Gentle Focus": { hz: 14, description: "Low beta waves — calm, clear focus without overstimulation. Good for gentle activity and reading." },
+};
+
+function generateBinauralTone(
+  audioCtx: AudioContext,
+  baseFreq: number,
+  beatFreq: number,
+  gainValue: number
+): { left: OscillatorNode; right: OscillatorNode; merger: ChannelMergerNode; gainNode: GainNode } {
+  const left = audioCtx.createOscillator();
+  const right = audioCtx.createOscillator();
+  const merger = audioCtx.createChannelMerger(2);
+  const gainNode = audioCtx.createGain();
+  const leftGain = audioCtx.createGain();
+  const rightGain = audioCtx.createGain();
+
+  left.frequency.value = baseFreq;
+  right.frequency.value = baseFreq + beatFreq;
+  left.type = "sine";
+  right.type = "sine";
+
+  leftGain.gain.value = 1;
+  rightGain.gain.value = 1;
+  gainNode.gain.value = gainValue;
+
+  left.connect(leftGain);
+  right.connect(rightGain);
+  leftGain.connect(merger, 0, 0);
+  rightGain.connect(merger, 0, 1);
+  merger.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+
+  left.start();
+  right.start();
+
+  return { left, right, merger, gainNode };
+}
+
+function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: number): { source: AudioBufferSourceNode; gainNode: GainNode } {
+  const bufferSize = audioCtx.sampleRate * 4;
+  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+
+  if (type === "white") {
+    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+  } else if (type === "pink") {
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+    for (let i = 0; i < bufferSize; i++) {
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) / 7;
+      b6 = white * 0.115926;
+    }
+  } else {
+    let lastOut = 0;
+    for (let i = 0; i < bufferSize; i++) {
+      const white = Math.random() * 2 - 1;
+      data[i] = (lastOut + 0.02 * white) / 1.02;
+      lastOut = data[i];
+      data[i] *= 3.5;
+    }
+  }
+
+  const source = audioCtx.createBufferSource();
+  source.buffer = buffer;
+  source.loop = true;
+
+  const gainNode = audioCtx.createGain();
+  gainNode.gain.value = gainValue;
+  source.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+  source.start();
+
+  return { source, gainNode };
+}export default function Mindfulness() {
+  const [activeTab, setActiveTab] = useState<Tab>("breathe");
+
+  // Box Breathing
+  const [breathPhase, setBreathPhase] = useState<BreathPhase>("ready");
+  const [breathCount, setBreathCount] = useState(0);
+  const [breathRunning, setBreathRunning] = useState(false);
+  const [selectedVoice, setSelectedVoice] = useState<VoiceFile>("john");
+  const [voiceLoop, setVoiceLoop] = useState(true);
+  const breathTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const voiceRef = useRef<HTMLAudioElement | null>(null);
+
+  // Body Scan
+  const [bodyScanVoice, setBodyScanVoice] = useState<BodyScanVoice>("ben");
+  const [bodyScanPlaying, setBodyScanPlaying] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
+  const bodyScanRef = useRef<HTMLAudioElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Binaural
+  const [selectedCategory, setSelectedCategory] = useState<BiauralCategory>("Anxiety");
+  const [binauralPlaying, setBinauralPlaying] = useState(false);
+  const [binauralVolume, setBinauralVolume] = useState(0.3);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const binauralNodesRef = useRef<{ left: OscillatorNode; right: OscillatorNode; merger: ChannelMergerNode; gainNode: GainNode } | null>(null);
+
+  // Noise
+  const [selectedNoise, setSelectedNoise] = useState<NoiseType | null>(null);
+  const [noiseVolume, setNoiseVolume] = useState(0.3);
+  const noiseNodesRef = useRef<{ source: AudioBufferSourceNode; gainNode: GainNode } | null>(null);
+
+  // Box breathing logic
+  const phases: BreathPhase[] = ["inhale", "hold-in", "exhale", "hold-out"];
+  const phaseLabels: Record<BreathPhase, string> = {
+    inhale: "Inhale",
+    "hold-in": "Hold",
+    exhale: "Exhale",
+    "hold-out": "Hold",
+    ready: "Ready",
+  };
+  const phaseColors: Record<BreathPhase, string> = {
+    inhale: "#2E8B6A",
+    "hold-in": "#1B4F3A",
+    exhale: "#6EC6A0",
+    "hold-out": "#A8D8C4",
+    ready: "#2E8B6A",
+  };
+  const phaseDuration = 4000;
+
+      const startBreathing = () => {
+    if (voiceRef.current) {
+      voiceRef.current.src = `/audio/box-breathing-${selectedVoice}.mp3`;
+            voiceRef.current.loop = false;
+      voiceRef.current.play().catch(() => {});
+      voiceRef.current.onended = () => {
+        if (voiceRef.current && voiceLoop) {
+          voiceRef.current.currentTime = 12.5;
+          voiceRef.current.play().catch(() => {});
+        }
+      };
+    }
+    setBreathRunning(true);
+    setBreathCount(0);
+    setBreathPhase("ready");
+    breathTimerRef.current = setTimeout(() => {
+      runPhase(0, 0);
+    }, 12000);
+  };
+
+  const runPhase = (phaseIndex: number, count: number) => {
+    const phase = phases[phaseIndex];
+    setBreathPhase(phase);
+    if (phaseIndex === 0) setBreathCount(count + 1);
+    breathTimerRef.current = setTimeout(() => {
+      const nextPhase = (phaseIndex + 1) % phases.length;
+      const nextCount = nextPhase === 0 ? count + 1 : count;
+      runPhase(nextPhase, nextCount);
+    }, phaseDuration);
+  };
+
+  const stopBreathing = () => {
+    if (breathTimerRef.current) clearTimeout(breathTimerRef.current);
+    if (voiceRef.current) { voiceRef.current.pause(); voiceRef.current.currentTime = 0; }
+    setBreathRunning(false);
+    setBreathPhase("ready");
+    setBreathCount(0);
+  };
+
+  // Binaural logic
+  const startBinaural = () => {
+    if (!audioCtxRef.current) audioCtxRef.current = new AudioContext();
+    const ctx = audioCtxRef.current;
+    if (ctx.state === "suspended") ctx.resume();
+    if (binauralNodesRef.current) {
+      binauralNodesRef.current.left.stop();
+      binauralNodesRef.current.right.stop();
+    }
+    const freq = binauralFrequencies[selectedCategory].hz;
+    binauralNodesRef.current = generateBinauralTone(ctx, 200, freq, binauralVolume);
+    setBinauralPlaying(true);
+  };
+
+  const stopBinaural = () => {
+    if (binauralNodesRef.current) {
+      try { binauralNodesRef.current.left.stop(); binauralNodesRef.current.right.stop(); } catch {}
+      binauralNodesRef.current = null;
+    }
+    setBinauralPlaying(false);
+  };
+
+  // Noise logic
+  const startNoise = (type: NoiseType) => {
+    if (!audioCtxRef.current) audioCtxRef.current = new AudioContext();
+    const ctx = audioCtxRef.current;
+    if (ctx.state === "suspended") ctx.resume();
+    if (noiseNodesRef.current) { try { noiseNodesRef.current.source.stop(); } catch {} }
+    noiseNodesRef.current = generateNoise(ctx, type, noiseVolume);
+    setSelectedNoise(type);
+  };
+
+  const stopNoise = () => {
+    if (noiseNodesRef.current) { try { noiseNodesRef.current.source.stop(); } catch {} noiseNodesRef.current = null; }
+    setSelectedNoise(null);
+  };
+
+  // Body scan logic
+  const toggleBodyScan = () => {
+    if (bodyScanPlaying) {
+      bodyScanRef.current?.pause();
+      setBodyScanPlaying(false);
+      setShowVideo(false);
+    } else {
+      if (!bodyScanRef.current) bodyScanRef.current = new Audio();
+      bodyScanRef.current.src = `/audio/${bodyScanVoice === "ben" ? "Ben_Body_Scan.mp3" : "Jane_Body_Scan.mp3"}`;
+      bodyScanRef.current.play().catch(() => {});
+      setBodyScanPlaying(true);
+      setShowVideo(true);
+    }
+  };
+
+  useEffect(() => {
+    voiceRef.current = new Audio();
+    return () => {
+      stopBreathing();
+      stopBinaural();
+      stopNoise();
+      bodyScanRef.current?.pause();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (binauralNodesRef.current) {
+      binauralNodesRef.current.gainNode.gain.value = binauralVolume;
+    }
+  }, [binauralVolume]);
+
+  useEffect(() => {
+    if (noiseNodesRef.current) {
+      noiseNodesRef.current.gainNode.gain.value = noiseVolume;
+    }
+  }, [noiseVolume]);  const circleSize = breathPhase === "inhale" ? "scale-150" : breathPhase === "exhale" ? "scale-75" : "scale-110";
+
+  return (
+    <div className="min-h-screen" style={{ backgroundColor: "#F0F7F4" }}>
+
+      {/* Navigation */}
+      <nav style={{ backgroundColor: "#1B4F3A" }} className="sticky top-0 z-50 shadow-md">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle cx="14" cy="14" r="13" stroke="#6EC6A0" strokeWidth="1.5" />
+              <circle cx="14" cy="14" r="3" fill="#6EC6A0" />
+              <line x1="14" y1="2" x2="14" y2="8" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="14" y1="20" x2="14" y2="26" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="2" y1="14" x2="8" y2="14" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="20" y1="14" x2="26" y2="14" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            <span className="text-xl font-semibold tracking-wide" style={{ color: "#6EC6A0" }}>
+              Crohn&apos;s Compass
+            </span>
+          </Link>
+          <div className="hidden md:flex items-center gap-6">
+            <Link href="/" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Home</Link>
+            <Link href="/treatments" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Treatments</Link>
+            <Link href="/diet" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Diet</Link>
+            <Link href="/research" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Research</Link>
+            <Link href="/mindfulness" className="text-sm transition-colors" style={{ color: "#ffffff", fontWeight: "600" }}>Mindfulness</Link>
+            <Link href="/ask-the-assistant" className="text-sm hover:text-white transition-colors" style={{ color: "#A8D8C4" }}>Ask the Assistant</Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Header */}
+      <div className="max-w-4xl mx-auto px-6 pt-10 pb-6 text-center">
+        <h1 className="text-3xl font-bold mb-2" style={{ color: "#1B4F3A" }}>Mindfulness</h1>
+        <p className="text-sm leading-relaxed max-w-2xl mx-auto" style={{ color: "#3D6B5A" }}>
+          Stress is a known Crohn&apos;s flare trigger. These tools are here to help you breathe,
+          rest and find calm — wherever you are, whenever you need it.
+        </p>
+        <p className="text-xs mt-3 italic" style={{ color: "#6B9E8A" }}>
+          Always be kind to yourself.
+        </p>
+      </div>
+
+      {/* Tab Navigation */}
+      <div className="max-w-4xl mx-auto px-6 pb-6">
+        <div className="flex gap-3 justify-center">
+          {([
+            { id: "breathe", label: "🌬️ Breathe" },
+            { id: "listen", label: "🎧 Listen" },
+            { id: "calm", label: "🌿 Calm" },
+          ] as { id: Tab; label: string }[]).map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className="px-6 py-2 rounded-full text-sm font-medium transition-all"
+              style={{
+                backgroundColor: activeTab === tab.id ? "#1B4F3A" : "#ffffff",
+                color: activeTab === tab.id ? "#ffffff" : "#1B4F3A",
+                border: "1px solid #1B4F3A",
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-6 pb-20">
+
+        {/* BREATHE TAB */}
+        {activeTab === "breathe" && (
+          <div className="space-y-6">
+
+            {/* Box Breathing */}
+            <div className="rounded-2xl p-8 border text-center" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
+              <h2 className="text-xl font-semibold mb-1" style={{ color: "#1B4F3A" }}>Box Breathing</h2>
+              <p className="text-xs mb-2" style={{ color: "#3D6B5A" }}>
+                A simple, clinically supported breathing technique that activates the parasympathetic nervous system — helping calm both mind and gut.
+              </p>
+              <p className="text-xs mb-6" style={{ color: "#6B9E8A" }}>
+                Inhale 4s · Hold 4s · Exhale 4s · Hold 4s · Repeat for 2–3 minutes
+              </p>
+
+                            {/* Breathing Circle */}
+              <div className="flex items-center justify-center mb-8">
+                <div
+                  className="rounded-full flex items-center justify-center"
+                  style={{
+                    width: 160,
+                    height: 160,
+                    backgroundColor: phaseColors[breathPhase],
+                    transform:
+                      breathPhase === "inhale" ? "scale(1.5)" :
+                      breathPhase === "exhale" ? "scale(0.75)" :
+                      breathPhase === "hold-in" ? "scale(1.5)" :
+                      breathPhase === "hold-out" ? "scale(0.75)" :
+                      "scale(1)",
+                    transition:
+                      breathPhase === "inhale" ? "transform 4000ms ease-in-out, background-color 300ms" :
+                      breathPhase === "exhale" ? "transform 4000ms ease-in-out, background-color 300ms" :
+                      "transform 0ms, background-color 300ms",
+                  }}
+                >
+                  <span className="text-white font-semibold text-lg">
+                    {phaseLabels[breathPhase]}
+                  </span>
+                </div>
+              </div>
+
+              {breathCount > 0 && (
+                <p className="text-xs mb-4" style={{ color: "#3D6B5A" }}>Cycle {breathCount}</p>
+              )}
+
+                            {/* Voice Selection */}
+              <div className="mb-4">
+                <p className="text-xs font-medium mb-2" style={{ color: "#1B4F3A" }}>Voice guidance</p>
+                <div className="flex justify-center gap-2 flex-wrap mb-3">
+                  {(["john", "julie", "les", "sarah"] as VoiceFile[]).map((v) => (
+                    <button
+                      key={v}
+                      onClick={() => setSelectedVoice(v)}
+                      className="px-4 py-1.5 rounded-full text-xs font-medium transition-all capitalize"
+                      style={{
+                        backgroundColor: selectedVoice === v ? "#2E8B6A" : "#F0F7F4",
+                        color: selectedVoice === v ? "#ffffff" : "#1B4F3A",
+                        border: "1px solid #C5E3D8",
+                      }}
+                    >
+                      {v}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex justify-center gap-2">
+                  <button
+                    onClick={() => setVoiceLoop(true)}
+                    className="px-4 py-1.5 rounded-full text-xs font-medium transition-all"
+                    style={{
+                      backgroundColor: voiceLoop ? "#2E8B6A" : "#F0F7F4",
+                      color: voiceLoop ? "#ffffff" : "#1B4F3A",
+                      border: "1px solid #C5E3D8",
+                    }}
+                  >
+                    Continuous
+                  </button>
+                  <button
+                    onClick={() => setVoiceLoop(false)}
+                    className="px-4 py-1.5 rounded-full text-xs font-medium transition-all"
+                    style={{
+                      backgroundColor: !voiceLoop ? "#2E8B6A" : "#F0F7F4",
+                      color: !voiceLoop ? "#ffffff" : "#1B4F3A",
+                      border: "1px solid #C5E3D8",
+                    }}
+                  >
+                    Off after intro
+                  </button>
+                </div>
+              </div>
+
+              <button
+                onClick={breathRunning ? stopBreathing : startBreathing}
+                className="px-8 py-3 rounded-full text-white font-medium text-sm shadow transition-all"
+                style={{ backgroundColor: breathRunning ? "#922B21" : "#2E8B6A" }}
+              >
+                {breathRunning ? "Stop" : "Start"}
+              </button>
+            </div>
+
+            {/* Body Scan */}
+            <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
+              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "#1B4F3A" }}>Body Scan</h2>
+              <p className="text-xs mb-6 text-center" style={{ color: "#3D6B5A" }}>
+                A gentle guided meditation that brings kind awareness to each part of your body.
+                Adapted to be compassionate and calm for those living with Crohn&apos;s disease.
+              </p>
+
+              {/* Video */}
+              {showVideo && (
+                <div className="mb-6 rounded-xl overflow-hidden">
+                  <video
+                    ref={videoRef}
+                    src="/video/beach-sunrise-seamless-loop-new-audio.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full rounded-xl"
+                  />
+                </div>
+              )}
+
+              {/* Voice Selection */}
+              <div className="mb-6 text-center">
+                <p className="text-xs font-medium mb-2" style={{ color: "#1B4F3A" }}>Choose a guide</p>
+                <div className="flex justify-center gap-2">
+                  {(["ben", "jane"] as BodyScanVoice[]).map((v) => (
+                    <button
+                      key={v}
+                      onClick={() => setBodyScanVoice(v)}
+                      className="px-4 py-1.5 rounded-full text-xs font-medium transition-all capitalize"
+                      style={{
+                        backgroundColor: bodyScanVoice === v ? "#2E8B6A" : "#F0F7F4",
+                        color: bodyScanVoice === v ? "#ffffff" : "#1B4F3A",
+                        border: "1px solid #C5E3D8",
+                      }}
+                    >
+                      {v}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="text-center">
+                <button
+                  onClick={toggleBodyScan}
+                  className="px-8 py-3 rounded-full text-white font-medium text-sm shadow transition-all"
+                  style={{ backgroundColor: bodyScanPlaying ? "#922B21" : "#2E8B6A" }}
+                >
+                  {bodyScanPlaying ? "Stop" : "Begin Body Scan"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}        {/* LISTEN TAB */}
+        {activeTab === "listen" && (
+          <div className="space-y-6">
+
+            {/* Binaural Beats */}
+            <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
+              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "#1B4F3A" }}>Binaural Beats</h2>
+              <p className="text-xs mb-2 text-center" style={{ color: "#3D6B5A" }}>
+                Binaural beats use slightly different frequencies in each ear to guide your brain into a desired state.
+                Headphones are required for the full effect.
+              </p>
+              <p className="text-xs mb-6 text-center font-medium" style={{ color: "#922B21" }}>
+                🎧 Please lower your volume before pressing play
+              </p>
+
+              {/* Category Selection */}
+              <div className="flex flex-wrap gap-2 justify-center mb-6">
+                {(Object.keys(binauralFrequencies) as BiauralCategory[]).map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => { setSelectedCategory(cat); if (binauralPlaying) { stopBinaural(); } }}
+                    className="px-4 py-2 rounded-full text-xs font-medium transition-all"
+                    style={{
+                      backgroundColor: selectedCategory === cat ? "#1B4F3A" : "#F0F7F4",
+                      color: selectedCategory === cat ? "#ffffff" : "#1B4F3A",
+                      border: "1px solid #C5E3D8",
+                    }}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+
+              {/* Selected Info */}
+              <div className="rounded-xl px-5 py-4 mb-6 text-center" style={{ backgroundColor: "#F0F7F4" }}>
+                <p className="text-xs font-semibold mb-1" style={{ color: "#1B4F3A" }}>
+                  {binauralFrequencies[selectedCategory].hz}Hz — {selectedCategory}
+                </p>
+                <p className="text-xs leading-relaxed" style={{ color: "#3D6B5A" }}>
+                  {binauralFrequencies[selectedCategory].description}
+                </p>
+              </div>
+
+              {/* Aromatherapy Pairing */}
+              <div className="rounded-xl px-5 py-4 mb-6" style={{ backgroundColor: "#D4EDE4" }}>
+                <p className="text-xs font-semibold mb-1" style={{ color: "#1B4F3A" }}>
+                  🌿 Aromatherapy pairing — {aromaProfiles[selectedCategory].oils.join(" + ")}
+                </p>
+                <p className="text-xs leading-relaxed mb-2" style={{ color: "#1B4F3A" }}>
+                  {aromaProfiles[selectedCategory].description}
+                </p>
+                <p className="text-xs italic" style={{ color: "#2E8B6A" }}>
+                  Use only 100% pure therapeutic grade oils from reputable suppliers.
+                  Always dilute before skin contact. Not a substitute for medical care.
+                </p>
+              </div>
+
+              {/* Volume */}
+              <div className="mb-6">
+                <p className="text-xs font-medium mb-2 text-center" style={{ color: "#1B4F3A" }}>Volume</p>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={binauralVolume}
+                  onChange={(e) => setBinauralVolume(parseFloat(e.target.value))}
+                  className="w-full accent-green-700"
+                />
+              </div>
+
+              <div className="text-center">
+                <button
+                  onClick={binauralPlaying ? stopBinaural : startBinaural}
+                  className="px-8 py-3 rounded-full text-white font-medium text-sm shadow transition-all"
+                  style={{ backgroundColor: binauralPlaying ? "#922B21" : "#2E8B6A" }}
+                >
+                  {binauralPlaying ? "Stop" : "Play"}
+                </button>
+              </div>
+            </div>
+
+            {/* Noise Therapy */}
+            <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
+              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "#1B4F3A" }}>Noise Therapy</h2>
+              <p className="text-xs mb-6 text-center" style={{ color: "#3D6B5A" }}>
+                Steady background noise can mask gut sounds, ease tinnitus, and create a consistent
+                sonic environment that helps calm an overstimulated nervous system.
+              </p>
+
+              <div className="grid grid-cols-3 gap-3 mb-6">
+                {([
+                  { type: "white" as NoiseType, label: "White Noise", desc: "Steady. Consistent. Grounding." },
+                  { type: "pink" as NoiseType, label: "Pink Noise", desc: "Natural. Balanced. Calming." },
+                  { type: "brown" as NoiseType, label: "Brown Noise", desc: "Deep. Warm. Anchoring." },
+                ]).map(({ type, label, desc }) => (
+                  <button
+                    key={type}
+                    onClick={() => selectedNoise === type ? stopNoise() : startNoise(type)}
+                    className="rounded-xl p-4 text-center transition-all border"
+                    style={{
+                      backgroundColor: selectedNoise === type ? "#1B4F3A" : "#F0F7F4",
+                      color: selectedNoise === type ? "#ffffff" : "#1B4F3A",
+                      borderColor: "#C5E3D8",
+                    }}
+                  >
+                    <p className="text-xs font-semibold mb-1">{label}</p>
+                    <p className="text-xs opacity-80">{desc}</p>
+                  </button>
+                ))}
+              </div>
+
+                            {/* Volume */}
+              <div className="mb-6">
+                <p className="text-xs font-medium mb-2 text-center" style={{ color: "#1B4F3A" }}>Volume</p>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={noiseVolume}
+                  onChange={(e) => setNoiseVolume(parseFloat(e.target.value))}
+                  className="w-full accent-green-700"
+                />
+              </div>
+
+              <div className="text-center">
+                <button
+                  onClick={() => selectedNoise ? stopNoise() : startNoise("white")}
+                  className="px-8 py-3 rounded-full text-white font-medium text-sm shadow transition-all"
+                  style={{ backgroundColor: selectedNoise ? "#922B21" : "#2E8B6A" }}
+                >
+                  {selectedNoise ? "Stop" : "Play"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* CALM TAB */}
+        {activeTab === "calm" && (
+          <div className="space-y-6">
+
+            {/* Aromatherapy Guide */}
+            <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
+              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "#1B4F3A" }}>Aromatherapy</h2>
+              <p className="text-xs mb-6 text-center" style={{ color: "#3D6B5A" }}>
+                Essential oils used as a complementary comfort practice — not a medical treatment.
+                Always use 100% pure therapeutic grade oils from reputable Australian suppliers.
+              </p>
+
+              <div className="space-y-4">
+                {[
+                  { symptom: "Pain & Flare Support", oils: "Frankincense + Myrrh", detail: "Two of the oldest healing resins known to humanity. Diffuse together for a warm, grounding environment during difficult days.", caution: "Some people may be sensitive to these oils." },
+                  { symptom: "Anxiety & Stress", oils: "Lavender + Roman Chamomile", detail: "Lavender has the strongest evidence base of any essential oil for anxiety reduction. Roman Chamomile may ease mind and gut tension.", caution: "Never ingest essential oils." },
+                  { symptom: "Sleep", oils: "Lavender + Frankincense", detail: "Lavender eases a busy mind while Frankincense encourages slow, deep breathing. Diffuse in your bedroom 30 minutes before sleep.", caution: "Keep diffuser use to 30–60 minutes. Continuous diffusion can cause headaches." },
+                  { symptom: "Nausea", oils: "Peppermint", detail: "Peppermint has clinical evidence for easing nausea. Diffuse in your space or place one drop on a tissue and inhale gently.",
+                        caution: "Avoid diffusing around infants, young children and animals." },
+                  { symptom: "Mental Clarity & Gentle Focus", oils: "Lemongrass + Peppermint", detail: "Uplifting and clarifying on good days. Supports gentle focus without overstimulation.", caution: "Some people may have sensitivity to Lemongrass." },
+                  { symptom: "General Comfort & Calm", oils: "Frankincense + Myrrh + Lavender", detail: "A deeply comforting blend with ancient healing roots. Suitable for diffusing during rest, meditation or the body scan practice.", caution: "Introduce one oil at a time if you have asthma or respiratory sensitivities." },
+                ].map(({ symptom, oils, detail, caution }) => (
+                  <div key={symptom} className="rounded-xl p-5 border" style={{ backgroundColor: "#F0F7F4", borderColor: "#C5E3D8" }}>
+                    <p className="text-sm font-semibold mb-1" style={{ color: "#1B4F3A" }}>{symptom}</p>
+                    <p className="text-xs font-medium mb-2" style={{ color: "#2E8B6A" }}>🌿 {oils}</p>
+                    <p className="text-xs leading-relaxed mb-2" style={{ color: "#3D6B5A" }}>{detail}</p>
+                    <div className="rounded-lg px-3 py-2" style={{ backgroundColor: "#FEF9E7" }}>
+                      <p className="text-xs" style={{ color: "#7D6608" }}>⚠️ Worth knowing: {caution}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 rounded-xl px-5 py-4" style={{ backgroundColor: "#D4EDE4" }}>
+                <p className="text-xs font-semibold mb-1" style={{ color: "#1B4F3A" }}>General safety reminders</p>
+                <ul className="text-xs space-y-1" style={{ color: "#1B4F3A" }}>
+                  <li>• Use a diffuser for inhalation — the recommended method for aromatherapy</li>
+                  <li>• Introduce new oils cautiously if you have asthma or respiratory conditions</li>
+                  <li>• Introduce new oils cautiously if you have asthma or respiratory conditions</li>
+                  <li>• Aromatherapy is a comfort practice only — not a substitute for medical care</li>
+                </ul>
+              </div>
+            </div>
+
+            
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
+        <p className="text-sm" style={{ color: "#3D6B5A" }}>
+          Crohn&apos;s Compass — Evidence-based information with hope at its heart
+        </p>
+        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>
+          These tools are for comfort and wellbeing only — not a substitute for medical care.
+        </p>
+      </footer>
+
+    </div>
+  );
+}
