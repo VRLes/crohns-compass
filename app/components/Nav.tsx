@@ -1,10 +1,15 @@
+"use client";
+
 // app/components/Nav.tsx
 // Shared navigation component for all pages
 
+import { useState } from "react";
 import Link from "next/link";
 
 export default function Nav({ active }: { active: string }) {
-    const links = [
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const links = [
     { href: "/", label: "Home" },
     { href: "/treatments", label: "Treatments" },
     { href: "/diet", label: "Diet" },
@@ -18,7 +23,9 @@ export default function Nav({ active }: { active: string }) {
   return (
     <nav style={{ backgroundColor: "#1B4F3A" }} className="sticky top-0 z-50 shadow-md">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
+
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
             <circle cx="14" cy="14" r="13" stroke="#6EC6A0" strokeWidth="1.5" />
             <circle cx="14" cy="14" r="3" fill="#6EC6A0" />
@@ -31,6 +38,8 @@ export default function Nav({ active }: { active: string }) {
             Crohn&apos;s Compass
           </span>
         </Link>
+
+        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-6">
           {links.map((link) => (
             <Link
@@ -46,7 +55,39 @@ export default function Nav({ active }: { active: string }) {
             </Link>
           ))}
         </div>
+
+        {/* Mobile Hamburger */}
+        <button
+          className="md:hidden flex flex-col gap-1.5 p-2"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span className="block w-6 h-0.5 transition-all" style={{ backgroundColor: "#6EC6A0" }} />
+          <span className="block w-6 h-0.5 transition-all" style={{ backgroundColor: "#6EC6A0" }} />
+          <span className="block w-6 h-0.5 transition-all" style={{ backgroundColor: "#6EC6A0" }} />
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden border-t px-6 py-4 space-y-3" style={{ borderColor: "#2E8B6A", backgroundColor: "#1B4F3A" }}>
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className="block text-sm py-2 border-b transition-colors hover:text-white"
+              style={{
+                color: active === link.href ? "#ffffff" : "#A8D8C4",
+                fontWeight: active === link.href ? "600" : "400",
+                borderColor: "#2E8B6A",
+              }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }
