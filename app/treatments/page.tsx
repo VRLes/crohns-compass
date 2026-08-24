@@ -190,22 +190,22 @@ export default function Treatments() {
     : treatments.filter((t) => t.category === activeCategory);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#F0F7F4" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-page)" }}>
 
       {/* Navigation */}
       <Nav active="/treatments" />
 
       {/* Header */}
       <div className="max-w-6xl mx-auto px-6 pt-10 pb-6">
-        <h1 className="text-3xl font-bold mb-2" style={{ color: "#1B4F3A" }}>Treatments</h1>
-        <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "#3D6B5A" }}>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Treatments</h1>
+        <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "var(--text-secondary)" }}>
           An overview of medical, complementary, and comfort approaches for Crohn&apos;s disease —
           each clearly labelled by strength of evidence.
         </p>
 
         {/* Individual disclaimer */}
-        <div className="mt-4 rounded-xl px-6 py-4" style={{ backgroundColor: "#D4EDE4" }}>
-          <p className="text-sm font-semibold mb-1" style={{ color: "#1B4F3A" }}>
+        <div className="mt-4 rounded-xl px-6 py-4" style={{ backgroundColor: "var(--bg-accent)" }}>
+          <p className="text-sm font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
             ⚠️ Every person with Crohn&apos;s disease is different
           </p>
           <p className="text-sm" style={{ color: "#1B4F3A" }}>
@@ -223,10 +223,11 @@ export default function Treatments() {
               onClick={() => setActiveCategory(cat)}
               className="px-5 py-2 rounded-full text-sm font-medium transition-all"
               style={{
-                backgroundColor: activeCategory === cat ? "#1B4F3A" : "#ffffff",
-                color: activeCategory === cat ? "#ffffff" : "#1B4F3A",
-                border: "1px solid #1B4F3A",
+                backgroundColor: activeCategory === cat ? "var(--nav-bg)" : "var(--bg-card)",
+                color: activeCategory === cat ? "#ffffff" : "var(--text-primary)",
+                border: "1px solid var(--text-primary)",
               }}
+
             >
               {cat}
             </button>
@@ -363,7 +364,7 @@ export default function Treatments() {
               <div
                 key={treatment.name}
                 className="rounded-2xl p-6 border shadow-sm"
-                style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}
+                style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}
               >
                 {/* Evidence Badge */}
                 <span
@@ -379,16 +380,16 @@ export default function Treatments() {
                 {/* Category Tag */}
                 <span
                   className="text-xs font-medium px-3 py-1 rounded-full ml-2"
-                  style={{ backgroundColor: "#F0F7F4", color: "#2E8B6A" }}
+                  style={{ backgroundColor: "var(--bg-page)", color: "#2E8B6A" }}
                 >
                   {treatment.category}
                 </span>
 
-                <h3 className="text-lg font-semibold mt-3 mb-2" style={{ color: "#1B4F3A" }}>
+                <h3 className="text-lg font-semibold mt-3 mb-2" style={{ color: "var(--text-primary)" }}>
                   {treatment.name}
                 </h3>
 
-                <p className="text-sm leading-relaxed mb-3" style={{ color: "#3D6B5A" }}>
+                <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
                   {treatment.description}
                 </p>
 
@@ -399,9 +400,10 @@ export default function Treatments() {
                 </div>
 
                 {/* Individual Note */}
-                <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "#F0F7F4" }}>
-                  <p className="text-xs font-semibold mb-1" style={{ color: "#1B4F3A" }}>Individual response varies</p>
-                  <p className="text-xs leading-relaxed" style={{ color: "#3D6B5A" }}>{treatment.individual}</p>
+                <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "var(--bg-page)" }}>
+                  <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-primary)" }}>Individual response varies</p>
+                  
+<p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{treatment.individual}</p>
                 </div>
 
                 {/* How To Use Dropdown */}
@@ -417,7 +419,7 @@ export default function Treatments() {
                     {isExpanded && (
                       <div
                         className="mt-3 rounded-xl px-4 py-4 text-xs leading-relaxed space-y-1"
-                        style={{ backgroundColor: "#D4EDE4", color: "#1B4F3A" }}
+                        style={{ backgroundColor: "var(--bg-accent)", color: "#1B4F3A" }}
                       >
                         {hasHowTo.content}
                       </div>
@@ -431,11 +433,12 @@ export default function Treatments() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
-        <p className="text-sm" style={{ color: "#3D6B5A" }}>
+      <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
+        <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+
           Crohn&apos;s Compass — Evidence-based information with hope at its heart
         </p>
-        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>
+        <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
           Always consult your gastroenterologist before making changes to your treatment.
         </p>
       </footer>

@@ -3,11 +3,15 @@
 // app/components/Nav.tsx
 // Shared navigation component for all pages
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useTheme, Theme } from "../context/ThemeContext";
 
 export default function Nav({ active }: { active: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const themeRef = useRef<HTMLDivElement>(null);
 
   const links = [
     { href: "/", label: "Home" },
@@ -20,8 +24,27 @@ export default function Nav({ active }: { active: string }) {
     { href: "/about", label: "About" },
   ];
 
+  const themes: { value: Theme; label: string; icon: string }[] = [
+    { value: "light", label: "Light", icon: "☀️" },
+    { value: "soft-dark", label: "Soft Dark", icon: "🌙" },
+    { value: "true-dark", label: "True Dark", icon: "🌑" },
+    { value: "dark-green", label: "Dark Green", icon: "🌿" },
+  ];
+
+  const currentIcon = themes.find((t) => t.value === theme)?.icon ?? "☀️";
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (themeRef.current && !themeRef.current.contains(e.target as Node)) {
+        setThemeOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <nav style={{ backgroundColor: "#1B4F3A" }} className="sticky top-0 z-50 shadow-md">
+    <nav style={{ backgroundColor: "var(--nav-bg)" }} className="sticky top-0 z-50 shadow-md">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* Logo */}
@@ -40,7 +63,7 @@ export default function Nav({ active }: { active: string }) {
         </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-5">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -54,6 +77,45 @@ export default function Nav({ active }: { active: string }) {
               {link.label}
             </Link>
           ))}
+
+          {/* Theme Dropdown */}
+          <div className="relative" ref={themeRef}>
+            <button
+              onClick={() => setThemeOpen(!themeOpen)}
+              className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full transition-all"
+              style={{
+                backgroundColor: themeOpen ? "#2E8B6A" : "rgba(255,255,255,0.1)",
+                color: "#A8D8C4",
+              }}
+            >
+              <span>{currentIcon}</span>
+              <span>Theme</span>
+              <span style={{ fontSize: "10px" }}>▾</span>
+            </button>
+
+            {themeOpen && (
+              <div
+                className="absolute right-0 mt-2 w-44 rounded-xl shadow-lg overflow-hidden z-50"
+                style={{ borderColor: "#2E8B6A", backgroundColor: "var(--nav-bg)" }}
+              >
+                {themes.map((t) => (
+                  <button
+                    key={t.value}
+                    onClick={() => { setTheme(t.value); setThemeOpen(false); }}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors hover:bg-opacity-20 text-left"
+                    style={{
+                      backgroundColor: theme === t.value ? "#1B4F3A" : "transparent",
+                      color: theme === t.value ? "#ffffff" : "#A8D8C4",
+                    }}
+                  >
+                    <span>{t.icon}</span>
+                    <span>{t.label}</span>
+                    {theme === t.value && <span className="ml-auto text-xs">✓</span>}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Mobile Hamburger */}
@@ -70,7 +132,7 @@ export default function Nav({ active }: { active: string }) {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden border-t px-6 py-4 space-y-3" style={{ borderColor: "#2E8B6A", backgroundColor: "#1B4F3A" }}>
+        <div className="md:hidden border-t px-6 py-4 space-y-3" style={{ borderColor: "#2E8B6A", backgroundColor: "var(--nav-bg)" }}>
           {links.map((link) => (
             <Link
               key={link.href}
@@ -86,6 +148,26 @@ export default function Nav({ active }: { active: string }) {
               {link.label}
             </Link>
           ))}
+
+          {/* Mobile Theme Picker */}
+          <div className="pt-2">
+            <p className="text-xs mb-2" style={{ color: "#6EC6A0" }}>Theme</p>
+            <div className="flex gap-2 flex-wrap">
+              {themes.map((t) => (
+                <button
+                  key={t.value}
+                  onClick={() => setTheme(t.value)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs transition-all"
+                  style={{
+                    backgroundColor: theme === t.value ? "#2E8B6A" : "rgba(255,255,255,0.1)",
+                    color: theme === t.value ? "#ffffff" : "#A8D8C4",
+                  }}
+                >
+                  {t.icon} {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </nav>

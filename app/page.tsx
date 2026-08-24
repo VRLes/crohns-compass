@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#F0F7F4" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-page)" }}>
 
       <Nav active="/" />
 
@@ -13,10 +13,10 @@ export default function Home() {
         <p className="text-sm font-medium uppercase tracking-widest mb-4" style={{ color: "#2E8B6A" }}>
           Evidence-based · Hopeful · Human
         </p>
-        <h1 className="text-5xl font-bold mb-6 leading-tight" style={{ color: "#1B4F3A" }}>
+        <h1 className="text-5xl font-bold mb-6 leading-tight" style={{ color: "var(--text-primary)" }}>
           You Are Not Alone
         </h1>
-        <p className="text-xl max-w-2xl mx-auto mb-10 leading-relaxed" style={{ color: "#3D6B5A" }}>
+        <p className="text-xl max-w-2xl mx-auto mb-10 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
           Crohn&apos;s Compass gives you accurate, hopeful information to help you
           live well with Crohn&apos;s disease — grounded in science, written with care.
         </p>
@@ -31,7 +31,7 @@ export default function Home() {
       </section>
 
       <div className="max-w-4xl mx-auto px-6 mb-16">
-        <div className="rounded-2xl px-8 py-5 text-center" style={{ backgroundColor: "#D4EDE4" }}>
+        <div className="rounded-2xl px-8 py-5 text-center" style={{ backgroundColor: "var(--bg-accent)" }}>
           <p className="text-sm leading-relaxed" style={{ color: "#1B4F3A" }}>
             🌿 Everything here complements — never replaces — the care of your gastroenterologist.
             Our goal is to help you feel informed, not overwhelmed.
@@ -42,7 +42,7 @@ export default function Home() {
       <section className="max-w-6xl mx-auto px-6 pb-20">
         <div className="grid md:grid-cols-3 gap-6">
 
-          <div className="rounded-2xl p-7 shadow-sm border hover:shadow-md transition-shadow" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
+          <div className="rounded-2xl p-7 shadow-sm border hover:shadow-md transition-shadow" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
             <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: "#D4EDE4" }}>
               <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><path d="M11 2v18M2 11h18" stroke="#2E8B6A" strokeWidth="2" strokeLinecap="round" /></svg>
             </div>
@@ -126,9 +126,9 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
+      <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
         <p className="text-sm" style={{ color: "#3D6B5A" }}>Crohn&apos;s Compass — Evidence-based information with hope at its heart</p>
-        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>Always consult your gastroenterologist before making changes to your treatment.</p>
+        <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>Always consult your gastroenterologist before making changes to your treatment.</p>
       </footer>
 
     </div>

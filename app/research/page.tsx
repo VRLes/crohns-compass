@@ -165,6 +165,7 @@ const researchItems: ResearchItem[] = [
   },
 ];const stageColors: Record<ResearchItem["stage"], { bg: string; text: string }> = {
   "Approved": { bg: "#D4EDE4", text: "#1B4F3A" },
+
   "Phase 3": { bg: "#D6EAF8", text: "#1A5276" },
   "Phase 2": { bg: "#FEF9E7", text: "#7D6608" },
   "Early Research": { bg: "#F5EEF8", text: "#6C3483" },
@@ -172,8 +173,8 @@ const researchItems: ResearchItem[] = [
 };
 
 const categoryColors: Record<Exclude<ResearchCategory, "All">, { bg: string; text: string }> = {
-  "New Treatments": { bg: "#D4EDE4", text: "#1B4F3A" },
-  "Gut Science": { bg: "#D6EAF8", text: "#1A5276" },
+  
+"New Treatments": { bg: "#D4EDE4", text: "#1B4F3A" },  "Gut Science": { bg: "#D6EAF8", text: "#1A5276" },
   "Diet & Lifestyle": { bg: "#FEF9E7", text: "#7D6608" },
   "Future Therapies": { bg: "#F5EEF8", text: "#6C3483" },
 };
@@ -191,25 +192,28 @@ export default function Research() {
     : researchItems.filter((r) => r.category === activeCategory);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#F0F7F4" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-page)" }}>
 
       {/* Navigation */}
       <Nav active="/research" />
 
       {/* Header */}
       <div className="max-w-6xl mx-auto px-6 pt-10 pb-6">
-        <h1 className="text-3xl font-bold mb-2" style={{ color: "#1B4F3A" }}>Latest Research</h1>
-        <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "#3D6B5A" }}>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Latest Research</h1>
+        <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "var(--text-secondary)" }}>
           Crohn&apos;s disease research is moving faster than ever. Here we summarise the most significant
           recent findings in plain language — so you can stay informed without needing a medical degree.
         </p>
 
         {/* Global Disclaimer */}
-        <div className="mt-4 rounded-xl px-6 py-4" style={{ backgroundColor: "#D4EDE4" }}>
-          <p className="text-sm font-semibold mb-1" style={{ color: "#1B4F3A" }}>
+        <div className="mt-4 rounded-xl px-6 py-4" style={{ backgroundColor: "var(--bg-accent)"
+ }}>
+          <p className="text-sm font-semibold mb-1" style={{ 
+color: "var(--text-primary)" }}>
             🌍 Important — research and approvals vary by country
           </p>
-          <p className="text-sm" style={{ color: "#1B4F3A" }}>
+          <p className="text-sm" style={{ color: "var(--text-primary)"
+ }}>
             Information on this page reflects international research as of 2025–2026.
             Drug approval in one country does not mean a treatment is available in Australia or your region.
             The TGA (Therapeutic Goods Administration) regulates medicines in Australia independently of
@@ -241,9 +245,9 @@ export default function Research() {
               onClick={() => setActiveCategory(cat)}
               className="px-5 py-2 rounded-full text-sm font-medium transition-all"
               style={{
-                backgroundColor: activeCategory === cat ? "#1B4F3A" : "#ffffff",
-                color: activeCategory === cat ? "#ffffff" : "#1B4F3A",
-                border: "1px solid #1B4F3A",
+                backgroundColor: activeCategory === cat ? "var(--nav-bg)" : "var(--bg-card)",
+                color: activeCategory === cat ? "#ffffff" : "var(--text-primary)",
+                border: "1px solid var(--text-primary)",
               }}
             >
               {cat}
@@ -259,7 +263,7 @@ export default function Research() {
               <div
                 key={item.title}
                 className="rounded-2xl p-6 border shadow-sm"
-                style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}
+                style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}
               >
                 {/* Badges */}
                 <div className="flex flex-wrap gap-2 mb-3">
@@ -284,19 +288,23 @@ export default function Research() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-base font-semibold mb-2 leading-snug" style={{ color: "#1B4F3A" }}>
+                <h3 className="text-base font-semibold mb-2 leading-snug" style={{ color: "var(--text-primary)"
+ }}>
                   {item.title}
                 </h3>
 
                 {/* Meta */}
                 <div className="flex flex-wrap gap-3 mb-3">
-                  <span className="text-xs" style={{ color: "#6B9E8A" }}>📅 {item.date}</span>
-                  <span className="text-xs" style={{ color: "#6B9E8A" }}>📌 {item.source}</span>
-                  <span className="text-xs" style={{ color: "#6B9E8A" }}>🌍 {item.region}</span>
+                  <span className="text-xs" style={{ color: "var(--text-muted)" }}>📅 {item.date}</span>
+                  <span className="text-xs" style={{ color: "var(--text-muted)"
+ }}>📌 {item.source}</span>
+                  <span className="text-xs" style={{ 
+color: "var(--text-muted)" }}>🌍 {item.region}</span>
                 </div>
 
                 {/* Summary */}
-                <p className="text-sm leading-relaxed mb-3" style={{ color: "#3D6B5A" }}>
+                <p className="text-sm leading-relaxed mb-3" style={{ 
+color: "var(--text-secondary)" }}>
                   {item.summary}
                 </p>
 
@@ -321,7 +329,7 @@ export default function Research() {
                 {isExpanded && (
                   <div
                     className="mt-3 rounded-xl px-4 py-4 text-xs leading-relaxed space-y-3"
-                    style={{ backgroundColor: "#D4EDE4", color: "#1B4F3A" }}
+                    style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}
                   >
                     <div>
                       <p className="font-semibold mb-1">What this means in plain language</p>
@@ -331,8 +339,9 @@ export default function Research() {
                       <p className="font-semibold mb-1">💚 Reason for hope</p>
                       <p>{item.hopeFactor}</p>
                     </div>
-                    <div className="rounded-lg px-3 py-2" style={{ backgroundColor: "#ffffff" }}>
-                      <p className="text-xs" style={{ color: "#3D6B5A" }}>
+                    <div className="rounded-lg px-3 py-2" style={{ backgroundColor: "var(--bg-card)" }}>
+                      <p className="text-xs" style={{ 
+color: "var(--text-secondary)" }}>
                         ⚕️ For full prescribing information, safety data, and availability in your region,
                         speak with your gastroenterologist or visit the
                         TGA website at <span className="font-medium">tga.gov.au</span>
@@ -346,21 +355,22 @@ export default function Research() {
         </div>
 
         {/* UC Coming Soon */}
-        <div className="mt-12 rounded-2xl p-8 border text-center" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
+        <div className="mt-12 rounded-2xl p-8 border text-center" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
           <p className="text-2xl mb-2">🔬</p>
-          <h2 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>
+          <h2 className="text-lg font-semibold mb-2" style={{ color: "var(--text-primary)" }}>
             Ulcerative Colitis Research — Coming Soon
           </h2>
-          <p className="text-sm leading-relaxed max-w-xl mx-auto" style={{ color: "#3D6B5A" }}>
+          <p className="text-sm leading-relaxed max-w-xl mx-auto" style={{ color: "var(--text-secondary)" }}>
             Crohn&apos;s Compass currently focuses on Crohn&apos;s disease. A dedicated Ulcerative Colitis
             section covering the latest UC research, treatments and dietary approaches is in development.
           </p>
         </div>
 
         {/* Research Disclaimer */}
-        <div className="mt-6 rounded-2xl p-6 border" style={{ backgroundColor: "#F0F7F4", borderColor: "#C5E3D8" }}>
-          <p className="text-xs font-semibold mb-2" style={{ color: "#1B4F3A" }}>About this research summary</p>
-          <p className="text-xs leading-relaxed" style={{ color: "#3D6B5A" }}>
+        <div className="mt-6 rounded-2xl p-6 border" style={{ backgroundColor: "var(--bg-page)", borderColor: "var(--border-color)" }}>
+          <p className="text-xs font-semibold mb-2" style={{ color: "var(--text-primary)" }}>About this research summary</p>
+          <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)"
+ }}>
             All research summaries on this page are based on peer-reviewed studies, published clinical trial
             data, and reports from recognised medical institutions and journals including The Lancet, Nature,
             Harvard Medical School, and the American Gastroenterological Association. Summaries are written
@@ -372,11 +382,11 @@ export default function Research() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
-        <p className="text-sm" style={{ color: "#3D6B5A" }}>
+      <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
+        <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
           Crohn&apos;s Compass — Evidence-based information with hope at its heart
         </p>
-        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>
+        <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
           Research summaries are for informational purposes only — not medical advice.
           Always consult your gastroenterologist.
         </p>

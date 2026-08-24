@@ -358,22 +358,22 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
     : recipes.filter((r) => r.category === activeRecipeCategory);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#F0F7F4" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-page)" }}>
 
       {/* Navigation */}
       <Nav active="/diet" />
 
       {/* Header */}
       <div className="max-w-6xl mx-auto px-6 pt-10 pb-6">
-        <h1 className="text-3xl font-bold mb-2" style={{ color: "#1B4F3A" }}>Diet & Nutrition</h1>
-        <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "#3D6B5A" }}>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Diet & Nutrition</h1>
+        <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "var(--text-secondary)" }}>
           An honest, evidence-based overview of dietary approaches for Crohn&apos;s disease —
           from strongly evidenced therapeutic diets to emerging and anecdotal approaches.
           Each is clearly labelled so you always know what the science says.
         </p>
 
         {/* Main Disclaimer */}
-        <div className="mt-4 rounded-xl px-6 py-4" style={{ backgroundColor: "#D4EDE4" }}>
+        <div className="mt-4 rounded-xl px-6 py-4" style={{ backgroundColor: "var(--bg-accent)" }}>
           <p className="text-sm font-semibold mb-1" style={{ color: "#1B4F3A" }}>
             🥗 Important — please read before making dietary changes
           </p>
@@ -416,9 +416,9 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
               onClick={() => setActiveCategory(cat)}
               className="px-5 py-2 rounded-full text-sm font-medium transition-all"
               style={{
-                backgroundColor: activeCategory === cat ? "#1B4F3A" : "#ffffff",
-                color: activeCategory === cat ? "#ffffff" : "#1B4F3A",
-                border: "1px solid #1B4F3A",
+                backgroundColor: activeCategory === cat ? "var(--nav-bg)" : "var(--bg-card)",
+                color: activeCategory === cat ? "#ffffff" : "var(--text-primary)",
+                border: "1px solid var(--text-primary)",
               }}
             >
               {cat}
@@ -434,7 +434,7 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
               <div
                 key={diet.name}
                 className="rounded-2xl p-6 border shadow-sm"
-                style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}
+                style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}
               >
                 {/* Badges */}
                 <div className="flex flex-wrap gap-2 mb-3">
@@ -449,7 +449,8 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
                   </span>
                   <span
                     className="text-xs font-medium px-3 py-1 rounded-full"
-                    style={{ backgroundColor: "#F0F7F4", color: "#2E8B6A" }}
+                    style={{ 
+backgroundColor: "var(--bg-page)", color: "#2E8B6A" }}
                   >
                     {diet.category}
                   </span>
@@ -471,10 +472,11 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
                 </div>
 
                 {/* Individual */}
-                <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "#F0F7F4" }}>
-                  <p className="text-xs font-semibold mb-1" style={{ color: "#1B4F3A" }}>Individual response varies</p>
-                  <p className="text-xs leading-relaxed" style={{ color: "#3D6B5A" }}>{diet.individual}</p>
+                <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "var(--bg-page)" }}>
+                  <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-primary)" }}>Individual response varies</p>
+                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{diet.individual}</p>
                 </div>
+
 
                 {/* Expand Button */}
                 <button
@@ -489,7 +491,9 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
                 {isExpanded && (
                   <div
                     className="mt-3 rounded-xl px-4 py-4 text-xs leading-relaxed space-y-3"
-                    style={{ backgroundColor: "#D4EDE4", color: "#1B4F3A" }}
+                    style={{ backgroundColor: "var(--bg-accent)"
+, color: "var(--text-primary)"
+ }}
                   >
                     <div>
                       <p className="font-semibold mb-1">How it works</p>
@@ -512,7 +516,8 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
       </div>      {/* Recipes Section */}
       <div className="max-w-6xl mx-auto px-6 pb-20">
         <h2 className="text-xl font-semibold mb-2" style={{ color: "#1B4F3A" }}>Recipes</h2>
-        <p className="text-sm leading-relaxed max-w-3xl mb-4" style={{ color: "#3D6B5A" }}>
+        <p className="text-sm leading-relaxed max-w-3xl mb-4" style={{ 
+color: "var(--text-secondary)" }}>
           Simple, nourishing recipes suited to different stages of Crohn&apos;s disease.
           Each is labelled with which dietary approaches it suits.
         </p>
@@ -542,9 +547,10 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
               onClick={() => setActiveRecipeCategory(cat)}
               className="px-5 py-2 rounded-full text-sm font-medium transition-all"
               style={{
-                backgroundColor: activeRecipeCategory === cat ? "#1B4F3A" : "#ffffff",
-                color: activeRecipeCategory === cat ? "#ffffff" : "#1B4F3A",
-                border: "1px solid #1B4F3A",
+                backgroundColor: activeRecipeCategory === cat ? "var(--nav-bg)" : "var(--bg-card)",
+                color: activeRecipeCategory === cat ? "#ffffff" : "var(--text-primary)",
+                border: "1px solid var(--text-primary)",
+
               }}
             >
               {cat}
@@ -560,7 +566,8 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
               <div
                 key={recipe.name}
                 className="rounded-2xl p-6 border shadow-sm"
-                style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}
+                style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)"
+ }}
               >
                 {/* Badges */}
                 <div className="flex flex-wrap gap-2 mb-3">
@@ -584,7 +591,8 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
                   </span>
                 </div>
 
-                <h3 className="text-lg font-semibold mb-1" style={{ color: "#1B4F3A" }}>{recipe.name}</h3>
+                <h3 className="text-lg font-semibold mb-1" style={{ color: "var(--text-primary)"
+ }}>{recipe.name}</h3>
 
                 {/* Suits Diets */}
                 <div className="flex flex-wrap gap-1 mb-3">
@@ -599,14 +607,18 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
                   ))}
                 </div>
 
-                <p className="text-sm leading-relaxed mb-3" style={{ color: "#3D6B5A" }}>
+                <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)"
+ }}>
                   {recipe.description}
                 </p>
 
                 {/* Tip */}
-                <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "#F0F7F4" }}>
-                  <p className="text-xs font-semibold mb-1" style={{ color: "#1B4F3A" }}>💡 Tip</p>
-                  <p className="text-xs leading-relaxed" style={{ color: "#3D6B5A" }}>{recipe.tip}</p>
+                <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "var(--bg-page)"
+ }}>
+                  <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-primary)"
+ }}>💡 Tip</p>
+                  <p className="text-xs leading-relaxed" style={{ 
+color: "var(--text-secondary)" }}>{recipe.tip}</p>
                 </div>
 
                 {/* Expand Button */}
@@ -622,7 +634,8 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
                 {isExpanded && (
                   <div
                     className="mt-3 rounded-xl px-4 py-4 text-xs leading-relaxed space-y-3"
-                    style={{ backgroundColor: "#D4EDE4", color: "#1B4F3A" }}
+                    style={{ 
+backgroundColor: "var(--bg-accent)", color: "#1B4F3A" }}
                   >
                     <div>
                       <p className="font-semibold mb-2">Ingredients</p>
@@ -648,7 +661,8 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
         </div>
 
                 {/* Foods to be cautious with */}
-        <div className="mt-12 rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
+        <div className="mt-12 rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)"
+ }}>
           <h2 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>
             Foods many people with Crohn&apos;s find difficult
           </h2>
@@ -665,7 +679,8 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
               { category: "Spicy foods", detail: "Capsaicin in chilli and spicy foods can irritate the gut lining and worsen cramping during active disease. Tolerance varies significantly between individuals." },
               { category: "Raw high-fibre vegetables", detail: "Raw vegetables like broccoli, cabbage and onion can be difficult during active disease. Cooking thoroughly and peeling skin significantly improves tolerability." },
             ].map(({ category, detail }) => (
-              <div key={category} className="rounded-xl px-4 py-3" style={{ backgroundColor: "#F0F7F4" }}>
+              <div key={category} className="rounded-xl px-4 py-3" style={{ backgroundColor: "var(--bg-page)"
+ }}>
                 <p className="text-xs font-semibold mb-1" style={{ color: "#1B4F3A" }}>{category}</p>
                 <p className="text-xs leading-relaxed" style={{ color: "#3D6B5A" }}>{detail}</p>
               </div>
@@ -673,11 +688,11 @@ const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
           </div>
         </div>
       </div>
-      <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
+      <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
         <p className="text-sm" style={{ color: "#3D6B5A" }}>
           Crohn&apos;s Compass — Evidence-based information with hope at its heart
         </p>
-        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>
+        <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
           Always consult your gastroenterologist and an Accredited Practising Dietitian before
           making significant dietary changes.
         </p>

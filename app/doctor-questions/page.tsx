@@ -217,23 +217,23 @@ const questions: Question[] = [
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#F0F7F4" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-page)" }}>
 
       {/* Navigation */}
       <Nav active="/doctor-questions" />
 
       {/* Header */}
       <div className="max-w-6xl mx-auto px-6 pt-10 pb-6">
-        <h1 className="text-3xl font-bold mb-2" style={{ color: "#1B4F3A" }}>Doctor Questions</h1>
-        <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "#3D6B5A" }}>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Doctor Questions</h1>
+        <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "var(--text-secondary)" }}>
           Walking into a gastroenterology appointment feeling prepared makes a real difference.
           These questions are designed to help you get the most from your consultation —
           whether it is your first appointment or your fiftieth.
         </p>
 
         {/* Comfort note */}
-        <div className="mt-4 rounded-xl px-6 py-4" style={{ backgroundColor: "#D4EDE4" }}>
-          <p className="text-sm" style={{ color: "#1B4F3A" }}>
+        <div className="mt-4 rounded-xl px-6 py-4" style={{ backgroundColor: "var(--bg-accent)" }}>
+          <p className="text-sm" style={{ color: "var(--text-primary)" }}>
             💚 You have every right to ask your doctor questions. A good gastroenterologist
             will welcome an informed, engaged patient. These questions are yours to use however
             feels comfortable — bring the list to your appointment, read them aloud, or simply
@@ -247,16 +247,16 @@ const questions: Question[] = [
             onClick={() => setBuildingList(!buildingList)}
             className="px-5 py-2 rounded-full text-sm font-medium transition-all"
             style={{
-              backgroundColor: buildingList ? "#1B4F3A" : "#ffffff",
-              color: buildingList ? "#ffffff" : "#1B4F3A",
-              border: "1px solid #1B4F3A",
+              backgroundColor: buildingList ? "var(--nav-bg)" : "var(--bg-card)",
+              color: buildingList ? "#ffffff" : "var(--text-primary)",
+              border: "1px solid var(--text-primary)",
             }}
           >
             {buildingList ? "✓ Building my list" : "Build my list"}
           </button>
 
           {buildingList && (
-            <p className="text-xs" style={{ color: "#3D6B5A" }}>
+            <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
               Tap questions to select them — then copy your personalised list
             </p>
           )}
@@ -265,9 +265,9 @@ const questions: Question[] = [
             onClick={copyToClipboard}
             className="px-5 py-2 rounded-full text-sm font-medium transition-all ml-auto"
             style={{
-              backgroundColor: copied ? "#2E8B6A" : "#F0F7F4",
-              color: copied ? "#ffffff" : "#1B4F3A",
-              border: "1px solid #C5E3D8",
+              backgroundColor: copied ? "#2E8B6A" : "var(--bg-card)",
+              color: copied ? "#ffffff" : "var(--text-primary)",
+              border: "1px solid var(--border-color)",
             }}
           >
             {copied ? "✓ Copied!" : buildingList && selectedList.length > 0 ? `Copy my ${selectedList.length} questions` : "Copy all questions"}
@@ -284,9 +284,9 @@ const questions: Question[] = [
               onClick={() => setActiveCategory(cat)}
               className="px-5 py-2 rounded-full text-sm font-medium transition-all"
               style={{
-                backgroundColor: activeCategory === cat ? "#1B4F3A" : "#ffffff",
-                color: activeCategory === cat ? "#ffffff" : "#1B4F3A",
-                border: "1px solid #1B4F3A",
+                backgroundColor: activeCategory === cat ? "var(--nav-bg)" : "var(--bg-card)",
+                color: activeCategory === cat ? "#ffffff" : "var(--text-primary)",
+                border: "1px solid var(--text-primary)",
               }}
             >
               {cat}
@@ -301,7 +301,7 @@ const questions: Question[] = [
           if (categoryQuestions.length === 0) return null;
           return (
             <div key={category} className="mb-10">
-              <h2 className="text-lg font-semibold mb-4" style={{ color: "#1B4F3A" }}>
+              <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>
                 {category}
               </h2>
               <div className="space-y-3">
@@ -313,8 +313,8 @@ const questions: Question[] = [
                       key={q.id}
                       className="rounded-2xl border shadow-sm transition-all"
                       style={{
-                        backgroundColor: isSelected ? "#D4EDE4" : "#ffffff",
-                        borderColor: isSelected ? "#2E8B6A" : "#C5E3D8",
+                        backgroundColor: isSelected ? "var(--bg-accent)" : "var(--bg-card)",
+                        borderColor: isSelected ? "#2E8B6A" : "var(--border-color)",
                       }}
                     >
                       <div className="p-5">
@@ -340,7 +340,7 @@ const questions: Question[] = [
 
                           {/* Question text */}
                           <div className="flex-1">
-                            <p className="text-sm font-medium leading-snug" style={{ color: "#1B4F3A" }}>
+                            <p className="text-sm font-medium leading-snug" style={{ color: "var(--text-primary)" }}>
                               {q.question}
                             </p>
                           </div>
@@ -359,9 +359,9 @@ const questions: Question[] = [
                         {isExpanded && (
                           <div
                             className="mt-3 rounded-xl px-4 py-3 text-xs leading-relaxed"
-                            style={{ backgroundColor: "#F0F7F4", color: "#3D6B5A" }}
+                            style={{ backgroundColor: "var(--bg-page)", color: "var(--text-secondary)" }}
                           >
-                            <p className="font-semibold mb-1" style={{ color: "#1B4F3A" }}>
+                            <p className="font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
                               Why this question matters
                             </p>
                             <p>{q.whyItMatters}</p>
@@ -378,14 +378,14 @@ const questions: Question[] = [
 
         {/* Selected list preview */}
         {buildingList && selectedList.length > 0 && (
-          <div className="mt-8 rounded-2xl p-6 border" style={{ backgroundColor: "#ffffff", borderColor: "#2E8B6A" }}>
-            <h3 className="text-base font-semibold mb-4" style={{ color: "#1B4F3A" }}>
+          <div className="mt-8 rounded-2xl p-6 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "#2E8B6A" }}>
+            <h3 className="text-base font-semibold mb-4" style={{ color: "var(--text-primary)" }}>
               Your question list ({selectedList.length} questions)
             </h3>
             <ol className="space-y-2">
               {selectedList.map((q, i) => (
-                <li key={q.id} className="text-sm" style={{ color: "#3D6B5A" }}>
-                  <span className="font-medium" style={{ color: "#1B4F3A" }}>{i + 1}. </span>
+                <li key={q.id} className="text-sm" style={{ color: "var(--text-secondary)" }}>
+                  <span className="font-medium" style={{ color: "var(--text-primary)" }}>{i + 1}. </span>
                   {q.question}
                 </li>
               ))}
@@ -394,7 +394,7 @@ const questions: Question[] = [
               onClick={copyToClipboard}
               className="mt-4 px-6 py-2 rounded-full text-sm font-medium transition-all"
               style={{
-                backgroundColor: copied ? "#2E8B6A" : "#1B4F3A",
+                backgroundColor: copied ? "#2E8B6A" : "var(--nav-bg)",
                 color: "#ffffff",
               }}
             >
@@ -404,23 +404,23 @@ const questions: Question[] = [
         )}
 
         {/* UC Coming Soon */}
-        <div className="mt-12 rounded-2xl p-8 border text-center" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
+        <div className="mt-12 rounded-2xl p-8 border text-center" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
           <p className="text-2xl mb-2">🔬</p>
-          <h2 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>
+          <h2 className="text-lg font-semibold mb-2" style={{ color: "var(--text-primary)" }}>
             Ulcerative Colitis Questions — Coming Soon
           </h2>
-          <p className="text-sm leading-relaxed max-w-xl mx-auto" style={{ color: "#3D6B5A" }}>
+          <p className="text-sm leading-relaxed max-w-xl mx-auto" style={{ color: "var(--text-secondary)" }}>
             A dedicated set of questions tailored specifically for Ulcerative Colitis
             appointments is currently in development.
           </p>
         </div>
 
         {/* Empowerment note */}
-        <div className="mt-6 rounded-2xl p-6 border" style={{ backgroundColor: "#F0F7F4", borderColor: "#C5E3D8" }}>
-          <p className="text-xs font-semibold mb-2" style={{ color: "#1B4F3A" }}>
+        <div className="mt-6 rounded-2xl p-6 border" style={{ backgroundColor: "var(--bg-page)", borderColor: "var(--border-color)" }}>
+          <p className="text-xs font-semibold mb-2" style={{ color: "var(--text-primary)" }}>
             A note on advocating for yourself
           </p>
-          <p className="text-xs leading-relaxed" style={{ color: "#3D6B5A" }}>
+          <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             Gastroenterology appointments can feel rushed and it can be hard to remember
             everything you wanted to ask. Writing questions down beforehand, bringing a
             support person, and asking for a longer appointment if needed are all reasonable
@@ -433,11 +433,11 @@ const questions: Question[] = [
       </div>
 
       {/* Footer */}
-      <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
-        <p className="text-sm" style={{ color: "#3D6B5A" }}>
+      <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
+        <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
           Crohn&apos;s Compass — Evidence-based information with hope at its heart
         </p>
-        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>
+        <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
           These questions are a guide only — always follow the advice of your gastroenterologist.
         </p>
       </footer>

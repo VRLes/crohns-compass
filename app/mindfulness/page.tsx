@@ -154,6 +154,7 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
     inhale: "#2E8B6A",
     "hold-in": "#1B4F3A",
     exhale: "#6EC6A0",
+
     "hold-out": "#A8D8C4",
     ready: "#2E8B6A",
   };
@@ -273,19 +274,19 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
   }, [noiseVolume]);  const circleSize = breathPhase === "inhale" ? "scale-150" : breathPhase === "exhale" ? "scale-75" : "scale-110";
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#F0F7F4" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-page)" }}>
 
       {/* Navigation */}
       <Nav active="/mindfulness" />
 
       {/* Header */}
       <div className="max-w-4xl mx-auto px-6 pt-10 pb-6 text-center">
-        <h1 className="text-3xl font-bold mb-2" style={{ color: "#1B4F3A" }}>Mindfulness</h1>
-        <p className="text-sm leading-relaxed max-w-2xl mx-auto" style={{ color: "#3D6B5A" }}>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Mindfulness</h1>
+        <p className="text-sm leading-relaxed max-w-2xl mx-auto" style={{ color: "var(--text-secondary)" }}>
           Stress is a known Crohn&apos;s flare trigger. These tools are here to help you breathe,
           rest and find calm — wherever you are, whenever you need it.
         </p>
-        <p className="text-xs mt-3 italic" style={{ color: "#6B9E8A" }}>
+        <p className="text-xs mt-3 italic" style={{ color: "var(--text-muted)" }}>
           Always be kind to yourself.
         </p>
       </div>
@@ -303,9 +304,12 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
               onClick={() => setActiveTab(tab.id)}
               className="px-6 py-2 rounded-full text-sm font-medium transition-all"
               style={{
-                backgroundColor: activeTab === tab.id ? "#1B4F3A" : "#ffffff",
-                color: activeTab === tab.id ? "#ffffff" : "#1B4F3A",
-                border: "1px solid #1B4F3A",
+                backgroundColor: activeTab === tab.id ? "var(--nav-bg)" : "var(--bg-card)",
+
+                color: activeTab === tab.id ? "#ffffff" 
+: "var(--text-primary)",
+                border: "1px solid var(--text-primary)",
+
               }}
             >
               {tab.label}
@@ -321,12 +325,15 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
           <div className="space-y-6">
 
             {/* Box Breathing */}
-            <div className="rounded-2xl p-8 border text-center" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-              <h2 className="text-xl font-semibold mb-1" style={{ color: "#1B4F3A" }}>Box Breathing</h2>
-              <p className="text-xs mb-2" style={{ color: "#3D6B5A" }}>
+            <div className="rounded-2xl p-8 border text-center" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+              <h2 className="text-xl font-semibold mb-1" style={{ color: "var(--text-primary)"
+ }}>Box Breathing</h2>
+              <p className="text-xs mb-2" style={{ color: "var(--text-secondary)"
+ }}>
                 A simple, clinically supported breathing technique that activates the parasympathetic nervous system — helping calm both mind and gut.
               </p>
-              <p className="text-xs mb-6" style={{ color: "#6B9E8A" }}>
+              <p className="text-xs mb-6" style={{ color: "var(--text-muted)"
+ }}>
                 Inhale 4s · Hold 4s · Exhale 4s · Hold 4s · Repeat for 2–3 minutes
               </p>
 
@@ -357,12 +364,14 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
               </div>
 
               {breathCount > 0 && (
-                <p className="text-xs mb-4" style={{ color: "#3D6B5A" }}>Cycle {breathCount}</p>
+                <p className="text-xs mb-4" style={{ color: "var(--text-secondary)"
+ }}>Cycle {breathCount}</p>
               )}
 
                             {/* Voice Selection */}
               <div className="mb-4">
-                <p className="text-xs font-medium mb-2" style={{ color: "#1B4F3A" }}>Voice guidance</p>
+                <p className="text-xs font-medium mb-2" style={{ color: "var(--text-primary)"
+ }}>Voice guidance</p>
                 <div className="flex justify-center gap-2 flex-wrap mb-3">
                   {(["john", "julie", "les", "sarah"] as VoiceFile[]).map((v) => (
                     <button
@@ -370,9 +379,11 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
                       onClick={() => setSelectedVoice(v)}
                       className="px-4 py-1.5 rounded-full text-xs font-medium transition-all capitalize"
                       style={{
-                        backgroundColor: selectedVoice === v ? "#2E8B6A" : "#F0F7F4",
-                        color: selectedVoice === v ? "#ffffff" : "#1B4F3A",
-                        border: "1px solid #C5E3D8",
+                        backgroundColor: selectedVoice === v ? "#2E8B6A" : "var(--bg-card)",
+                        color: selectedVoice === v ? "#ffffff" 
+: "var(--text-primary)",
+                        
+border: "1px solid var(--border-color)",
                       }}
                     >
                       {v}
@@ -384,9 +395,11 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
                     onClick={() => setVoiceLoop(true)}
                     className="px-4 py-1.5 rounded-full text-xs font-medium transition-all"
                     style={{
-                      backgroundColor: voiceLoop ? "#2E8B6A" : "#F0F7F4",
-                      color: voiceLoop ? "#ffffff" : "#1B4F3A",
-                      border: "1px solid #C5E3D8",
+                      backgroundColor: voiceLoop ? "#2E8B6A" : "var(--bg-card)",
+                      color: voiceLoop ? "#ffffff" 
+: "var(--text-primary)",
+                      
+border: "1px solid var(--border-color)",
                     }}
                   >
                     Continuous
@@ -395,9 +408,11 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
                     onClick={() => setVoiceLoop(false)}
                     className="px-4 py-1.5 rounded-full text-xs font-medium transition-all"
                     style={{
-                      backgroundColor: !voiceLoop ? "#2E8B6A" : "#F0F7F4",
-                      color: !voiceLoop ? "#ffffff" : "#1B4F3A",
-                      border: "1px solid #C5E3D8",
+                      backgroundColor: !voiceLoop ? "#2E8B6A" : "var(--bg-card)",
+                      color: !voiceLoop ? "#ffffff" 
+: "var(--text-primary)",
+                      
+border: "1px solid var(--border-color)",
                     }}
                   >
                     Off after intro
@@ -415,9 +430,12 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
             </div>
 
             {/* Body Scan */}
-            <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "#1B4F3A" }}>Body Scan</h2>
-              <p className="text-xs mb-6 text-center" style={{ color: "#3D6B5A" }}>
+            <div className="rounded-2xl p-8 border" style={{ 
+backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "var(--text-primary)"
+ }}>Body Scan</h2>
+              <p className="text-xs mb-6 text-center" style={{ color: "var(--text-secondary)"
+ }}>
                 A gentle guided meditation that brings kind awareness to each part of your body.
                 Adapted to be compassionate and calm for those living with Crohn&apos;s disease.
               </p>
@@ -439,7 +457,8 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
 
               {/* Voice Selection */}
               <div className="mb-6 text-center">
-                <p className="text-xs font-medium mb-2" style={{ color: "#1B4F3A" }}>Choose a guide</p>
+                <p className="text-xs font-medium mb-2" style={{ color: "var(--text-primary)"
+ }}>Choose a guide</p>
                 <div className="flex justify-center gap-2">
                   {(["ben", "jane"] as BodyScanVoice[]).map((v) => (
                     <button
@@ -447,9 +466,11 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
                       onClick={() => setBodyScanVoice(v)}
                       className="px-4 py-1.5 rounded-full text-xs font-medium transition-all capitalize"
                       style={{
-                        backgroundColor: bodyScanVoice === v ? "#2E8B6A" : "#F0F7F4",
-                        color: bodyScanVoice === v ? "#ffffff" : "#1B4F3A",
-                        border: "1px solid #C5E3D8",
+                        backgroundColor: bodyScanVoice === v ? "#2E8B6A" : "var(--bg-card)",
+                        color: bodyScanVoice === v ? "#ffffff" 
+: "var(--text-primary)",
+                        
+border: "1px solid var(--border-color)",
                       }}
                     >
                       {v}
@@ -474,9 +495,12 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
           <div className="space-y-6">
 
             {/* Binaural Beats */}
-            <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "#1B4F3A" }}>Binaural Beats</h2>
-              <p className="text-xs mb-2 text-center" style={{ color: "#3D6B5A" }}>
+            <div className="rounded-2xl p-8 border" style={{ 
+backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "var(--text-primary)"
+ }}>Binaural Beats</h2>
+              <p className="text-xs mb-2 text-center" style={{ color: "var(--text-secondary)"
+ }}>
                 Binaural beats use slightly different frequencies in each ear to guide your brain into a desired state.
                 Headphones are required for the full effect.
               </p>
@@ -492,9 +516,11 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
                     onClick={() => { setSelectedCategory(cat); if (binauralPlaying) { stopBinaural(); } }}
                     className="px-4 py-2 rounded-full text-xs font-medium transition-all"
                     style={{
-                      backgroundColor: selectedCategory === cat ? "#1B4F3A" : "#F0F7F4",
-                      color: selectedCategory === cat ? "#ffffff" : "#1B4F3A",
-                      border: "1px solid #C5E3D8",
+                      backgroundColor: selectedCategory === cat ? "var(--nav-bg)" : "var(--bg-card)",
+                      color: selectedCategory === cat ? "#ffffff" 
+: "var(--text-primary)",
+                      
+border: "1px solid var(--border-color)",
                     }}
                   >
                     {cat}
@@ -503,21 +529,26 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
               </div>
 
               {/* Selected Info */}
-              <div className="rounded-xl px-5 py-4 mb-6 text-center" style={{ backgroundColor: "#F0F7F4" }}>
-                <p className="text-xs font-semibold mb-1" style={{ color: "#1B4F3A" }}>
+              <div className="rounded-xl px-5 py-4 mb-6 text-center" style={{ backgroundColor: "var(--bg-page)"
+ }}>
+                <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-primary)"
+ }}>
                   {binauralFrequencies[selectedCategory].hz}Hz — {selectedCategory}
                 </p>
-                <p className="text-xs leading-relaxed" style={{ color: "#3D6B5A" }}>
+                <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)"
+ }}>
                   {binauralFrequencies[selectedCategory].description}
                 </p>
               </div>
 
               {/* Aromatherapy Pairing */}
-              <div className="rounded-xl px-5 py-4 mb-6" style={{ backgroundColor: "#D4EDE4" }}>
-                <p className="text-xs font-semibold mb-1" style={{ color: "#1B4F3A" }}>
+              <div className="rounded-xl px-5 py-4 mb-6" style={{ backgroundColor: "var(--bg-accent)" }}>
+                <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-primary)"
+ }}>
                   🌿 Aromatherapy pairing — {aromaProfiles[selectedCategory].oils.join(" + ")}
                 </p>
-                <p className="text-xs leading-relaxed mb-2" style={{ color: "#1B4F3A" }}>
+                <p className="text-xs leading-relaxed mb-2" style={{ color: "var(--text-primary)"
+ }}>
                   {aromaProfiles[selectedCategory].description}
                 </p>
                 <p className="text-xs italic" style={{ color: "#2E8B6A" }}>
@@ -528,7 +559,8 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
 
               {/* Volume */}
               <div className="mb-6">
-                <p className="text-xs font-medium mb-2 text-center" style={{ color: "#1B4F3A" }}>Volume</p>
+                <p className="text-xs font-medium mb-2 text-center" style={{ color: "var(--text-primary)"
+ }}>Volume</p>
                 <input
                   type="range"
                   min="0"
@@ -552,9 +584,12 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
             </div>
 
             {/* Noise Therapy */}
-            <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "#1B4F3A" }}>Noise Therapy</h2>
-              <p className="text-xs mb-6 text-center" style={{ color: "#3D6B5A" }}>
+            <div className="rounded-2xl p-8 border" style={{ 
+backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "var(--text-primary)"
+ }}>Noise Therapy</h2>
+              <p className="text-xs mb-6 text-center" style={{ color: "var(--text-secondary)"
+ }}>
                 Steady background noise can mask gut sounds, ease tinnitus, and create a consistent
                 sonic environment that helps calm an overstimulated nervous system.
               </p>
@@ -570,9 +605,11 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
                     onClick={() => selectedNoise === type ? stopNoise() : startNoise(type)}
                     className="rounded-xl p-4 text-center transition-all border"
                     style={{
-                      backgroundColor: selectedNoise === type ? "#1B4F3A" : "#F0F7F4",
-                      color: selectedNoise === type ? "#ffffff" : "#1B4F3A",
-                      borderColor: "#C5E3D8",
+                      backgroundColor: selectedNoise === type ? "var(--nav-bg)" : "var(--bg-card)",
+                      color: selectedNoise === type ? "#ffffff" 
+: "var(--text-primary)",
+                      borderColor: "var(--border-color)"
+,
                     }}
                   >
                     <p className="text-xs font-semibold mb-1">{label}</p>
@@ -583,7 +620,8 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
 
                             {/* Volume */}
               <div className="mb-6">
-                <p className="text-xs font-medium mb-2 text-center" style={{ color: "#1B4F3A" }}>Volume</p>
+                <p className="text-xs font-medium mb-2 text-center" style={{ color: "var(--text-primary)"
+ }}>Volume</p>
                 <input
                   type="range"
                   min="0"
@@ -613,9 +651,12 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
           <div className="space-y-6">
 
             {/* Aromatherapy Guide */}
-            <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "#1B4F3A" }}>Aromatherapy</h2>
-              <p className="text-xs mb-6 text-center" style={{ color: "#3D6B5A" }}>
+            <div className="rounded-2xl p-8 border" style={{ 
+backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+              <h2 className="text-xl font-semibold mb-1 text-center" style={{ color: "var(--text-primary)"
+ }}>Aromatherapy</h2>
+              <p className="text-xs mb-6 text-center" style={{ color: "var(--text-secondary)"
+ }}>
                 Essential oils used as a complementary comfort practice — not a medical treatment.
                 Always use 100% pure therapeutic grade oils from reputable Australian suppliers.
               </p>
@@ -630,10 +671,14 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
                   { symptom: "Mental Clarity & Gentle Focus", oils: "Lemongrass + Peppermint", detail: "Uplifting and clarifying on good days. Supports gentle focus without overstimulation.", caution: "Some people may have sensitivity to Lemongrass." },
                   { symptom: "General Comfort & Calm", oils: "Frankincense + Myrrh + Lavender", detail: "A deeply comforting blend with ancient healing roots. Suitable for diffusing during rest, meditation or the body scan practice.", caution: "Introduce one oil at a time if you have asthma or respiratory sensitivities." },
                 ].map(({ symptom, oils, detail, caution }) => (
-                  <div key={symptom} className="rounded-xl p-5 border" style={{ backgroundColor: "#F0F7F4", borderColor: "#C5E3D8" }}>
-                    <p className="text-sm font-semibold mb-1" style={{ color: "#1B4F3A" }}>{symptom}</p>
+                  <div key={symptom} className="rounded-xl p-5 border" style={{ backgroundColor: "var(--bg-page)"
+, borderColor: "var(--border-color)"
+ }}>
+                    <p className="text-sm font-semibold mb-1" style={{ color: "var(--text-primary)"
+ }}>{symptom}</p>
                     <p className="text-xs font-medium mb-2" style={{ color: "#2E8B6A" }}>🌿 {oils}</p>
-                    <p className="text-xs leading-relaxed mb-2" style={{ color: "#3D6B5A" }}>{detail}</p>
+                    <p className="text-xs leading-relaxed mb-2" style={{ color: "var(--text-secondary)"
+ }}>{detail}</p>
                     <div className="rounded-lg px-3 py-2" style={{ backgroundColor: "#FEF9E7" }}>
                       <p className="text-xs" style={{ color: "#7D6608" }}>⚠️ Worth knowing: {caution}</p>
                     </div>
@@ -641,9 +686,12 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
                 ))}
               </div>
 
-              <div className="mt-6 rounded-xl px-5 py-4" style={{ backgroundColor: "#D4EDE4" }}>
-                <p className="text-xs font-semibold mb-1" style={{ color: "#1B4F3A" }}>General safety reminders</p>
-                <ul className="text-xs space-y-1" style={{ color: "#1B4F3A" }}>
+              <div className="mt-6 rounded-xl px-5 py-4" style={{ backgroundColor: "var(--bg-accent)"
+ }}>
+                <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-primary)"
+ }}>General safety reminders</p>
+                <ul className="text-xs space-y-1" style={{ color: "var(--text-primary)"
+ }}>
                   <li>• Use a diffuser for inhalation — the recommended method for aromatherapy</li>
                   <li>• Introduce new oils cautiously if you have asthma or respiratory conditions</li>
                   <li>• Introduce new oils cautiously if you have asthma or respiratory conditions</li>
@@ -658,11 +706,13 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
       </div>
 
       {/* Footer */}
-      <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
-        <p className="text-sm" style={{ color: "#3D6B5A" }}>
+      <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
+        <p className="text-sm" style={{ color: "var(--text-secondary)"
+ }}>
           Crohn&apos;s Compass — Evidence-based information with hope at its heart
         </p>
-        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>
+        <p className="text-xs mt-2" style={{ color: "var(--text-muted)"
+ }}>
           These tools are for comfort and wellbeing only — not a substitute for medical care.
         </p>
       </footer>

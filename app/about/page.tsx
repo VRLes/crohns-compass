@@ -6,14 +6,14 @@ import Nav from "../components/Nav";
 
 export default function About() {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#F0F7F4" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-page)" }}>
 
       <Nav active="/about" />
 
       {/* Header */}
       <div className="max-w-4xl mx-auto px-6 pt-10 pb-6">
-        <h1 className="text-3xl font-bold mb-2" style={{ color: "#1B4F3A" }}>About Crohn&apos;s Compass</h1>
-        <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "#3D6B5A" }}>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>About Crohn&apos;s Compass</h1>
+        <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "var(--text-secondary)" }}>
           Crohn&apos;s Compass was created by someone living with Crohn&apos;s disease —
           for everyone living with it.
         </p>
@@ -22,21 +22,21 @@ export default function About() {
       <div className="max-w-4xl mx-auto px-6 pb-20 space-y-6">
 
         {/* Our Story */}
-        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-          <h2 className="text-lg font-semibold mb-4" style={{ color: "#1B4F3A" }}>Our Story</h2>
-          <p className="text-sm leading-relaxed mb-3" style={{ color: "#3D6B5A" }}>
+        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+          <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Our Story</h2>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
             Crohn&apos;s Compass was built by Les — a non-technical creator and entrepreneur
             living with Crohn&apos;s disease in Australia. After years of navigating confusing,
             conflicting, and sometimes fear-inducing information online, Les wanted to create
             something different: a resource that was accurate, warm, and genuinely helpful
             for patients, families, and carers.
           </p>
-          <p className="text-sm leading-relaxed mb-3" style={{ color: "#3D6B5A" }}>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
             Every section of this app has been built with care — drawing on peer-reviewed
             research, clinical guidelines, and the lived experience of someone who understands
             what it means to navigate this disease day to day.
           </p>
-          <p className="text-sm leading-relaxed" style={{ color: "#3D6B5A" }}>
+          <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             Crohn&apos;s Compass is currently in review by gastroenterologists and the
             Crohn&apos;s &amp; Colitis Association of Australia. We are committed to
             accuracy, ongoing updates, and always putting patients first.
@@ -44,8 +44,8 @@ export default function About() {
         </div>
 
         {/* Our Principles */}
-        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-          <h2 className="text-lg font-semibold mb-4" style={{ color: "#1B4F3A" }}>Our Principles</h2>
+        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+          <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Our Principles</h2>
           <div className="space-y-4">
             {[
               {
@@ -73,18 +73,18 @@ export default function About() {
                 detail: "This app operates under Australian health information standards. We are mindful of TGA regulations and present information in a way that is compliant, responsible, and appropriate for an Australian audience — while also being useful globally.",
               },
             ].map(({ title, detail }) => (
-              <div key={title} className="rounded-xl px-5 py-4" style={{ backgroundColor: "#F0F7F4" }}>
-                <p className="text-sm font-semibold mb-1" style={{ color: "#1B4F3A" }}>✓ {title}</p>
-                <p className="text-xs leading-relaxed" style={{ color: "#3D6B5A" }}>{detail}</p>
+              <div key={title} className="rounded-xl px-5 py-4" style={{ backgroundColor: "var(--bg-page)" }}>
+                <p className="text-sm font-semibold mb-1" style={{ color: "var(--text-primary)" }}>✓ {title}</p>
+                <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{detail}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Evidence Labelling */}
-        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-          <h2 className="text-lg font-semibold mb-4" style={{ color: "#1B4F3A" }}>How We Label Evidence</h2>
-          <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>
+        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+          <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>How We Label Evidence</h2>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-secondary)" }}>
             Every treatment, diet, and research summary on this site is labelled with its
             strength of evidence so you always know what the science says:
           </p>
@@ -103,13 +103,13 @@ export default function About() {
                 >
                   {label}
                 </span>
-                <p className="text-xs leading-relaxed" style={{ color: "#3D6B5A" }}>{detail}</p>
+                <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{detail}</p>
               </div>
             ))}
           </div>
         </div>        {/* Medical Disclaimer */}
-        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-          <h2 className="text-lg font-semibold mb-4" style={{ color: "#1B4F3A" }}>Medical Disclaimer</h2>
+        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+          <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Medical Disclaimer</h2>
           <div className="rounded-xl px-5 py-4 mb-4" style={{ backgroundColor: "#FEF9E7" }}>
             <p className="text-sm font-semibold mb-2" style={{ color: "#7D6608" }}>
               ⚠️ Important — please read
@@ -120,7 +120,7 @@ export default function About() {
               site should be used as a substitute for professional medical care.
             </p>
           </div>
-          <div className="space-y-3 text-sm leading-relaxed" style={{ color: "#3D6B5A" }}>
+          <div className="space-y-3 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             <p>
               All information on this site is provided for general educational and
               informational purposes only. While we make every effort to ensure accuracy,
@@ -149,56 +149,56 @@ export default function About() {
         </div>
 
         {/* AI Assistant Disclaimer */}
-        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-          <h2 className="text-lg font-semibold mb-4" style={{ color: "#1B4F3A" }}>About the AI Assistant</h2>
-          <p className="text-sm leading-relaxed mb-3" style={{ color: "#3D6B5A" }}>
+        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+          <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>About the AI Assistant</h2>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
             The Crohn&apos;s Compass AI Assistant is powered by Claude — an AI developed
             by Anthropic. It has been configured specifically for Crohn&apos;s disease
             information with careful instructions to be accurate, honest, and evidence-based.
           </p>
-          <p className="text-sm leading-relaxed mb-3" style={{ color: "#3D6B5A" }}>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
             The assistant is designed to provide general information only — not personalised
             medical advice. It will always encourage you to speak with your gastroenterologist
             and will never suggest stopping or changing medications.
           </p>
-          <p className="text-sm leading-relaxed" style={{ color: "#3D6B5A" }}>
+          <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             AI can make mistakes. While we have taken significant care in configuring the
             assistant, always verify important information with your medical team.
           </p>
         </div>
 
         {/* Privacy */}
-        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-          <h2 className="text-lg font-semibold mb-4" style={{ color: "#1B4F3A" }}>Privacy</h2>
-          <p className="text-sm leading-relaxed mb-3" style={{ color: "#3D6B5A" }}>
+        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+          <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Privacy</h2>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
             Crohn&apos;s Compass does not collect, store, or share any personal health
             information. Conversations with the AI Assistant are not stored or used
             for any purpose beyond the immediate session.
           </p>
-          <p className="text-sm leading-relaxed" style={{ color: "#3D6B5A" }}>
+          <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             We do not display advertising and we do not sell data. This site exists
             solely to help people living with Crohn&apos;s disease access better information.
           </p>
         </div>
 
         {/* Contact & Feedback */}
-        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "#ffffff", borderColor: "#C5E3D8" }}>
-          <h2 className="text-lg font-semibold mb-4" style={{ color: "#1B4F3A" }}>Contact & Feedback</h2>
-          <p className="text-sm leading-relaxed mb-3" style={{ color: "#3D6B5A" }}>
+        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+          <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Contact & Feedback</h2>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
             Crohn&apos;s Compass welcomes feedback from patients, carers, gastroenterologists,
             dietitians, and other healthcare professionals. If you believe any information
             on this site is inaccurate, outdated, or could be improved — please get in touch.
           </p>
-          <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-secondary)" }}>
             We are particularly interested in feedback from gastroenterologists and IBD
             specialists who can help ensure the accuracy and clinical appropriateness
             of our content.
           </p>
-          <div className="rounded-xl px-5 py-4" style={{ backgroundColor: "#D4EDE4" }}>
-            <p className="text-sm font-semibold mb-1" style={{ color: "#1B4F3A" }}>
+          <div className="rounded-xl px-5 py-4" style={{ backgroundColor: "var(--bg-accent)" }}>
+            <p className="text-sm font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
               Useful Australian resources
             </p>
-            <ul className="text-sm space-y-1" style={{ color: "#1B4F3A" }}>
+            <ul className="text-sm space-y-1" style={{ color: "var(--text-primary)" }}>
               <li>• <span className="font-medium">Crohn&apos;s & Colitis Australia</span> — crohnsandcolitis.com.au</li>
               <li>• <span className="font-medium">Therapeutic Goods Administration</span> — tga.gov.au</li>
               <li>• <span className="font-medium">Healthdirect Australia</span> — healthdirect.gov.au</li>
@@ -209,10 +209,10 @@ export default function About() {
 
         {/* Version */}
         <div className="text-center pb-4">
-          <p className="text-xs" style={{ color: "#6B9E8A" }}>
+          <p className="text-xs" style={{ color: "var(--text-muted)" }}>
             Crohn&apos;s Compass — Version 1.0 — August 2026
           </p>
-          <p className="text-xs mt-1" style={{ color: "#6B9E8A" }}>
+          <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
             Currently in review by gastroenterologists and the Crohn&apos;s & Colitis Association of Australia
           </p>
         </div>
@@ -220,11 +220,11 @@ export default function About() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t py-8 text-center" style={{ borderColor: "#C5E3D8", backgroundColor: "#E8F5EF" }}>
-        <p className="text-sm" style={{ color: "#3D6B5A" }}>
+      <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
+        <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
           Crohn&apos;s Compass — Evidence-based information with hope at its heart
         </p>
-        <p className="text-xs mt-2" style={{ color: "#6B9E8A" }}>
+        <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
           This site is an information resource only — not a substitute for medical care.
         </p>
       </footer>
