@@ -243,7 +243,7 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
       setShowVideo(false);
     } else {
       if (!bodyScanRef.current) bodyScanRef.current = new Audio();
-      bodyScanRef.current.src = `/audio/${bodyScanVoice === "ben" ? "Ben_Body_Scan.mp3" : "Jane_Body_Scan.mp3"}`;
+      bodyScanRef.current.src = `/audio/${bodyScanVoice === "ben" ? "ben_body_scan.mp3" : "jane_body_scan.mp3"}`;
       bodyScanRef.current.play().catch(() => {});
       setBodyScanPlaying(true);
       setShowVideo(true);
