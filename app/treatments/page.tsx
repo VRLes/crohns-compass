@@ -208,7 +208,8 @@ export default function Treatments() {
           <p className="text-sm font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
             ⚠️ Every person with Crohn&apos;s disease is different
           </p>
-          <p className="text-sm" style={{ color: "#1B4F3A" }}>
+          <p className="text-sm" style={{ 
+color: "var(--text-primary)" }}>
             What works well for one person may not suit another — and in some cases may cause harm.
             Always discuss any complementary therapy with your gastroenterologist before trying it.
             This page provides information only — not medical advice.
@@ -419,7 +420,8 @@ export default function Treatments() {
                     {isExpanded && (
                       <div
                         className="mt-3 rounded-xl px-4 py-4 text-xs leading-relaxed space-y-1"
-                        style={{ backgroundColor: "var(--bg-accent)", color: "#1B4F3A" }}
+                        style={{ backgroundColor: "var(--bg-accent)", 
+color: "var(--text-primary)" }}
                       >
                         {hasHowTo.content}
                       </div>
@@ -434,9 +436,9 @@ export default function Treatments() {
 
       {/* Footer */}
       <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
-        <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-
-          Crohn&apos;s Compass — Evidence-based information with hope at its heart
+        <p className="text-sm flex items-center justify-center gap-2 flex-wrap" style={{ color: "var(--text-secondary)" }}>
+          <span>Crohn&apos;s Compass — Evidence-based information with hope at its heart</span>
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}>UC Coming Soon</span>
         </p>
         <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
           Always consult your gastroenterologist before making changes to your treatment.
