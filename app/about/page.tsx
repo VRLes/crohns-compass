@@ -12,9 +12,9 @@ export default function About() {
 
       {/* Header */}
       <div className="max-w-4xl mx-auto px-6 pt-10 pb-6">
-        <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>About Crohn&apos;s Compass</h1>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>About IBD Compass</h1>
         <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "var(--text-secondary)" }}>
-          Crohn&apos;s Compass was created by someone living with Crohn&apos;s disease —
+          IBD Compass was created by someone living with Crohn&apos;s disease —
           for everyone living with it.
         </p>
       </div>
@@ -25,7 +25,7 @@ export default function About() {
         <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
           <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Our Story</h2>
           <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
-            Crohn&apos;s Compass was built by Les — a non-technical creator and entrepreneur
+             IBD Compass was built by Les — a non-technical creator and entrepreneur
             living with Crohn&apos;s disease in Australia. After years of navigating confusing,
             conflicting, and sometimes fear-inducing information online, Les wanted to create
             something different: a resource that was accurate, warm, and genuinely helpful
@@ -37,7 +37,7 @@ export default function About() {
             what it means to navigate this disease day to day.
           </p>
           <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-            Crohn&apos;s Compass is currently in review by gastroenterologists and the
+           IBD Compass is currently in review by gastroenterologists and the
             Crohn&apos;s &amp; Colitis Association of Australia. We are committed to
             accuracy, ongoing updates, and always putting patients first.
           </p>
@@ -115,7 +115,7 @@ export default function About() {
               ⚠️ Important — please read
             </p>
             <p className="text-sm leading-relaxed" style={{ color: "#7D6608" }}>
-              Crohn&apos;s Compass is an information resource only. It does not provide
+              IBD Compass is an information resource only. It does not provide
               medical advice, diagnosis, or treatment recommendations. Nothing on this
               site should be used as a substitute for professional medical care.
             </p>
@@ -152,7 +152,7 @@ export default function About() {
         <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
           <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>About the AI Assistant</h2>
           <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
-            The Crohn&apos;s Compass AI Assistant is powered by Claude — an AI developed
+            The IBD Compass AI Assistant is powered by Claude — an AI developed
             by Anthropic. It has been configured specifically for Crohn&apos;s disease
             information with careful instructions to be accurate, honest, and evidence-based.
           </p>
@@ -171,7 +171,7 @@ export default function About() {
         <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
           <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Privacy</h2>
           <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
-            Crohn&apos;s Compass does not collect, store, or share any personal health
+            IBD Compass does not collect, store, or share any personal health
             information. Conversations with the AI Assistant are not stored or used
             for any purpose beyond the immediate session.
           </p>
@@ -185,7 +185,7 @@ export default function About() {
         <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
           <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Contact & Feedback</h2>
           <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
-            Crohn&apos;s Compass welcomes feedback from patients, carers, gastroenterologists,
+            IBD Compass welcomes feedback from patients, carers, gastroenterologists,
             dietitians, and other healthcare professionals. If you believe any information
             on this site is inaccurate, outdated, or could be improved — please get in touch.
           </p>
@@ -210,7 +210,7 @@ export default function About() {
         {/* Version */}
         <div className="text-center pb-4">
           <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-            Crohn&apos;s Compass — Version 1.0 — August 2026
+            IBD Compass — Version 1.0 — August 2026
           </p>
           <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
             Currently in review by gastroenterologists and the Crohn&apos;s & Colitis Association of Australia
