@@ -19,9 +19,10 @@ export default function Nav({ active }: { active: string }) {
     { href: "/diet", label: "Diet" },
     { href: "/research", label: "Research" },
     { href: "/mindfulness", label: "Mindfulness" },
-    { href: "/doctor-questions", label: "Doctor Questions" },
-    { href: "/ask-the-assistant", label: "Ask the Assistant" },
-    { href: "/about", label: "About" },
+               { href: "/doctor-questions", label: "Questions" },
+    { href: "/ask-the-assistant", label: "Assistant" },
+      { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
   ];
 
   const themes: { value: Theme; label: string; icon: string }[] = [
