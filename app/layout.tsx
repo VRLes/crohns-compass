@@ -15,10 +15,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Crohn's Compass — Evidence-based information with hope at its heart",
-    template: "%s | Crohn's Compass",
+    default: "IBD Compass — Evidence-based information with hope at its heart",
+    template: "%s | IBD Compass",
   },
-  description: "Crohn's Compass provides accurate, evidence-based information about Crohn's disease —treatments, diet, research, mindfulness and more. Written with care for patients, families and carersin Australia and beyond.",
+  description: "IBD Compass provides accurate, evidence-based information about Crohn's disease — treatments, diet, research, mindfulness and more. Written with care for patients, families and carers in Australia and beyond.",
   keywords: ["Crohn's disease", "IBD", "inflammatory bowel disease", "Crohn's treatments", "Crohn's diet", "Australia"],
 };
 

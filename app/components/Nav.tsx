@@ -58,7 +58,7 @@ export default function Nav({ active }: { active: string }) {
             <line x1="2" y1="14" x2="8" y2="14" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
             <line x1="20" y1="14" x2="26" y2="14" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
-          <span className="text-xl font-semibold tracking-wide" style={{ color: "#6EC6A0" }}>
+          <span className="text-xl font-semibold tracking-wide whitespace-nowrap" style={{ color: "#6EC6A0" }}>
                 IBD Compass
           </span>
         </Link>
