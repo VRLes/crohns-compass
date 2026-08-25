@@ -16,7 +16,7 @@ export default function AskTheAssistant() {
     {
       role: "assistant",
       content:
-        "Hello, and welcome to Crohn's Compass. I'm here to help you find accurate, evidence-based information about Crohn's disease — explained in plain language, with honesty and care.\n\nWhat would you like to know today?",
+        "Hello, and welcome to IBD Compass. I'm here to help you find accurate, evidence-based information about Crohn's disease — explained in plain language, with honesty and care.\n\nWhat would you like to know today?",
     },
   ]);
   const [input, setInput] = useState("");

@@ -361,7 +361,7 @@ color: "var(--text-secondary)" }}>
             Ulcerative Colitis Research — Coming Soon
           </h2>
           <p className="text-sm leading-relaxed max-w-xl mx-auto" style={{ color: "var(--text-secondary)" }}>
-            Crohn&apos;s Compass currently focuses on Crohn&apos;s disease. A dedicated Ulcerative Colitis
+            IBD Compass currently focuses on Crohn&apos;s disease. A dedicated Ulcerative Colitis
             section covering the latest UC research, treatments and dietary approaches is in development.
           </p>
         </div>
