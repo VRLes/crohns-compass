@@ -59,7 +59,7 @@ export default function Nav({ active }: { active: string }) {
             <line x1="20" y1="14" x2="26" y2="14" stroke="#6EC6A0" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
           <span className="text-xl font-semibold tracking-wide" style={{ color: "#6EC6A0" }}>
-            Crohn&apos;s Compass
+                IBD Compass
           </span>
         </Link>
 
