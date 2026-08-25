@@ -16,16 +16,22 @@ const ThemeContext = createContext<ThemeContextType>({
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("light");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("cc-theme") as Theme;
     if (saved) setThemeState(saved);
+    setMounted(true);
   }, []);
 
   const setTheme = (t: Theme) => {
     setThemeState(t);
     localStorage.setItem("cc-theme", t);
   };
+
+  // Don't render children until theme is loaded from localStorage
+  // This prevents the server/client mismatch warning
+  if (!mounted) return null;
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

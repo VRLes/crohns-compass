@@ -690,7 +690,7 @@ backgroundColor: "var(--bg-accent)", color: "#1B4F3A" }}
       </div>
       <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
         <p className="text-sm flex items-center justify-center gap-2 flex-wrap" style={{ color: "var(--text-secondary)" }}>
-          <span>Crohn&apos;s Compass — Evidence-based information with hope at its heart</span>
+          <span>IBD Compass — Evidence-based information with hope at its heart</span>
           <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}>UC Coming Soon</span>
         </p>
         <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
