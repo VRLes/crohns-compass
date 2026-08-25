@@ -17,7 +17,7 @@ export default function Home() {
           You Are Not Alone
         </h1>
         <p className="text-xl max-w-2xl mx-auto mb-10 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-          Crohn&apos;s Compass gives you accurate, hopeful information to help you
+                       IBD Compass gives you accurate, hopeful information to help you
           live well with Crohn&apos;s disease — grounded in science, written with care.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
@@ -105,7 +105,7 @@ export default function Home() {
               </svg>
             </div>
             <h3 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>About & Disclaimer</h3>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>Our story, principles, evidence standards, medical disclaimer and privacy information — everything about how Crohn's Compass works.</p>
+            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>Our story, principles, evidence standards, medical disclaimer and privacy information —              everything about how IBD Compass works.     </p>
             <Link href="/about" className="text-sm font-medium hover:underline" style={{ color: "#2E8B6A" }}>Learn more →</Link>
           </div>
 
