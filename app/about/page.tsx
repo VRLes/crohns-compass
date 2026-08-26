@@ -21,27 +21,93 @@ export default function About() {
 
       <div className="max-w-4xl mx-auto px-6 pb-20 space-y-6">
 
-        {/* Our Story */}
-        <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
-          <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Our Story</h2>
-          <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
-             IBD Compass was built by Les — a non-technical creator and entrepreneur
-            living with Crohn&apos;s disease in Australia. After years of navigating confusing,
-            conflicting, and sometimes fear-inducing information online, Les wanted to create
-            something different: a resource that was accurate, warm, and genuinely helpful
-            for patients, families, and carers.
-          </p>
-          <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
-            Every section of this app has been built with care — drawing on peer-reviewed
-            research, clinical guidelines, and the lived experience of someone who understands
-            what it means to navigate this disease day to day.
-          </p>
-          <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-           IBD Compass is currently in review by gastroenterologists and the
-            Crohn&apos;s &amp; Colitis Association of Australia. We are committed to
-            accuracy, ongoing updates, and always putting patients first.
-          </p>
-        </div>
+{/* My Story */}
+<div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+  <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>My Story</h2>
+
+  <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
+    I&apos;ve been living with Crohn&apos;s disease for 62 years.
+  </p>
+
+  <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
+    For the first 34 of those years, I had no diagnosis. As a child I was told by the medical system
+    that I was a &quot;little worrier&quot; — that there was nothing wrong with me. So I suffered in silence.
+    My education suffered. I was slow to develop physically and mentally. I was bullied at school.
+    And all the while, I believed it was in my mind.
+  </p>
+
+  <p className="text-sm leading-relaxed mb-4 italic font-medium" style={{ color: "var(--text-primary)" }}>
+    Be kind to yourself.
+  </p>
+
+  <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
+    That&apos;s what nobody told me then. The shame, the self-doubt, the guilt — they became as much
+    a part of life as the pain itself. For someone living undiagnosed, the invisible nature of illness
+    can be its cruelest feature. You begin to question your own reality.
+  </p>
+
+  <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
+    It wasn&apos;t until my bowel perforated and turned gangrenous at age 34 — requiring emergency surgery,
+    several days in ICU, and both an ileostomy and colostomy bag — that anyone finally had an answer.
+    The reversal surgery that followed brought its own challenges. Thirty-four years of undiagnosed pain,
+    anxiety, guilt, lost jobs, and lost time. A lot of trauma.
+  </p>
+
+  <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
+    I now live with two large abdominal hernias — too risky to repair — along with the inevitable
+    side effects of decades of surgery and medication. Life goes on.
+  </p>
+
+  <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--text-secondary)" }}>
+    What I want doctors, carers, and loved ones to know is this: behind every clinical chart is a
+    whole human life. The ripple effects of a missed or delayed diagnosis reach far beyond the body —
+    into identity, relationships, work, and sense of self. This isn&apos;t said to assign blame. Medicine
+    is hard, and most doctors are doing their best. It&apos;s said simply as a reminder of what&apos;s at
+    stake — and why being truly heard can be as healing as any treatment.
+  </p>
+
+  <h3 className="text-sm font-semibold mb-2" style={{ color: "var(--text-primary)" }}>Christine</h3>
+  <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
+    Through all of it, my wonderful partner Christine has been there for me. She has kept me going,
+    saved me from self-destruction, and been my rock in ways I will never be able to fully repay.
+    I am deeply blessed.
+  </p>
+
+  <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--text-secondary)" }}>
+    Self-destruction is something many people living with chronic illness and disability understand
+    all too well — and it is not spoken about nearly enough. There is no shame in it. It is a human
+    response to years of invisible suffering. If you recognise yourself in these words, please know
+    you are not alone.
+  </p>
+
+  <h3 className="text-sm font-semibold mb-2" style={{ color: "var(--text-primary)" }}>How I cope</h3>
+  <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
+    Several years ago I met a psychologist who shared my curiosity about Virtual Reality. I bought
+    a headset and spent four years researching and testing it on myself. It turned out to be the
+    most transformative thing I&apos;ve ever done.
+  </p>
+
+  <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
+    VR taught me how to meditate. It helped me understand the gut-brain connection — how stress,
+    anxiety, trauma, worry, and guilt physically affect the body. Slowly, I began to understand
+    myself in ways I never had before. I rediscovered who I am.
+  </p>
+
+  <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
+    Addressing the whole person — mind, body, and spirit — is the only way forward I know.
+    Like all of us, it&apos;s an ongoing journey with ups and downs. But it&apos;s much easier to
+    navigate now. Honesty — with yourself and with the people around you — takes courage.
+    The reward is priceless.
+  </p>
+
+  <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-secondary)" }}>
+    This app is what I wish had existed when I was first diagnosed.
+  </p>
+
+  <p className="text-sm leading-relaxed italic font-medium" style={{ color: "var(--text-primary)" }}>
+    Show up for yourself.
+  </p>
+</div>
 
         {/* Our Principles */}
         <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
@@ -223,9 +289,7 @@ export default function About() {
       <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
         <p className="text-sm flex items-center justify-center gap-2 flex-wrap" style={{ color: "var(--text-secondary)" }}>
           <span>IBD Compass — Evidence-based information with hope at its heart</span>
-          <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}>
-            UC Coming Soon
-          </span>
+
         </p>
         <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
           This site is an information resource only — not a substitute for medical care.
