@@ -8,21 +8,27 @@ import Link from "next/link";
 
 type EvidenceType = "Strong clinical" | "Promising" | "Traditional use" | "Anecdotal" | "Newly emerging";
 
+        type ConditionType = "Both" | "Crohn's" | "UC";
+
 interface Treatment {
   name: string;
   category: "Medical" | "Complementary" | "Comfort";
+  condition: ConditionType;
   evidence: EvidenceType;
+  ucNote?: string;      
   description: string;
   worthKnowing: string;
   individual: string;
 }
 
-const treatments: Treatment[] = [
+   const treatments: Treatment[] = [
   // MEDICAL
   {
     name: "Biologics",
     category: "Medical",
+    condition: "Both",
     evidence: "Strong clinical",
+    ucNote: "Vedolizumab is particularly well-studied in UC and is often a preferred first-line biologic. Infliximab and ustekinumab are also approved for UC.",
     description: "Medications like adalimumab, infliximab, vedolizumab and ustekinumab that target specific proteins driving inflammation. The most effective treatments currently available for moderate to severe Crohn's disease.",
     worthKnowing: "May increase susceptibility to infections and require regular monitoring. Effectiveness can reduce over time in some people. Administered by injection or infusion.",
     individual: "Response varies significantly between individuals. What works well for one person may not work for another. Your gastroenterologist will consider your specific disease pattern, location, and history.",
@@ -30,6 +36,7 @@ const treatments: Treatment[] = [
   {
     name: "JAK Inhibitors",
     category: "Medical",
+    condition: "Both",
     evidence: "Newly emerging",
     description: "Upadacitinib is currently the only oral advanced therapy approved for Crohn's disease — a significant development as it avoids injections. Targets the JAK signalling pathway to reduce inflammation.",
     worthKnowing: "Newer class of medication — long-term safety data still emerging. Not suitable for everyone. Discuss carefully with your gastroenterologist.",
@@ -38,6 +45,7 @@ const treatments: Treatment[] = [
   {
     name: "Immunosuppressants",
     category: "Medical",
+    condition: "Both",
     evidence: "Strong clinical",
     description: "Medications including azathioprine and methotrexate that suppress the overactive immune response causing inflammation. Often used alongside biologics or as maintenance therapy.",
     worthKnowing: "Regular blood tests required to monitor liver function and blood counts. Takes weeks to months to reach full effect. Sun sensitivity with methotrexate.",
@@ -46,6 +54,7 @@ const treatments: Treatment[] = [
   {
     name: "Corticosteroids",
     category: "Medical",
+    condition: "Both",
     evidence: "Strong clinical",
     description: "Prednisolone and budesonide are used to rapidly reduce inflammation during flares. Effective for short-term relief but not suitable for long-term use.",
     worthKnowing: "Long-term use carries significant side effects including bone density loss, weight gain, and adrenal suppression. Used to bridge to longer-term treatments, not as ongoing therapy.",
@@ -54,6 +63,7 @@ const treatments: Treatment[] = [
   {
     name: "Aminosalicylates (5-ASA)",
     category: "Medical",
+    condition: "Both",
     evidence: "Strong clinical",
     description: "Medications like mesalazine that reduce inflammation directly in the gut lining. More commonly used in ulcerative colitis but sometimes prescribed in Crohn's disease.",
     worthKnowing: "Evidence for effectiveness in Crohn's specifically is more limited than in ulcerative colitis. Discuss with your gastroenterologist whether this is appropriate for your type of Crohn's.",
@@ -62,6 +72,7 @@ const treatments: Treatment[] = [
   {
     name: "Exclusive Enteral Nutrition (EEN)",
     category: "Medical",
+    condition: "Crohn's",
     evidence: "Strong clinical",
     description: "A liquid nutritional formula that replaces all food for a period of time — typically 6 to 8 weeks. Particularly effective in children and adolescents. Used to induce remission and heal the gut lining.",
     worthKnowing: "Requires commitment to a liquid-only diet. Can be taken orally or via a nasogastric tube. Nutritional support from a dietitian is essential.",
@@ -71,6 +82,7 @@ const treatments: Treatment[] = [
   {
     name: "Boswellia Serrata",
     category: "Complementary",
+    condition: "Crohn's",
     evidence: "Promising",
     description: "Resin from the Boswellia tree, used in traditional Ayurvedic medicine for centuries. Clinical studies have shown anti-inflammatory effects, with one RCT showing results comparable to mesalazine in IBD.",
     worthKnowing: "Can interact with anti-inflammatory medications. May affect blood clotting. Quality and standardisation of products varies significantly — look for Aflapin or AprèsFlex forms which are better absorbed.",
@@ -79,6 +91,7 @@ const treatments: Treatment[] = [
   {
     name: "Curcumin (Turmeric)",
     category: "Complementary",
+    condition: "Both",
     evidence: "Promising",
     description: "The active compound in turmeric. Inhibits NF-κB, an inflammatory signalling protein central to IBD. Several randomised controlled trials show promise as a complementary therapy alongside conventional treatment.",
     worthKnowing: "Important: curcumin can be detrimental for some people. It has blood-thinning properties and can cause digestive irritation at high doses. May interfere with certain medications including blood thinners and chemotherapy. Poor absorption without piperine (black pepper extract). Gallstone risk at high doses.",
@@ -87,6 +100,7 @@ const treatments: Treatment[] = [
   {
     name: "Saccharomyces Boulardii",
     category: "Complementary",
+    condition: "Both",
     evidence: "Promising",
     description: "A beneficial yeast-based probiotic with the strongest evidence base among probiotics for Crohn's disease. Helps restore gut microbiome balance and may reduce diarrhoea and support remission.",
     worthKnowing: "Being yeast-based it is different to bacterial probiotics and generally better tolerated. However it is not suitable for people with yeast sensitivities or those who are immunocompromised.",
@@ -95,14 +109,16 @@ const treatments: Treatment[] = [
   {
     name: "Wormwood (Artemisia absinthium)",
     category: "Complementary",
+    condition: "Crohn's",
     evidence: "Promising",
     description: "An ancient medicinal herb with clinical studies showing it blocks TNF-α — the same inflammatory protein targeted by some biologic medications. One RCT showed steroid-sparing effects in Crohn's disease.",
     worthKnowing: "Raw wormwood plant is dangerous at high doses — only standardised preparations should be used. Can interact with medications. Not safe during pregnancy. Long-term safety data is limited.",
     individual: "This is a herb that requires careful medical supervision. Do not self-medicate with wormwood. Only use standardised preparations and always discuss with your gastroenterologist.",
   },
-  {
+{
     name: "Vitamin D",
     category: "Complementary",
+    condition: "Both",
     evidence: "Promising",
     description: "People with Crohn's disease are frequently deficient in Vitamin D due to malabsorption and reduced sun exposure. Supplementation is widely supported and low Vitamin D is associated with increased disease activity.",
     worthKnowing: "Get your levels tested before supplementing — too much Vitamin D can be harmful. Your gastroenterologist or GP can prescribe the right dose based on your blood results.",
@@ -111,6 +127,7 @@ const treatments: Treatment[] = [
   {
     name: "Aloe Vera",
     category: "Complementary",
+    condition: "Both",
     evidence: "Traditional use",
     description: "Used in traditional medicine for thousands of years for digestive conditions. Some small studies show anti-inflammatory properties in the gut. More evidence exists for ulcerative colitis than Crohn's specifically.",
     worthKnowing: "Aloe latex (from the skin of the leaf) is a strong laxative and should be avoided — only use aloe vera gel products. Can interact with some medications.",
@@ -120,6 +137,7 @@ const treatments: Treatment[] = [
   {
     name: "Castor Oil Heat Pack",
     category: "Comfort",
+    condition: "Both",
     evidence: "Anecdotal",
     description: "A cloth soaked in castor oil and applied warm to the abdomen. Widely used in traditional and folk medicine and reported by many Crohn's patients as soothing during cramping and pain. The warmth and gentle pressure appear to provide comfort during flares.",
     worthKnowing: "Important: oral castor oil is NOT recommended for people with Crohn's disease or IBD — it is a powerful laxative and can worsen symptoms. External castor oil packs are different. The benefit is likely from the heat rather than the castor oil penetrating the skin. Do not apply to broken or inflamed skin.",
@@ -128,6 +146,7 @@ const treatments: Treatment[] = [
   {
     name: "Heat Therapy",
     category: "Comfort",
+    condition: "Both",
     evidence: "Anecdotal",
     description: "Applying a warm heat pack or hot water bottle to the abdomen during cramping and pain. A simple, safe, and widely reported comfort measure among people living with Crohn's disease.",
     worthKnowing: "Avoid applying heat directly to skin without a cloth barrier. Do not use on areas of active surgical wounds or stomas. If pain is severe or sudden — seek medical attention rather than applying heat.",
@@ -136,6 +155,7 @@ const treatments: Treatment[] = [
   {
     name: "Gentle Movement & Walking",
     category: "Comfort",
+    condition: "Both",
     evidence: "Promising",
     description: "Regular gentle exercise including walking has been shown in studies to positively affect gut motility, reduce stress hormones, and support overall wellbeing in people with IBD. It does not need to be intense to be beneficial.",
     worthKnowing: "During active flares, rest is often more appropriate. Listen to your body. Intense exercise can sometimes worsen symptoms during active disease.",
@@ -177,6 +197,7 @@ const castorOilProtocol = (
 );
 
 export default function Treatments() {
+  const [activeCondition, setActiveCondition] = useState<"All" | "Crohn's" | "UC">("All");
   const [activeCategory, setActiveCategory] = useState<"All" | "Medical" | "Complementary" | "Comfort">("All");
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({});
   const [showCastorProtocol, setShowCastorProtocol] = useState(false);
@@ -185,9 +206,11 @@ export default function Treatments() {
     setExpandedCards((prev) => ({ ...prev, [name]: !prev[name] }));
   };
 
-  const filtered = activeCategory === "All"
-    ? treatments
-    : treatments.filter((t) => t.category === activeCategory);
+    const filtered = treatments.filter((t) => {
+    const conditionMatch = activeCondition === "All" || t.condition === activeCondition || t.condition === "Both";
+    const categoryMatch = activeCategory === "All" || t.category === activeCategory;
+    return conditionMatch && categoryMatch;
+  });
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--bg-page)" }}>
@@ -215,6 +238,26 @@ color: "var(--text-primary)" }}>
             This page provides information only — not medical advice.
           </p>
         </div>
+              {/* Condition Tabs */}
+      <div className="max-w-6xl mx-auto px-6 pt-2 pb-0">
+        <div className="flex gap-1 border-b" style={{ borderColor: "var(--border-color)" }}>
+          {(["All", "Crohn's", "UC"] as const).map((cond) => (
+            <button
+              key={cond}
+              onClick={() => setActiveCondition(cond)}
+              className="px-6 py-3 text-sm font-medium transition-all"
+              style={{
+                color: activeCondition === cond ? "var(--nav-bg)" : "var(--text-secondary)",
+                borderBottom: activeCondition === cond ? "2px solid var(--nav-bg)" : "2px solid transparent",
+                marginBottom: "-1px",
+                backgroundColor: "transparent",
+              }}
+            >
+              {cond === "All" ? "All conditions" : cond === "Crohn's" ? "Crohn's disease" : "Ulcerative colitis"}
+            </button>
+          ))}
+        </div>
+      </div>
       </div>      {/* Filter Buttons */}
       <div className="max-w-6xl mx-auto px-6 pb-6">
         <div className="flex flex-wrap gap-3">
@@ -440,7 +483,6 @@ color: "var(--text-primary)" }}
       <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
         <p className="text-sm flex items-center justify-center gap-2 flex-wrap" style={{ color: "var(--text-secondary)" }}>
           <span>IBD Compass — Evidence-based information with hope at its heart</span>
-          <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}>UC Coming Soon</span>
         </p>
         <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
           Always consult your gastroenterologist before making changes to your treatment.
