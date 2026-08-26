@@ -141,12 +141,12 @@ const treatments: Treatment[] = [
     worthKnowing: "During active flares, rest is often more appropriate. Listen to your body. Intense exercise can sometimes worsen symptoms during active disease.",
     individual: "Exercise tolerance varies greatly depending on disease activity, fatigue levels, and overall health. Even short gentle walks on good days can be beneficial.",
   },
-];const evidenceColors: Record<EvidenceType, { bg: string; text: string }> = {
-  "Strong clinical": { bg: "#D4EDE4", text: "#1B4F3A" },
-  "Promising": { bg: "#D6EAF8", text: "#1A5276" },
-  "Traditional use": { bg: "#FEF9E7", text: "#7D6608" },
-  "Anecdotal": { bg: "#F5EEF8", text: "#6C3483" },
-  "Newly emerging": { bg: "#FDEDEC", text: "#922B21" },
+];  const evidenceColors: Record<EvidenceType, { bg: string; text: string; dot: string }> = {
+  "Strong clinical": { bg: "#e0f2fe", text: "#0c4a6e", dot: "#38bdf8" },
+  "Promising":       { bg: "#fef9c3", text: "#713f12", dot: "#fde047" },
+  "Traditional use": { bg: "#f0fdf4", text: "#14532d", dot: "#4ade80" },
+  "Anecdotal":       { bg: "#f5f5f4", text: "#44403c", dot: "#a8a29e" },
+  "Newly emerging":  { bg: "#fff7ed", text: "#7c2d12", dot: "#fb923c" },
 };
 
 const castorOilProtocol = (
@@ -245,6 +245,7 @@ color: "var(--text-primary)" }}>
               className="px-3 py-1 rounded-full text-xs font-medium"
               style={{ backgroundColor: evidenceColors[label].bg, color: evidenceColors[label].text }}
             >
+                            <span style={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: evidenceColors[label].dot, display: "inline-block" }} />
               {label}
             </span>
           ))}
@@ -369,12 +370,13 @@ color: "var(--text-primary)" }}>
               >
                 {/* Evidence Badge */}
                 <span
-                  className="text-xs font-medium px-3 py-1 rounded-full"
+                  className="text-xs font-medium px-3 py-1 rounded-full inline-flex items-center gap-1.5"
                   style={{
                     backgroundColor: evidenceColors[treatment.evidence].bg,
                     color: evidenceColors[treatment.evidence].text,
                   }}
                 >
+                                    <span style={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: evidenceColors[treatment.evidence].dot, display: "inline-block" }} />
                   {treatment.evidence}
                 </span>
 
