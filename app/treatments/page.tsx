@@ -430,6 +430,13 @@ color: "var(--text-primary)" }}>
                 >
                   {treatment.category}
                 </span>
+                                {/* UC Note */}
+                {activeCondition === "UC" && treatment.ucNote && (
+                  <div className="mt-3 rounded-xl px-4 py-3" style={{ backgroundColor: "#eff6ff", borderLeft: "3px solid #3b82f6" }}>
+                    <p className="text-xs font-semibold mb-1" style={{ color: "#1e40af" }}>UC-specific</p>
+                    <p className="text-xs leading-relaxed" style={{ color: "#1e40af" }}>{treatment.ucNote}</p>
+                  </div>
+                )}
 
                 <h3 className="text-lg font-semibold mt-3 mb-2" style={{ color: "var(--text-primary)" }}>
                   {treatment.name}
