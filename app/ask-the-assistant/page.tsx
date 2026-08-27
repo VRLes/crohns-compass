@@ -1,7 +1,7 @@
 "use client";
 import Nav from "../components/Nav";
 // app/ask-the-assistant/page.tsx
-  // IBD Compass — AI Chat Assistant        
+// IBD Compass — AI Chat Assistant
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
@@ -21,11 +21,54 @@ export default function AskTheAssistant() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [listening, setListening] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const lastAssistantRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messages.length > 0 && messages[messages.length - 1].role === "assistant") {
+      lastAssistantRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages]);
+
+  const toggleListening = () => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) return;
+
+    if (listening) {
+      recognitionRef.current?.stop();
+      setListening(false);
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-AU";
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      const transcript = Array.from(event.results)
+        .map((r) => r[0].transcript)
+        .join("");
+      setInput(transcript);
+    };
+
+    recognition.onend = () => {
+      setListening(false);
+    };
+
+    recognition.onerror = () => {
+      setListening(false);
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
+    setListening(true);
+  };
 
   const sendMessage = async () => {
     if (!input.trim() || loading) return;
@@ -63,14 +106,19 @@ export default function AskTheAssistant() {
       e.preventDefault();
       sendMessage();
     }
-  };  return (
+  };
+
+  const speechSupported = typeof window !== "undefined" &&
+    ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
+
+  return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg-page)" }}>
 
       <Nav active="/ask-the-assistant" />
 
       <div className="max-w-4xl mx-auto w-full px-6 pt-10 pb-6">
         <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Ask the Assistant</h1>
-            <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+        <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
           Ask the Assistant anything — diet and food choices, medications and side effects, surgery and stoma care, mindfulness, complementary therapies, or the latest research. All answers are evidence-based and written in plain language. Available day and night.
         </p>
         <div className="mt-4 rounded-xl px-6 py-3" style={{ backgroundColor: "var(--bg-accent)" }}>
@@ -87,7 +135,7 @@ export default function AskTheAssistant() {
           style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", minHeight: "400px", maxHeight: "520px" }}
         >
           {messages.map((msg, i) => (
-            <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+            <div key={i} ref={msg.role === "assistant" && i === messages.length - 1 ? lastAssistantRef : null} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
               <div
                 className="rounded-2xl px-5 py-3 text-sm leading-relaxed"
                 style={{
@@ -111,16 +159,43 @@ export default function AskTheAssistant() {
           <div ref={bottomRef} />
         </div>
 
-        <div className="mt-4 flex gap-3">
+        <div className="mt-4 flex gap-3 items-end">
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask a question about IBD..."
+            placeholder={listening ? "Listening..." : "Ask a question about IBD..."}
             rows={2}
             className="flex-1 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none"
-            style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
+            style={{
+              backgroundColor: "var(--bg-card)",
+              border: `1px solid ${listening ? "#2E8B6A" : "var(--border-color)"}`,
+              color: "var(--text-primary)",
+            }}
           />
+
+          {/* Mic button */}
+          {speechSupported && (
+            <button
+              onClick={toggleListening}
+              title={listening ? "Stop listening" : "Speak your question"}
+              className="px-4 py-3 rounded-xl text-sm font-medium transition-all"
+              style={{
+                backgroundColor: listening ? "#922B21" : "var(--bg-card)",
+                color: listening ? "#ffffff" : "var(--text-secondary)",
+                border: `1px solid ${listening ? "#922B21" : "var(--border-color)"}`,
+                animation: listening ? "pulse 1.5s infinite" : "none",
+              }}
+            >
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="9" y="2" width="6" height="12" rx="3" />
+                <path d="M5 10a7 7 0 0014 0" />
+                <line x1="12" y1="19" x2="12" y2="22" />
+                <line x1="9" y1="22" x2="15" y2="22" />
+              </svg>
+            </button>
+          )}
+
           <button
             onClick={sendMessage}
             disabled={loading || !input.trim()}
@@ -130,8 +205,10 @@ export default function AskTheAssistant() {
             Send
           </button>
         </div>
+
         <p className="text-xs mt-2 text-center" style={{ color: "var(--text-muted)" }}>
           Press Enter to send · Shift + Enter for a new line
+          {speechSupported && " · Tap 🎤 to speak"}
         </p>
       </div>
 
