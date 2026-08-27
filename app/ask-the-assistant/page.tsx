@@ -24,7 +24,8 @@ export default function AskTheAssistant() {
   const [listening, setListening] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const lastAssistantRef = useRef<HTMLDivElement>(null);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<any>(null);
+
 
   useEffect(() => {
     if (messages.length > 0 && messages[messages.length - 1].role === "assistant") {
@@ -50,10 +51,12 @@ export default function AskTheAssistant() {
     recognition.continuous = false;
     recognition.interimResults = true;
 
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
-      const transcript = Array.from(event.results)
-        .map((r) => r[0].transcript)
+  
+    recognition.onresult = (event: any) => {
+        const transcript = Array.from(event.results)
+        .map((r: any) => r[0].transcript)
         .join("");
+
       setInput(transcript);
     };
 
