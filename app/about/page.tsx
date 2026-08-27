@@ -120,19 +120,19 @@ export default function About() {
               },
               {
                 title: "Honesty about what we don't know",
-                detail: "Crohn's disease research is evolving rapidly. Where evidence is limited, conflicting, or uncertain — we say so clearly. We would rather say 'we don't know yet' than present incomplete evidence as fact.",
+                detail: "IBD research is evolving rapidly. Where evidence is limited, conflicting, or uncertain — we say so clearly. We would rather say 'we don't know yet' than present incomplete evidence as fact.",
               },
               {
                 title: "No fear — ever",
-                detail: "Stress is a known Crohn's flare trigger. Every piece of content on this site is written to inform and empower — never to frighten. Difficult information is presented with context, care, and a path forward.",
+                detail: "Stress is a known IBD flare trigger. Every piece of content on this site is written to inform and empower — never to frighten. Difficult information is presented with context, care, and a path forward.",
               },
               {
                 title: "Individual variation is real",
-                detail: "Crohn's disease affects every person differently. We never present a single approach as the answer for everyone. What works for one person may not work for another — and in some cases may cause harm.",
+                detail: "IBD affects every person differently. We never present a single approach as the answer for everyone. What works for one person may not work for another — and in some cases may cause harm.",
               },
               {
                 title: "Complementary — never replacing medical care",
-                detail: "Crohn's Compass is an information resource. It complements — and never replaces — the care of a gastroenterologist. We actively encourage strong relationships between patients and their medical teams.",
+                detail: "IBD Compass is an information resource. It complements — and never replaces — the care of a gastroenterologist. We actively encourage strong relationships between patients and their medical teams.",
               },
               {
                 title: "Australian standards",
@@ -219,7 +219,7 @@ export default function About() {
           <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>About the AI Assistant</h2>
           <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>
             The IBD Compass AI Assistant is powered by Claude — an AI developed
-            by Anthropic. It has been configured specifically for Crohn&apos;s disease
+            by Anthropic. It has been configured specifically for IBD
             information with careful instructions to be accurate, honest, and evidence-based.
           </p>
           <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>

@@ -17,8 +17,8 @@ export default function Home() {
           You Are Not Alone
         </h1>
         <p className="text-xl max-w-2xl mx-auto mb-10 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                       IBD Compass gives you accurate, hopeful information to help you
-          live well with Crohn&apos;s disease — grounded in science, written with care.
+                         IBD Compass gives you accurate, hopeful information to help you
+          live well with IBD — grounded in science, written with care.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link href="/ask-the-assistant" className="px-8 py-3 rounded-full text-white font-medium text-sm shadow hover:opacity-90 transition-all" style={{ backgroundColor: "#2E8B6A" }}>
@@ -56,7 +56,7 @@ export default function Home() {
               <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><path d="M4 4c4-2 10-2 14 4-4 2-10 2-14-4z" stroke="#2E8B6A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /><path d="M11 8v12" stroke="#2E8B6A" strokeWidth="1.8" strokeLinecap="round" /></svg>
             </div>
             <h3 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>Diet & Nutrition</h3>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>From SCD to plant-based eating, understand what the science says about food and Crohn&apos;s — without the conflicting advice.</p>
+            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>From SCD to plant-based eating, understand what the science says about food and IBD — without the conflicting advice.</p>
             <Link href="/diet" className="text-sm font-medium hover:underline" style={{ color: "#2E8B6A" }}>Explore diets →</Link>
           </div>
 
@@ -65,7 +65,7 @@ export default function Home() {
               <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" stroke="#2E8B6A" strokeWidth="1.8" /><path d="M11 7v4l3 3" stroke="#2E8B6A" strokeWidth="1.8" strokeLinecap="round" /></svg>
             </div>
             <h3 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>Mindfulness</h3>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>Stress is a known flare trigger. Breathwork, meditation and gentle movement practices — adapted for life with Crohn&apos;s.</p>
+            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>Stress is a known flare trigger. Breathwork, meditation and gentle movement practices — adapted for life with IBD.</p>
             <Link href="/mindfulness" className="text-sm font-medium hover:underline" style={{ color: "#2E8B6A" }}>Find calm →</Link>
           </div>
 
@@ -83,7 +83,7 @@ export default function Home() {
               <svg width="22" height="22" fill="none" viewBox="0 0 22 22"><path d="M4 4h14a2 2 0 012 2v8a2 2 0 01-2 2H8l-4 4V6a2 2 0 012-2z" stroke="#2E8B6A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </div>
             <h3 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>Ask the Assistant</h3>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>Have a question about Crohn&apos;s? Our AI assistant gives evidence-based answers in plain language — available day or night.</p>
+            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}> Have a question about IBD? Our AI assistant gives evidence-based answers in plain language — available day or night.</p>
             <Link href="/ask-the-assistant" className="text-sm font-medium hover:underline" style={{ color: "#2E8B6A" }}>Ask a question →</Link>
           </div>
 
@@ -105,7 +105,7 @@ export default function Home() {
               </svg>
             </div>
             <h3 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>About & Disclaimer</h3>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>Our story, principles, evidence standards, medical disclaimer and privacy information —              everything about how IBD Compass works.     </p>
+            <p className="text-sm leading-relaxed mb-4" style={{ color: "#3D6B5A" }}>Our story, principles, evidence standards, medical disclaimer and privacy information — everything about how IBD Compass works.     </p>
             <Link href="/about" className="text-sm font-medium hover:underline" style={{ color: "#2E8B6A" }}>Learn more →</Link>
           </div>
 
@@ -129,7 +129,7 @@ export default function Home() {
       <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
         <p className="text-sm flex items-center justify-center gap-2 flex-wrap" style={{ color: "var(--text-secondary)" }}>
           <span>IBD Compass — Evidence-based information with hope at its heart</span>
-          <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}>UC Coming Soon</span>
+        
         </p>
         <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>Always consult your gastroenterologist before making changes to your treatment.</p>
       </footer>

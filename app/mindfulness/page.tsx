@@ -283,7 +283,7 @@ function generateNoise(audioCtx: AudioContext, type: NoiseType, gainValue: numbe
       <div className="max-w-4xl mx-auto px-6 pt-10 pb-6 text-center">
         <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Mindfulness</h1>
         <p className="text-sm leading-relaxed max-w-2xl mx-auto" style={{ color: "var(--text-secondary)" }}>
-          Stress is a known Crohn&apos;s flare trigger. These tools are here to help you breathe,
+          Stress is a known IBD flare trigger. These tools are here to help you breathe,
           rest and find calm — wherever you are, whenever you need it.
         </p>
         <p className="text-xs mt-3 italic" style={{ color: "var(--text-muted)" }}>
@@ -437,7 +437,7 @@ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
               <p className="text-xs mb-6 text-center" style={{ color: "var(--text-secondary)"
  }}>
                 A gentle guided meditation that brings kind awareness to each part of your body.
-                Adapted to be compassionate and calm for those living with Crohn&apos;s disease.
+                Adapted to be compassionate and calm for those living with IBD.
               </p>
 
               {/* Video */}
@@ -666,7 +666,7 @@ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
                   { symptom: "Pain & Flare Support", oils: "Frankincense + Myrrh", detail: "Two of the oldest healing resins known to humanity. Diffuse together for a warm, grounding environment during difficult days.", caution: "Some people may be sensitive to these oils." },
                   { symptom: "Anxiety & Stress", oils: "Lavender + Roman Chamomile", detail: "Lavender has the strongest evidence base of any essential oil for anxiety reduction. Roman Chamomile may ease mind and gut tension.", caution: "Never ingest essential oils." },
                   { symptom: "Sleep", oils: "Lavender + Frankincense", detail: "Lavender eases a busy mind while Frankincense encourages slow, deep breathing. Diffuse in your bedroom 30 minutes before sleep.", caution: "Keep diffuser use to 30–60 minutes. Continuous diffusion can cause headaches." },
-                  { symptom: "Nausea", oils: "Peppermint", detail: "Peppermint has clinical evidence for easing nausea. Diffuse in your space or place one drop on a tissue and inhale gently.",
+                  { symptom: "Nausea", oils: "Peppermint",     detail: "Peppermint has promising evidence for easing nausea through inhalation. Diffuse in your space or place one drop on a tissue and inhale gently.",
                         caution: "Avoid diffusing around infants, young children and animals." },
                   { symptom: "Mental Clarity & Gentle Focus", oils: "Lemongrass + Peppermint", detail: "Uplifting and clarifying on good days. Supports gentle focus without overstimulation.", caution: "Some people may have sensitivity to Lemongrass." },
                   { symptom: "General Comfort & Calm", oils: "Frankincense + Myrrh + Lavender", detail: "A deeply comforting blend with ancient healing roots. Suitable for diffusing during rest, meditation or the body scan practice.", caution: "Introduce one oil at a time if you have asthma or respiratory sensitivities." },
@@ -693,8 +693,7 @@ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
                 <ul className="text-xs space-y-1" style={{ color: "var(--text-primary)"
  }}>
                   <li>• Use a diffuser for inhalation — the recommended method for aromatherapy</li>
-                  <li>• Introduce new oils cautiously if you have asthma or respiratory conditions</li>
-                  <li>• Introduce new oils cautiously if you have asthma or respiratory conditions</li>
+                <li>• Introduce new oils cautiously if you have asthma or respiratory conditions</li>
                   <li>• Aromatherapy is a comfort practice only — not a substitute for medical care</li>
                 </ul>
               </div>
@@ -709,7 +708,6 @@ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
       <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
         <p className="text-sm flex items-center justify-center gap-2 flex-wrap" style={{ color: "var(--text-secondary)" }}>
           <span>IBD Compass — Evidence-based information with hope at its heart</span>
-          <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}>UC Coming Soon</span>
         </p>
         <p className="text-xs mt-2" style={{ color: "var(--text-muted)"
  }}>

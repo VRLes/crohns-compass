@@ -82,13 +82,13 @@ const questions: Question[] = [
     id: "q10",
     category: "My Current Treatment",
     question: "What vaccinations do I need given my current medication — and which should I avoid?",
-    whyItMatters: "Some Crohn's medications suppress the immune system, which affects which vaccines are safe and which are recommended. Live vaccines in particular may be contraindicated. This is a commonly overlooked but important aspect of care.",
+    whyItMatters: "Some IBD medications suppress the immune system, which affects which vaccines are safe and which are recommended. Live vaccines in particular may be contraindicated. This is a commonly overlooked but important aspect of care.",
   },
   {
     id: "q11",
     category: "My Current Treatment",
     question: "Are there any supplements or complementary therapies I should avoid with my current medication?",
-    whyItMatters: "Some supplements — including high-dose curcumin, fish oil, and certain herbal products — can interact with Crohn's medications. Your gastroenterologist should know everything you are taking, including natural supplements.",
+    whyItMatters: "Some supplements — including high-dose curcumin, fish oil, and certain herbal products — can interact with IBD medications. Your gastroenterologist should know everything you are taking, including natural supplements.",
   },
   // MONITORING & TESTS
   {
@@ -138,13 +138,13 @@ const questions: Question[] = [
     id: "q19",
     category: "Lifestyle & Diet",
     question: "What level of physical activity is appropriate for me given my current disease activity?",
-    whyItMatters: "Regular gentle exercise has benefits for Crohn's including stress reduction, bone health, and gut motility. However the appropriate level depends on your current disease activity and overall health. Your gastroenterologist can guide what is safe.",
+    whyItMatters: "Regular gentle exercise has benefits for IBD including stress reduction, bone health, and gut motility. However the appropriate level depends on your current disease activity and overall health. Your gastroenterologist can guide what is safe.",
   },
   {
     id: "q20",
     category: "Lifestyle & Diet",
     question: "Should I be seeing a psychologist or mental health professional as part of my Crohn's care?",
-    whyItMatters: "Stress is a known Crohn's flare trigger and living with a chronic condition affects mental health. Psychological support — including cognitive behavioural therapy and gut-directed therapies — has evidence for improving quality of life in IBD. A Mental Health Treatment Plan from your GP may provide Medicare-subsidised sessions.",
+    whyItMatters: "Stress is a known IBD flare trigger and living with a chronic condition affects mental health. Psychological support — including cognitive behavioural therapy and gut-directed therapies — has evidence for improving quality of life in IBD. A Mental Health Treatment Plan from your GP may provide Medicare-subsidised sessions.",
   },
   // PLANNING AHEAD
   {
@@ -225,9 +225,9 @@ const questions: Question[] = [
       {/* Header */}
       <div className="max-w-6xl mx-auto px-6 pt-10 pb-6">
         <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Doctor Questions</h1>
-        <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "var(--text-secondary)" }}>
+          <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "var(--text-secondary)" }}>
           Walking into a gastroenterology appointment feeling prepared makes a real difference.
-          These questions are designed to help you get the most from your consultation —
+          These questions are designed to help people living with IBD get the most from their consultation —
           whether it is your first appointment or your fiftieth.
         </p>
 
@@ -403,17 +403,7 @@ const questions: Question[] = [
           </div>
         )}
 
-        {/* UC Coming Soon */}
-        <div className="mt-12 rounded-2xl p-8 border text-center" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
-          <p className="text-2xl mb-2">🔬</p>
-          <h2 className="text-lg font-semibold mb-2" style={{ color: "var(--text-primary)" }}>
-            Ulcerative Colitis Questions — Coming Soon
-          </h2>
-          <p className="text-sm leading-relaxed max-w-xl mx-auto" style={{ color: "var(--text-secondary)" }}>
-            A dedicated set of questions tailored specifically for Ulcerative Colitis
-            appointments is currently in development.
-          </p>
-        </div>
+
 
         {/* Empowerment note */}
         <div className="mt-6 rounded-2xl p-6 border" style={{ backgroundColor: "var(--bg-page)", borderColor: "var(--border-color)" }}>
@@ -436,9 +426,7 @@ const questions: Question[] = [
       <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
         <p className="text-sm flex items-center justify-center gap-2 flex-wrap" style={{ color: "var(--text-secondary)" }}>
           <span>IBD Compass — Evidence-based information with hope at its heart</span>
-          <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}>
-            UC Coming Soon
-          </span>
+
         </p>
         <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
           These questions are a guide only — always follow the advice of your gastroenterologist.

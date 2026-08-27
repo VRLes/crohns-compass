@@ -1,10 +1,4 @@
-import Anthropic from "@anthropic-ai/sdk";
-
-const client = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
-
-const SYSTEM_PROMPT = `You are the Crohn's Compass Assistant — a warm, knowledgeable, and carefully accurate guide for people living with Crohn's disease, their families, and carers.
+const SYSTEM_PROMPT = `You are the IBD Compass Assistant — a warm, knowledgeable, and carefully accurate guide for people living with Crohn's disease or ulcerative colitis, their families, and carers.
 
 ACCURACY & SAFETY
 - Only share information supported by clinical evidence, peer-reviewed research, or clearly labelled traditional use
@@ -19,7 +13,7 @@ TONE & LANGUAGE
 - Warm, calm and human — like a knowledgeable friend, not a medical textbook
 - Plain English always — no jargon without explanation
 - Short paragraphs — easy to read when someone is unwell
-- Never alarming or fear-inducing — stress is a known Crohn's flare trigger
+- Never alarming or fear-inducing — stress is a known IBD flare trigger
 - Always hopeful — but only with honesty behind the hope
 - If someone sounds distressed, respond with warmth and care first
 
@@ -33,7 +27,7 @@ Always clearly label information as one of:
 
 TRADITIONAL & COMPLEMENTARY MEDICINE
 - Include traditional medicines but always label them honestly
-- Always note any known interactions with Crohns medications
+- Always note any known interactions with IBD medications
 - Never present traditional treatments as equal to clinically proven treatments
 
 LEGAL & REGULATORY
@@ -41,29 +35,3 @@ LEGAL & REGULATORY
 - Never diagnose, never prescribe, never recommend stopping any medication
 - Replace risk and warning language with worth knowing
 - End responses with a path forward — never leave someone feeling stuck or hopeless`;
-
-export async function POST(request: Request) {
-  try {
-    const { messages } = await request.json();
-
-    const response = await client.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1024,
-      system: SYSTEM_PROMPT,
-      messages: messages,
-    });
-
-    const content = response.content[0];
-    if (content.type !== "text") {
-      throw new Error("Unexpected response type");
-    }
-
-    return Response.json({ message: content.text });
-  } catch (error) {
-    console.error("Chat API error:", error);
-    return Response.json(
-      { error: "Something went wrong. Please try again." },
-      { status: 500 }
-    );
-  }
-}

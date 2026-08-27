@@ -1,7 +1,7 @@
 "use client";
 import Nav from "../components/Nav";
 // app/ask-the-assistant/page.tsx
-// Crohn's Compass — AI Chat Assistant
+  // IBD Compass — AI Chat Assistant        
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
@@ -16,7 +16,7 @@ export default function AskTheAssistant() {
     {
       role: "assistant",
       content:
-        "Hello, and welcome to IBD Compass. I'm here to help you find accurate, evidence-based information about Crohn's disease — explained in plain language, with honesty and care.\n\nWhat would you like to know today?",
+        "Hello, and welcome to IBD Compass. I'm here to help you find accurate, evidence-based information about IBD — explained in plain language, with honesty and care.\n\nWhat would you like to know today?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -70,9 +70,8 @@ export default function AskTheAssistant() {
 
       <div className="max-w-4xl mx-auto w-full px-6 pt-10 pb-6">
         <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Ask the Assistant</h1>
-        <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-          Ask anything about Crohn&apos;s disease — medications, diet, research, or how to prepare for your next appointment.
-          All answers are evidence-based and written in plain language.
+            <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+          Ask the Assistant anything — diet and food choices, medications and side effects, surgery and stoma care, mindfulness, complementary therapies, or the latest research. All answers are evidence-based and written in plain language. Available day and night.
         </p>
         <div className="mt-4 rounded-xl px-6 py-3" style={{ backgroundColor: "var(--bg-accent)" }}>
           <p className="text-xs" style={{ color: "var(--text-primary)" }}>
@@ -117,7 +116,7 @@ export default function AskTheAssistant() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask a question about Crohn's disease..."
+            placeholder="Ask a question about IBD..."
             rows={2}
             className="flex-1 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none"
             style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
@@ -139,9 +138,6 @@ export default function AskTheAssistant() {
       <footer className="border-t py-6 text-center mt-4" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
         <p className="text-sm flex items-center justify-center gap-2 flex-wrap" style={{ color: "var(--text-secondary)" }}>
           <span>IBD Compass — Evidence-based information with hope at its heart</span>
-          <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}>
-            UC Coming Soon
-          </span>
         </p>
       </footer>
 

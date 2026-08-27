@@ -61,7 +61,7 @@ const researchItems: ResearchItem[] = [
     hopeFactor: "A new pathway means new hope for people who haven't responded to existing treatments.",
   },
   {
-    title: "Upadacitinib approved for children with Crohn's disease",
+        title: "Ustekinumab approved for children with Crohn's disease",
     category: "New Treatments",
     date: "2026",
     source: "US FDA",
@@ -201,7 +201,7 @@ export default function Research() {
       <div className="max-w-6xl mx-auto px-6 pt-10 pb-6">
         <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Latest Research</h1>
         <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "var(--text-secondary)" }}>
-          Crohn&apos;s disease research is moving faster than ever. Here we summarise the most significant
+              IBD research is moving faster than ever. Here we summarise the most significant
           recent findings in plain language — so you can stay informed without needing a medical degree.
         </p>
 
@@ -354,18 +354,6 @@ color: "var(--text-secondary)" }}>
           })}
         </div>
 
-        {/* UC Coming Soon */}
-        <div className="mt-12 rounded-2xl p-8 border text-center" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
-          <p className="text-2xl mb-2">🔬</p>
-          <h2 className="text-lg font-semibold mb-2" style={{ color: "var(--text-primary)" }}>
-            Ulcerative Colitis Research — Coming Soon
-          </h2>
-          <p className="text-sm leading-relaxed max-w-xl mx-auto" style={{ color: "var(--text-secondary)" }}>
-            IBD Compass currently focuses on Crohn&apos;s disease. A dedicated Ulcerative Colitis
-            section covering the latest UC research, treatments and dietary approaches is in development.
-          </p>
-        </div>
-
         {/* Research Disclaimer */}
         <div className="mt-6 rounded-2xl p-6 border" style={{ backgroundColor: "var(--bg-page)", borderColor: "var(--border-color)" }}>
           <p className="text-xs font-semibold mb-2" style={{ color: "var(--text-primary)" }}>About this research summary</p>
@@ -385,9 +373,7 @@ color: "var(--text-secondary)" }}>
       <footer className="border-t py-8 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
         <p className="text-sm flex items-center justify-center gap-2 flex-wrap" style={{ color: "var(--text-secondary)" }}>
           <span>IBD Compass — Evidence-based information with hope at its heart</span>
-          <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}>
-            UC Coming Soon
-          </span>
+
         </p>
         <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
           Research summaries are for informational purposes only — not medical advice.

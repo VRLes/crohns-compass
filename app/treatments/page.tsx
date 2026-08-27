@@ -66,7 +66,7 @@ interface Treatment {
     condition: "Both",
     evidence: "Strong clinical",
     description: "Medications like mesalazine that reduce inflammation directly in the gut lining. More commonly used in ulcerative colitis but sometimes prescribed in Crohn's disease.",
-    worthKnowing: "Evidence for effectiveness in Crohn's specifically is more limited than in ulcerative colitis. Discuss with your gastroenterologist whether this is appropriate for your type of Crohn's.",
+    worthKnowing: "Current international guidelines do not recommend 5-ASA as standard treatment for Crohn's disease. Evidence is stronger for ulcerative colitis. Discuss with your gastroenterologist whether it is appropriate for your specific situation.",
     individual: "Effectiveness depends heavily on where your Crohn's disease is located in the digestive tract.",
   },
   {
@@ -161,6 +161,15 @@ interface Treatment {
     worthKnowing: "During active flares, rest is often more appropriate. Listen to your body. Intense exercise can sometimes worsen symptoms during active disease.",
     individual: "Exercise tolerance varies greatly depending on disease activity, fatigue levels, and overall health. Even short gentle walks on good days can be beneficial.",
   },
+  {
+    name: "Surgery & Stoma Care",
+    category: "Medical",
+    condition: "Both",
+    evidence: "Strong clinical",
+    description: "Surgery is sometimes part of the IBD journey — and for many people, it brings genuine relief after years of difficult symptoms. Procedures range from bowel resection to stoma formation (ileostomy or colostomy) and, for UC patients, the J-pouch (ileal pouch-anal anastomosis). A stoma may be temporary or permanent depending on your individual situation.",
+    worthKnowing: "Surgical decisions are highly individual and depend on disease location, severity, and your overall health. A stoma is not a failure — many people find it life-changing in a positive way. Specialist stoma nurses provide essential support before and after surgery.",
+    individual: "Ask the Assistant about surgical options, stoma care, or what to expect before and after surgery. Every surgical journey is different.",
+  },
 ];  const evidenceColors: Record<EvidenceType, { bg: string; text: string; dot: string }> = {
   "Strong clinical": { bg: "#e0f2fe", text: "#0c4a6e", dot: "#38bdf8" },
   "Promising":       { bg: "#fef9c3", text: "#713f12", dot: "#fde047" },
@@ -219,17 +228,17 @@ export default function Treatments() {
       <Nav active="/treatments" />
 
       {/* Header */}
-      <div className="max-w-6xl mx-auto px-6 pt-10 pb-6">
+      <div className="max-w-6xl mx-auto px-6 spt-10 pb-6">
         <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Treatments</h1>
         <p className="text-sm leading-relaxed max-w-3xl" style={{ color: "var(--text-secondary)" }}>
-          An overview of medical, complementary, and comfort approaches for Crohn&apos;s disease —
+             An overview of medical, complementary, and comfort approaches for IBD —
           each clearly labelled by strength of evidence.
         </p>
 
         {/* Individual disclaimer */}
         <div className="mt-4 rounded-xl px-6 py-4" style={{ backgroundColor: "var(--bg-accent)" }}>
           <p className="text-sm font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
-            ⚠️ Every person with Crohn&apos;s disease is different
+            ⚠️ Every person with IBD is different
           </p>
           <p className="text-sm" style={{ 
 color: "var(--text-primary)" }}>
