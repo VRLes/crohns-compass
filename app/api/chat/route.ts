@@ -1,3 +1,9 @@
+import Anthropic from "@anthropic-ai/sdk";
+
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
+
 const SYSTEM_PROMPT = `You are the IBD Compass Assistant — a warm, knowledgeable, and carefully accurate guide for people living with Crohn's disease or ulcerative colitis, their families, and carers.
 
 ACCURACY & SAFETY
@@ -35,3 +41,29 @@ LEGAL & REGULATORY
 - Never diagnose, never prescribe, never recommend stopping any medication
 - Replace risk and warning language with worth knowing
 - End responses with a path forward — never leave someone feeling stuck or hopeless`;
+
+export async function POST(request: Request) {
+  try {
+    const { messages } = await request.json();
+
+    const response = await client.messages.create({
+      model: "claude-sonnet-4-6",
+      max_tokens: 1024,
+      system: SYSTEM_PROMPT,
+      messages: messages,
+    });
+
+    const content = response.content[0];
+    if (content.type !== "text") {
+      throw new Error("Unexpected response type");
+    }
+
+    return Response.json({ message: content.text });
+  } catch (error) {
+    console.error("Chat API error:", error);
+    return Response.json(
+      { error: "Something went wrong. Please try again." },
+      { status: 500 }
+    );
+  }
+}
