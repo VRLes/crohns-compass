@@ -25,13 +25,17 @@ export default function AskTheAssistant() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const lastAssistantRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
-
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (messages.length > 0 && messages[messages.length - 1].role === "assistant") {
-      lastAssistantRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const container = chatContainerRef.current;
+    const lastAssistant = lastAssistantRef.current;
+    if (!container) return;
+
+    if (messages.length > 0 && messages[messages.length - 1].role === "assistant" && lastAssistant) {
+      container.scrollTop = lastAssistant.offsetTop - container.offsetTop;
     } else {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      container.scrollTop = container.scrollHeight;
     }
   }, [messages]);
 
@@ -48,20 +52,19 @@ export default function AskTheAssistant() {
 
     const recognition = new SpeechRecognition();
     recognition.lang = "en-AU";
-    recognition.continuous = false;
+    recognition.continuous = true;
     recognition.interimResults = true;
 
-  
     recognition.onresult = (event: any) => {
-        const transcript = Array.from(event.results)
+      const transcript = Array.from(event.results)
         .map((r: any) => r[0].transcript)
         .join("");
-
       setInput(transcript);
     };
 
     recognition.onend = () => {
       setListening(false);
+      recognitionRef.current = null;
     };
 
     recognition.onerror = () => {
@@ -111,8 +114,15 @@ export default function AskTheAssistant() {
     }
   };
 
-  const speechSupported = typeof window !== "undefined" &&
-    ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
+  
+  const [speechSupported, setSpeechSupported] = useState(false);
+
+  useEffect(() => {
+    setSpeechSupported(
+      typeof window !== "undefined" &&
+      !!(window as any).SpeechRecognition || !!(window as any).webkitSpeechRecognition
+    );
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg-page)" }}>
@@ -134,6 +144,7 @@ export default function AskTheAssistant() {
 
       <div className="max-w-4xl mx-auto w-full px-6 flex-1 flex flex-col pb-6">
         <div
+          ref={chatContainerRef}
           className="flex-1 rounded-2xl p-6 overflow-y-auto flex flex-col gap-4"
           style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", minHeight: "400px", maxHeight: "520px" }}
         >
@@ -177,7 +188,6 @@ export default function AskTheAssistant() {
             }}
           />
 
-          {/* Mic button */}
           {speechSupported && (
             <button
               onClick={toggleListening}
@@ -187,7 +197,6 @@ export default function AskTheAssistant() {
                 backgroundColor: listening ? "#922B21" : "var(--bg-card)",
                 color: listening ? "#ffffff" : "var(--text-secondary)",
                 border: `1px solid ${listening ? "#922B21" : "var(--border-color)"}`,
-                animation: listening ? "pulse 1.5s infinite" : "none",
               }}
             >
               <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
