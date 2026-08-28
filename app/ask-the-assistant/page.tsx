@@ -10,14 +10,14 @@ interface Message {
   content: string;
 }
 
+const WELCOME_MESSAGE: Message = {
+  role: "assistant",
+  content:
+    "Hello, and welcome to IBD Compass. I'm here to help you find accurate, evidence-based information about IBD — explained in plain language, with honesty and care.\n\nWhat would you like to know today?",
+};
+
 export default function AskTheAssistant() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content:
-        "Hello, and welcome to IBD Compass. I'm here to help you find accurate, evidence-based information about IBD — explained in plain language, with honesty and care.\n\nWhat would you like to know today?",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
@@ -75,12 +75,23 @@ export default function AskTheAssistant() {
     setListening(true);
   };
 
+  // Clear question textarea and stop mic if active
   const clearInput = () => {
     if (listening) {
       recognitionRef.current?.stop();
       setListening(false);
     }
     setInput("");
+  };
+
+  // Clear conversation back to welcome message
+  const clearConversation = () => {
+    setMessages([WELCOME_MESSAGE]);
+    setInput("");
+    if (listening) {
+      recognitionRef.current?.stop();
+      setListening(false);
+    }
   };
 
   const sendMessage = async () => {
@@ -140,17 +151,18 @@ export default function AskTheAssistant() {
         </div>
       </div>
 
-      {/* Chat section — grows to fill remaining screen height */}
+      {/* Chat section */}
       <div className="max-w-4xl mx-auto w-full px-6 pb-6 flex flex-col" style={{ flex: "1 1 0", minHeight: 0 }}>
 
-        {/* Chat card wrapper — fixed height relative to viewport, scrolls inside */}
+        {/* Chat card — fills available height, scrolls inside */}
         <div className="relative" style={{ flex: "1 1 0", minHeight: 0 }}>
           <div
             ref={chatContainerRef}
-            className="absolute inset-0 rounded-2xl p-6 overflow-y-auto flex flex-col gap-4"
+            className="absolute inset-0 rounded-2xl p-6 flex flex-col gap-4 chat-scroll"
             style={{
               backgroundColor: "var(--bg-card)",
               border: "1px solid var(--border-color)",
+              overflowY: "scroll", // always show scrollbar, including iOS
             }}
           >
             {messages.map((msg, i) => (
@@ -192,8 +204,21 @@ export default function AskTheAssistant() {
           />
         </div>
 
+        {/* Clear conversation link — only shows after first reply */}
+        {messages.length > 1 && (
+          <div className="mt-2 text-center">
+            <button
+              onClick={clearConversation}
+              className="text-xs font-medium hover:opacity-70 transition-opacity"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              ✕ Clear conversation
+            </button>
+          </div>
+        )}
+
         {/* Input row */}
-        <div className="mt-4 flex gap-3 items-end">
+        <div className="mt-3 flex gap-3 items-end">
 
           {/* Textarea with clear button */}
           <div className="flex-1 relative">
@@ -203,28 +228,32 @@ export default function AskTheAssistant() {
               onKeyDown={handleKeyDown}
               placeholder={listening ? "Listening..." : "Ask a question about IBD..."}
               rows={2}
-              className="w-full rounded-xl px-4 py-3 text-sm resize-none focus:outline-none pr-10"
+              className="w-full rounded-xl px-4 py-3 text-sm resize-none focus:outline-none"
               style={{
                 backgroundColor: "var(--bg-card)",
                 border: `1px solid ${listening ? "#2E8B6A" : "var(--border-color)"}`,
                 color: "var(--text-primary)",
+                // Extra right padding so text doesn't hide behind the ✕ button
+                paddingRight: input.trim() ? "2.5rem" : "1rem",
               }}
             />
-            {/* Clear button — only shows when there is text */}
-            {input.trim() && (
-              <button
-                onClick={clearInput}
-                title="Clear"
-                className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold transition-opacity hover:opacity-80"
-                style={{
-                  backgroundColor: "var(--text-muted)",
-                  color: "var(--bg-card)",
-                  lineHeight: 1,
-                }}
-              >
-                ✕
-              </button>
-            )}
+            {/* ✕ clear button — always rendered but hidden when empty, avoids iOS display issues */}
+            <button
+              onClick={clearInput}
+              title="Clear"
+              aria-label="Clear question"
+              className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold transition-opacity hover:opacity-80"
+              style={{
+                backgroundColor: "#2E8B6A",
+                color: "#ffffff",
+                lineHeight: 1,
+                // Visible only when there's text — using opacity so it stays in the DOM on iOS
+                opacity: input.trim() ? 1 : 0,
+                pointerEvents: input.trim() ? "auto" : "none",
+              }}
+            >
+              ✕
+            </button>
           </div>
 
           {/* Mic button + label */}
@@ -248,7 +277,6 @@ export default function AskTheAssistant() {
                   <line x1="9" y1="22" x2="15" y2="22" />
                 </svg>
               </button>
-              {/* Mic hint — flips when recording, bold and clearly coloured */}
               <span
                 className="text-xs font-semibold whitespace-nowrap"
                 style={{ color: listening ? "#922B21" : "#2E8B6A" }}
@@ -275,8 +303,18 @@ export default function AskTheAssistant() {
 
         </div>
 
-        {/* Pulse keyframe for mic recording animation */}
+        {/* Styles — scrollbar always visible on iOS webkit, mic pulse animation */}
         <style>{`
+          .chat-scroll::-webkit-scrollbar {
+            width: 6px;
+          }
+          .chat-scroll::-webkit-scrollbar-track {
+            background: transparent;
+          }
+          .chat-scroll::-webkit-scrollbar-thumb {
+            background-color: #2E8B6A;
+            border-radius: 999px;
+          }
           @keyframes micPulse {
             0%, 100% { box-shadow: 0 0 0 0 rgba(146, 43, 33, 0.4); }
             50% { box-shadow: 0 0 0 8px rgba(146, 43, 33, 0); }
