@@ -179,7 +179,7 @@ interface Treatment {
 };
 
 const castorOilProtocol = (
-  <div className="mt-4 rounded-xl p-4 text-xs" style={{ backgroundColor: "#FEF9E7", color: "#7D6608" }}>
+  <div className="mt-4 rounded-xl p-4 text-xs" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-muted)" }}>
     <p className="font-semibold mb-2">🌿 How to make a castor oil heat pack</p>
     <p className="mb-2 font-medium">What you need:</p>
     <ul className="mb-3 space-y-1">
@@ -456,9 +456,9 @@ color: "var(--text-primary)" }}>
                 </p>
 
                 {/* Worth Knowing */}
-                <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "#FEF9E7" }}>
-                  <p className="text-xs font-semibold mb-1" style={{ color: "#7D6608" }}>Worth knowing</p>
-                  <p className="text-xs leading-relaxed" style={{ color: "#7D6608" }}>{treatment.worthKnowing}</p>
+                <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "var(--bg-accent)" }}>
+                  <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-muted)" }}>Worth knowing</p>
+                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{treatment.worthKnowing}</p>
                 </div>
 
                 {/* Individual Note */}

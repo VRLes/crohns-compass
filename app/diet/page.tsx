@@ -301,9 +301,9 @@ export default function Diet() {
           An honest, evidence-based overview of dietary approaches for IBD — from strongly evidenced therapeutic diets to emerging and anecdotal approaches. Each is clearly labelled so you always know what the science says.
         </p>
         <div className="mt-4 rounded-xl px-6 py-4" style={{ backgroundColor: "var(--bg-accent)" }}>
-          <p className="text-sm font-semibold mb-1" style={{ color: "#1B4F3A" }}>🥗 Important — please read before making dietary changes</p>
-          <p className="text-sm mb-2" style={{ color: "#1B4F3A" }}>Dietary changes in IBD can have significant effects — both positive and negative. Before making major changes to your diet, please speak with your gastroenterologist and an Accredited Practising Dietitian (APD) experienced in IBD.</p>
-          <p className="text-sm" style={{ color: "#1B4F3A" }}>💡 <span className="font-medium">Australian tip:</span> Ask your GP for a referral to a dietitian under a Chronic Disease Management (CDM) plan — you may be eligible for Medicare-subsidised dietitian appointments. Crohn&apos;s &amp; Colitis Australia can also help connect you with IBD-experienced dietitians.</p>
+          <p className="text-sm font-semibold mb-1" style={{ color: "var(--text-primary)" }}>🥗 Important — please read before making dietary changes</p>
+          <p className="text-sm mb-2" style={{ color: "var(--text-primary)" }}>Dietary changes in IBD can have significant effects — both positive and negative. Before making major changes to your diet, please speak with your gastroenterologist and an Accredited Practising Dietitian (APD) experienced in IBD.</p>
+          <p className="text-sm" style={{ color: "var(--text-primary)" }}>💡 <span className="font-medium">Australian tip:</span> Ask your GP for a referral to a dietitian under a Chronic Disease Management (CDM) plan — you may be eligible for Medicare-subsidised dietitian appointments. Crohn&apos;s &amp; Colitis Australia can also help connect you with IBD-experienced dietitians.</p>
         </div>
       </div>
 
@@ -319,7 +319,7 @@ export default function Diet() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 pb-6">
-        <h2 className="text-xl font-semibold mb-4" style={{ color: "#1B4F3A" }}>Dietary Approaches</h2>
+        <h2 className="text-xl font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Dietary Approaches</h2>
         <div className="flex gap-0 mb-6 border-b" style={{ borderColor: "var(--border-color)" }}>
           {(["All", "Crohn's", "UC"] as const).map((cond) => (
             <button key={cond} onClick={() => setActiveCondition(cond)} className="px-5 py-2 text-sm font-medium transition-all"
@@ -349,11 +349,11 @@ export default function Diet() {
                   <span className="text-xs font-medium px-3 py-1 rounded-full" style={{ backgroundColor: "var(--bg-page)", color: "#2E8B6A" }}>{diet.category}</span>
                   <span className="text-xs font-medium px-3 py-1 rounded-full" style={{ backgroundColor: "#EEF2FF", color: "#4338CA" }}>{conditionLabel(diet.condition)}</span>
                 </div>
-                <h3 className="text-lg font-semibold mb-2" style={{ color: "#1B4F3A" }}>{diet.name}</h3>
-                <p className="text-sm leading-relaxed mb-3" style={{ color: "#3D6B5A" }}>{diet.summary}</p>
-                <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "#FEF9E7" }}>
-                  <p className="text-xs font-semibold mb-1" style={{ color: "#7D6608" }}>Worth knowing</p>
-                  <p className="text-xs leading-relaxed" style={{ color: "#7D6608" }}>{diet.worthKnowing}</p>
+                <h3 className="text-lg font-semibold mb-2" style={{ color: "var(--text-primary)" }}>{diet.name}</h3>
+                <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-secondary)" }}>{diet.summary}</p>
+                <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "var(--bg-accent)" }}>
+                  <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-muted)" }}>Worth knowing</p>
+                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{diet.worthKnowing}</p>
                 </div>
                 <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "var(--bg-page)" }}>
                   <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-primary)" }}>Individual response varies</p>
@@ -376,11 +376,11 @@ export default function Diet() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 pb-20">
-        <h2 className="text-xl font-semibold mb-2" style={{ color: "#1B4F3A" }}>Recipes</h2>
+        <h2 className="text-xl font-semibold mb-2" style={{ color: "var(--text-primary)" }}>Recipes</h2>
         <p className="text-sm leading-relaxed max-w-3xl mb-4" style={{ color: "var(--text-secondary)" }}>Simple, nourishing recipes suited to different stages of IBD. Each is labelled with which dietary approaches it suits.</p>
-        <div className="rounded-xl px-6 py-4 mb-6" style={{ backgroundColor: "#FEF9E7" }}>
-          <p className="text-xs font-semibold mb-1" style={{ color: "#7D6608" }}>⚠️ Please read before trying these recipes</p>
-          <p className="text-xs leading-relaxed" style={{ color: "#7D6608" }}>These recipes are shared as general ideas only. Every person with IBD has different tolerances — what nourishes one person may not suit another. Conditions like SIBO, bowel strictures, bowel resection, histamine intolerance, gastroparesis, oxalate sensitivity, and individual food intolerances all affect what you can safely eat. If you are unsure what is right for you, please speak with an Accredited Practising Dietitian experienced in IBD before making significant dietary changes. Some ingredients in these recipes — including banana and butternut pumpkin — contain fructose or fructans and may not be well tolerated by everyone with IBD, particularly at larger serving sizes or during a flare. Individual tolerance varies significantly — speak with your dietitian before trying these recipes. For dietitian-approved recipes and to find an IBD-experienced dietitian in Australia, visit <a href="https://www.crohnsandcolitis.com.au" target="_blank" style={{color:"#2E8B6A"}}>Crohn&apos;s &amp; Colitis Australia</a>.</p>
+        <div className="rounded-xl px-6 py-4 mb-6" style={{ backgroundColor: "var(--bg-accent)" }}>
+          <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-primary)" }}>⚠️ Please read before trying these recipes</p>
+          <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>These recipes are shared as general ideas only. Every person with IBD has different tolerances — what nourishes one person may not suit another. Conditions like SIBO, bowel strictures, bowel resection, histamine intolerance, gastroparesis, oxalate sensitivity, and individual food intolerances all affect what you can safely eat. If you are unsure what is right for you, please speak with an Accredited Practising Dietitian experienced in IBD before making significant dietary changes. Some ingredients in these recipes — including banana and butternut pumpkin — contain fructose or fructans and may not be well tolerated by everyone with IBD, particularly at larger serving sizes or during a flare. Individual tolerance varies significantly — speak with your dietitian before trying these recipes. For dietitian-approved recipes and to find an IBD-experienced dietitian in Australia, visit <a href="https://www.crohnsandcolitis.com.au" target="_blank" style={{color:"#2E8B6A"}}>Crohn&apos;s &amp; Colitis Australia</a>.</p>
         </div>
         <div className="flex flex-wrap gap-3 mb-6">
           {(["All", "Flare-friendly", "Remission-friendly"] as const).map((cat) => (
@@ -415,7 +415,7 @@ export default function Diet() {
                   {isExpanded ? "▲ Hide" : "▼ Show"} ingredients & method
                 </button>
                 {isExpanded && (
-                  <div className="mt-3 rounded-xl px-4 py-4 text-xs leading-relaxed space-y-3" style={{ backgroundColor: "var(--bg-accent)", color: "#1B4F3A" }}>
+                  <div className="mt-3 rounded-xl px-4 py-4 text-xs leading-relaxed space-y-3" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}>
                     <div><p className="font-semibold mb-2">Ingredients</p><ul className="space-y-1">{recipe.ingredients.map((ing, i) => (<li key={i}>• {ing}</li>))}</ul></div>
                     <div><p className="font-semibold mb-2">Method</p><ol className="space-y-1">{recipe.method.map((step, i) => (<li key={i}>{i + 1}. {step}</li>))}</ol></div>
                   </div>
@@ -426,15 +426,15 @@ export default function Diet() {
         </div>
 
         <div className="mt-12 rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
-          <h2 className="text-lg font-semibold mb-1" style={{ color: "#1B4F3A" }}>Foods many people with IBD find difficult</h2>
-          <p className="text-xs mb-1" style={{ color: "#3D6B5A" }}>This is not a list of foods you must avoid — individual tolerances vary enormously. Effects can be subtle and build over time. A food and symptom diary is one of the most useful tools for identifying your personal triggers.</p>
+          <h2 className="text-lg font-semibold mb-1" style={{ color: "var(--text-primary)" }}>Foods many people with IBD find difficult</h2>
+          <p className="text-xs mb-1" style={{ color: "var(--text-secondary)" }}>This is not a list of foods you must avoid — individual tolerances vary enormously. Effects can be subtle and build over time. A food and symptom diary is one of the most useful tools for identifying your personal triggers.</p>
           {activeCondition !== "All" && (<p className="text-xs mb-4 font-medium" style={{ color: "#2E8B6A" }}>Showing shared triggers plus entries specific to {activeCondition === "Crohn's" ? "Crohn\u2019s disease" : "Ulcerative colitis"}.</p>)}
-          {activeCondition === "All" && (<p className="text-xs mb-4" style={{ color: "#3D6B5A" }}>Use the condition tabs above to filter this list for your specific diagnosis.</p>)}
+          {activeCondition === "All" && (<p className="text-xs mb-4" style={{ color: "var(--text-secondary)" }}>Use the condition tabs above to filter this list for your specific diagnosis.</p>)}
           <div className="grid md:grid-cols-2 gap-4">
             {difficultFoods.map(({ category, detail }) => (
               <div key={category} className="rounded-xl px-4 py-3" style={{ backgroundColor: "var(--bg-page)" }}>
-                <p className="text-xs font-semibold mb-1" style={{ color: "#1B4F3A" }}>{category}</p>
-                <p className="text-xs leading-relaxed" style={{ color: "#3D6B5A" }}>{detail}</p>
+                <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-primary)" }}>{category}</p>
+                <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{detail}</p>
               </div>
             ))}
           </div>

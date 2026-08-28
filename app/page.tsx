@@ -119,7 +119,7 @@ export default function Home() {
           <div className="flex flex-wrap justify-center gap-3">
             <span className="px-4 py-1.5 rounded-full text-xs font-medium" style={{ backgroundColor: "#D4EDE4", color: "#1B4F3A" }}>Strong clinical</span>
             <span className="px-4 py-1.5 rounded-full text-xs font-medium" style={{ backgroundColor: "#D6EAF8", color: "#1A5276" }}>Promising</span>
-            <span className="px-4 py-1.5 rounded-full text-xs font-medium" style={{ backgroundColor: "#FEF9E7", color: "#7D6608" }}>Traditional use</span>
+            <span className="px-4 py-1.5 rounded-full text-xs font-medium" style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-muted)" }}>Traditional use</span>
             <span className="px-4 py-1.5 rounded-full text-xs font-medium" style={{ backgroundColor: "#F5EEF8", color: "#6C3483" }}>Anecdotal</span>
             <span className="px-4 py-1.5 rounded-full text-xs font-medium" style={{ backgroundColor: "#FDEDEC", color: "#922B21" }}>Newly emerging</span>
           </div>

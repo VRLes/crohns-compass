@@ -176,7 +176,7 @@ export default function About() {
         </div>        {/* Medical Disclaimer */}
         <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
           <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Medical Disclaimer</h2>
-          <div className="rounded-xl px-5 py-4 mb-4" style={{ backgroundColor: "#FEF9E7" }}>
+          <div className="rounded-xl px-5 py-4 mb-4" style={{ backgroundColor: "var(--bg-accent)" }}>
             <p className="text-sm font-semibold mb-2" style={{ color: "#7D6608" }}>
               ⚠️ Important — please read
             </p>

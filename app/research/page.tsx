@@ -310,7 +310,7 @@ color: "var(--text-secondary)" }}>
 
                 {/* Australia Note */}
                 {item.australiaNote && (
-                  <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "#FEF9E7" }}>
+                  <div className="rounded-xl px-4 py-3 mb-3" style={{ backgroundColor: "var(--bg-accent)" }}>
                     <p className="text-xs font-semibold mb-1" style={{ color: "#7D6608" }}>🇦🇺 Australian availability</p>
                     <p className="text-xs leading-relaxed" style={{ color: "#7D6608" }}>{item.australiaNote}</p>
                   </div>

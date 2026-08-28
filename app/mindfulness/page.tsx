@@ -679,7 +679,7 @@ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
                     <p className="text-xs font-medium mb-2" style={{ color: "#2E8B6A" }}>🌿 {oils}</p>
                     <p className="text-xs leading-relaxed mb-2" style={{ color: "var(--text-secondary)"
  }}>{detail}</p>
-                    <div className="rounded-lg px-3 py-2" style={{ backgroundColor: "#FEF9E7" }}>
+                    <div className="rounded-lg px-3 py-2" style={{ backgroundColor: "var(--bg-accent)" }}>
                       <p className="text-xs" style={{ color: "#7D6608" }}>⚠️ Worth knowing: {caution}</p>
                     </div>
                   </div>
