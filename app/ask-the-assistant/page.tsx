@@ -4,7 +4,6 @@ import Nav from "../components/Nav";
 // IBD Compass — AI Chat Assistant
 
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
 
 interface Message {
   role: "user" | "assistant";
@@ -22,10 +21,17 @@ export default function AskTheAssistant() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const lastAssistantRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setSpeechSupported(
+      !!(window as any).SpeechRecognition || !!(window as any).webkitSpeechRecognition
+    );
+  }, []);
 
   useEffect(() => {
     const container = chatContainerRef.current;
@@ -76,6 +82,15 @@ export default function AskTheAssistant() {
     setListening(true);
   };
 
+  // Clear textarea and stop mic if active
+  const clearInput = () => {
+    if (listening) {
+      recognitionRef.current?.stop();
+      setListening(false);
+    }
+    setInput("");
+  };
+
   const sendMessage = async () => {
     if (!input.trim() || loading) return;
     const userMessage: Message = { role: "user", content: input.trim() };
@@ -114,16 +129,6 @@ export default function AskTheAssistant() {
     }
   };
 
-  
-  const [speechSupported, setSpeechSupported] = useState(false);
-
-  useEffect(() => {
-    setSpeechSupported(
-      typeof window !== "undefined" &&
-      !!(window as any).SpeechRecognition || !!(window as any).webkitSpeechRecognition
-    );
-  }, []);
-
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg-page)" }}>
 
@@ -143,85 +148,150 @@ export default function AskTheAssistant() {
       </div>
 
       <div className="max-w-4xl mx-auto w-full px-6 flex-1 flex flex-col pb-6">
-        <div
-          ref={chatContainerRef}
-          className="flex-1 rounded-2xl p-6 overflow-y-auto flex flex-col gap-4"
-          style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)", minHeight: "400px", maxHeight: "520px" }}
-        >
-          {messages.map((msg, i) => (
-            <div key={i} ref={msg.role === "assistant" && i === messages.length - 1 ? lastAssistantRef : null} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-              <div
-                className="rounded-2xl px-5 py-3 text-sm leading-relaxed"
-                style={{
-                  maxWidth: "80%",
-                  backgroundColor: msg.role === "user" ? "#2E8B6A" : "var(--bg-page)",
-                  color: msg.role === "user" ? "#ffffff" : "var(--text-primary)",
-                  whiteSpace: "pre-wrap",
-                }}
-              >
-                {msg.content}
-              </div>
-            </div>
-          ))}
-          {loading && (
-            <div className="flex justify-start">
-              <div className="rounded-2xl px-5 py-3 text-sm" style={{ backgroundColor: "var(--bg-page)", color: "var(--text-secondary)" }}>
-                Thinking...
-              </div>
-            </div>
-          )}
-          <div ref={bottomRef} />
-        </div>
 
-        <div className="mt-4 flex gap-3 items-end">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={listening ? "Listening..." : "Ask a question about IBD..."}
-            rows={2}
-            className="flex-1 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none"
+        {/* Chat card wrapper — position relative so fade overlay can sit on top */}
+        <div className="relative flex-1" style={{ minHeight: "400px", maxHeight: "520px" }}>
+
+          {/* Scrollable chat area */}
+          <div
+            ref={chatContainerRef}
+            className="h-full rounded-2xl p-6 overflow-y-auto flex flex-col gap-4"
             style={{
               backgroundColor: "var(--bg-card)",
-              border: `1px solid ${listening ? "#2E8B6A" : "var(--border-color)"}`,
-              color: "var(--text-primary)",
+              border: "1px solid var(--border-color)",
+            }}
+          >
+            {messages.map((msg, i) => (
+              <div
+                key={i}
+                ref={msg.role === "assistant" && i === messages.length - 1 ? lastAssistantRef : null}
+                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+              >
+                <div
+                  className="rounded-2xl px-5 py-3 text-sm leading-relaxed"
+                  style={{
+                    maxWidth: "80%",
+                    backgroundColor: msg.role === "user" ? "#2E8B6A" : "var(--bg-page)",
+                    color: msg.role === "user" ? "#ffffff" : "var(--text-primary)",
+                    whiteSpace: "pre-wrap",
+                  }}
+                >
+                  {msg.content}
+                </div>
+              </div>
+            ))}
+            {loading && (
+              <div className="flex justify-start">
+                <div className="rounded-2xl px-5 py-3 text-sm" style={{ backgroundColor: "var(--bg-page)", color: "var(--text-secondary)" }}>
+                  Thinking...
+                </div>
+              </div>
+            )}
+            <div ref={bottomRef} />
+          </div>
+
+          {/* Fade gradient — sits over bottom of chat card, signals more content below */}
+          <div
+            className="absolute bottom-0 left-0 right-0 rounded-b-2xl pointer-events-none"
+            style={{
+              height: "60px",
+              background: "linear-gradient(to bottom, transparent, var(--bg-card))",
             }}
           />
 
-          {speechSupported && (
-            <button
-              onClick={toggleListening}
-              title={listening ? "Stop listening" : "Speak your question"}
-              className="px-4 py-3 rounded-xl text-sm font-medium transition-all"
-              style={{
-                backgroundColor: listening ? "#922B21" : "var(--bg-card)",
-                color: listening ? "#ffffff" : "var(--text-secondary)",
-                border: `1px solid ${listening ? "#922B21" : "var(--border-color)"}`,
-              }}
-            >
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="9" y="2" width="6" height="12" rx="3" />
-                <path d="M5 10a7 7 0 0014 0" />
-                <line x1="12" y1="19" x2="12" y2="22" />
-                <line x1="9" y1="22" x2="15" y2="22" />
-              </svg>
-            </button>
-          )}
-
-          <button
-            onClick={sendMessage}
-            disabled={loading || !input.trim()}
-            className="px-6 py-3 rounded-xl text-white text-sm font-medium transition-opacity disabled:opacity-50"
-            style={{ backgroundColor: "#2E8B6A" }}
-          >
-            Send
-          </button>
         </div>
 
-        <p className="text-xs mt-2 text-center" style={{ color: "var(--text-muted)" }}>
-          Press Enter to send · Shift + Enter for a new line
-          {speechSupported && " · Tap 🎤 to speak"}
-        </p>
+        {/* Input row */}
+        <div className="mt-4 flex gap-3 items-end">
+
+          {/* Textarea with optional clear button */}
+          <div className="flex-1 relative">
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={listening ? "Listening..." : "Ask a question about IBD..."}
+              rows={2}
+              className="w-full rounded-xl px-4 py-3 text-sm resize-none focus:outline-none pr-10"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                border: `1px solid ${listening ? "#2E8B6A" : "var(--border-color)"}`,
+                color: "var(--text-primary)",
+              }}
+            />
+            {/* Clear button — only shows when there is text */}
+            {input.trim() && (
+              <button
+                onClick={clearInput}
+                title="Clear"
+                className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold transition-opacity hover:opacity-80"
+                style={{
+                  backgroundColor: "var(--text-muted)",
+                  color: "var(--bg-card)",
+                  lineHeight: 1,
+                }}
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Mic button + label */}
+          {speechSupported && (
+            <div className="flex flex-col items-center gap-1">
+              <button
+                onClick={toggleListening}
+                title={listening ? "Tap to stop" : "Tap to speak"}
+                className="px-4 py-3 rounded-xl text-sm font-medium transition-all"
+                style={{
+                  backgroundColor: listening ? "#922B21" : "var(--bg-card)",
+                  color: listening ? "#ffffff" : "var(--text-secondary)",
+                  border: `1px solid ${listening ? "#922B21" : "var(--border-color)"}`,
+                  animation: listening ? "pulse 1.5s ease-in-out infinite" : "none",
+                }}
+              >
+                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="9" y="2" width="6" height="12" rx="3" />
+                  <path d="M5 10a7 7 0 0014 0" />
+                  <line x1="12" y1="19" x2="12" y2="22" />
+                  <line x1="9" y1="22" x2="15" y2="22" />
+                </svg>
+              </button>
+              {/* Mic hint — flips when recording */}
+              <span
+                className="text-xs font-medium whitespace-nowrap"
+                style={{ color: listening ? "#922B21" : "var(--text-secondary)" }}
+              >
+                {listening ? "Tap to stop" : "Tap to speak"}
+              </span>
+            </div>
+          )}
+
+          {/* Send button + label */}
+          <div className="flex flex-col items-center gap-1">
+            <button
+              onClick={sendMessage}
+              disabled={loading || !input.trim()}
+              className="px-6 py-3 rounded-xl text-white text-sm font-medium transition-opacity disabled:opacity-50"
+              style={{ backgroundColor: "#2E8B6A" }}
+            >
+              Send
+            </button>
+            <span className="text-xs font-medium whitespace-nowrap" style={{ color: "var(--text-secondary)" }}>
+              Press Enter to send
+            </span>
+          </div>
+
+        </div>
+
+        {/* Pulse keyframe for mic recording animation */}
+        <style>{`
+          @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(146, 43, 33, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(146, 43, 33, 0); }
+          }
+        `}</style>
+
       </div>
 
       <footer className="border-t py-6 text-center mt-4" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
