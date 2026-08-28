@@ -37,7 +37,6 @@ export default function AskTheAssistant() {
     const container = chatContainerRef.current;
     const lastAssistant = lastAssistantRef.current;
     if (!container) return;
-
     if (messages.length > 0 && messages[messages.length - 1].role === "assistant" && lastAssistant) {
       container.scrollTop = lastAssistant.offsetTop - container.offsetTop;
     } else {
@@ -49,40 +48,33 @@ export default function AskTheAssistant() {
     const SpeechRecognition =
       (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) return;
-
     if (listening) {
       recognitionRef.current?.stop();
       setListening(false);
       return;
     }
-
     const recognition = new SpeechRecognition();
     recognition.lang = "en-AU";
     recognition.continuous = true;
     recognition.interimResults = true;
-
     recognition.onresult = (event: any) => {
       const transcript = Array.from(event.results)
         .map((r: any) => r[0].transcript)
         .join("");
       setInput(transcript);
     };
-
     recognition.onend = () => {
       setListening(false);
       recognitionRef.current = null;
     };
-
     recognition.onerror = () => {
       setListening(false);
     };
-
     recognitionRef.current = recognition;
     recognition.start();
     setListening(true);
   };
 
-  // Clear textarea and stop mic if active
   const clearInput = () => {
     if (listening) {
       recognitionRef.current?.stop();
@@ -134,6 +126,7 @@ export default function AskTheAssistant() {
 
       <Nav active="/ask-the-assistant" />
 
+      {/* Page header */}
       <div className="max-w-4xl mx-auto w-full px-6 pt-10 pb-6">
         <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Ask the Assistant</h1>
         <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
@@ -147,15 +140,14 @@ export default function AskTheAssistant() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto w-full px-6 flex-1 flex flex-col pb-6">
+      {/* Chat section — grows to fill remaining screen height */}
+      <div className="max-w-4xl mx-auto w-full px-6 pb-6 flex flex-col" style={{ flex: "1 1 0", minHeight: 0 }}>
 
-        {/* Chat card wrapper — position relative so fade overlay can sit on top */}
-        <div className="relative flex-1" style={{ minHeight: "400px", maxHeight: "520px" }}>
-
-          {/* Scrollable chat area */}
+        {/* Chat card wrapper — fixed height relative to viewport, scrolls inside */}
+        <div className="relative" style={{ flex: "1 1 0", minHeight: 0 }}>
           <div
             ref={chatContainerRef}
-            className="h-full rounded-2xl p-6 overflow-y-auto flex flex-col gap-4"
+            className="absolute inset-0 rounded-2xl p-6 overflow-y-auto flex flex-col gap-4"
             style={{
               backgroundColor: "var(--bg-card)",
               border: "1px solid var(--border-color)",
@@ -190,7 +182,7 @@ export default function AskTheAssistant() {
             <div ref={bottomRef} />
           </div>
 
-          {/* Fade gradient — sits over bottom of chat card, signals more content below */}
+          {/* Fade gradient — signals more content below */}
           <div
             className="absolute bottom-0 left-0 right-0 rounded-b-2xl pointer-events-none"
             style={{
@@ -198,13 +190,12 @@ export default function AskTheAssistant() {
               background: "linear-gradient(to bottom, transparent, var(--bg-card))",
             }}
           />
-
         </div>
 
         {/* Input row */}
         <div className="mt-4 flex gap-3 items-end">
 
-          {/* Textarea with optional clear button */}
+          {/* Textarea with clear button */}
           <div className="flex-1 relative">
             <textarea
               value={input}
@@ -242,25 +233,25 @@ export default function AskTheAssistant() {
               <button
                 onClick={toggleListening}
                 title={listening ? "Tap to stop" : "Tap to speak"}
-                className="px-4 py-3 rounded-xl text-sm font-medium transition-all"
+                className="px-4 py-3 rounded-xl font-medium transition-all"
                 style={{
                   backgroundColor: listening ? "#922B21" : "var(--bg-card)",
-                  color: listening ? "#ffffff" : "var(--text-secondary)",
-                  border: `1px solid ${listening ? "#922B21" : "var(--border-color)"}`,
-                  animation: listening ? "pulse 1.5s ease-in-out infinite" : "none",
+                  color: listening ? "#ffffff" : "#2E8B6A",
+                  border: `2px solid ${listening ? "#922B21" : "#2E8B6A"}`,
+                  animation: listening ? "micPulse 1.5s ease-in-out infinite" : "none",
                 }}
               >
-                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="9" y="2" width="6" height="12" rx="3" />
                   <path d="M5 10a7 7 0 0014 0" />
                   <line x1="12" y1="19" x2="12" y2="22" />
                   <line x1="9" y1="22" x2="15" y2="22" />
                 </svg>
               </button>
-              {/* Mic hint — flips when recording */}
+              {/* Mic hint — flips when recording, bold and clearly coloured */}
               <span
-                className="text-xs font-medium whitespace-nowrap"
-                style={{ color: listening ? "#922B21" : "var(--text-secondary)" }}
+                className="text-xs font-semibold whitespace-nowrap"
+                style={{ color: listening ? "#922B21" : "#2E8B6A" }}
               >
                 {listening ? "Tap to stop" : "Tap to speak"}
               </span>
@@ -277,7 +268,7 @@ export default function AskTheAssistant() {
             >
               Send
             </button>
-            <span className="text-xs font-medium whitespace-nowrap" style={{ color: "var(--text-secondary)" }}>
+            <span className="text-xs font-semibold whitespace-nowrap" style={{ color: "var(--text-secondary)" }}>
               Press Enter to send
             </span>
           </div>
@@ -286,7 +277,7 @@ export default function AskTheAssistant() {
 
         {/* Pulse keyframe for mic recording animation */}
         <style>{`
-          @keyframes pulse {
+          @keyframes micPulse {
             0%, 100% { box-shadow: 0 0 0 0 rgba(146, 43, 33, 0.4); }
             50% { box-shadow: 0 0 0 8px rgba(146, 43, 33, 0); }
           }
@@ -294,7 +285,7 @@ export default function AskTheAssistant() {
 
       </div>
 
-      <footer className="border-t py-6 text-center mt-4" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
+      <footer className="border-t py-6 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
         <p className="text-sm flex items-center justify-center gap-2 flex-wrap" style={{ color: "var(--text-secondary)" }}>
           <span>IBD Compass — Evidence-based information with hope at its heart</span>
         </p>
