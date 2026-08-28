@@ -16,22 +16,45 @@ const WELCOME_MESSAGE: Message = {
     "Hello, and welcome to IBD Compass. I'm here to help you find accurate, evidence-based information about IBD — explained in plain language, with honesty and care.\n\nWhat would you like to know today?",
 };
 
+const EXAMPLE_QUESTIONS = [
+  "What diet helps reduce IBD flares?",
+  "Are probiotics safe for Crohn's disease?",
+  "What questions should I ask my gastroenterologist?",
+];
+
 export default function AskTheAssistant() {
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(false);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const lastAssistantRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const cycleRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     setSpeechSupported(
       !!(window as any).SpeechRecognition || !!(window as any).webkitSpeechRecognition
     );
   }, []);
+
+  // Cycle placeholder examples every 4 seconds — stops when user focuses textarea
+  useEffect(() => {
+    if (isFocused) {
+      if (cycleRef.current) clearInterval(cycleRef.current);
+      return;
+    }
+    cycleRef.current = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % EXAMPLE_QUESTIONS.length);
+    }, 4000);
+    return () => {
+      if (cycleRef.current) clearInterval(cycleRef.current);
+    };
+  }, [isFocused]);
 
   useEffect(() => {
     const container = chatContainerRef.current;
@@ -75,7 +98,6 @@ export default function AskTheAssistant() {
     setListening(true);
   };
 
-  // Clear question textarea and stop mic if active
   const clearInput = () => {
     if (listening) {
       recognitionRef.current?.stop();
@@ -84,7 +106,6 @@ export default function AskTheAssistant() {
     setInput("");
   };
 
-  // Clear conversation back to welcome message
   const clearConversation = () => {
     setMessages([WELCOME_MESSAGE]);
     setInput("");
@@ -132,6 +153,13 @@ export default function AskTheAssistant() {
     }
   };
 
+  // Placeholder — shows listening state, cycling example, or static prompt
+  const placeholder = listening
+    ? "Listening..."
+    : isFocused
+    ? "Ask a question about IBD..."
+    : `Try asking: ${EXAMPLE_QUESTIONS[placeholderIndex]}`;
+
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg-page)" }}>
 
@@ -162,7 +190,7 @@ export default function AskTheAssistant() {
             style={{
               backgroundColor: "var(--bg-card)",
               border: "1px solid var(--border-color)",
-              overflowY: "scroll", // always show scrollbar, including iOS
+              overflowY: "scroll",
             }}
           >
             {messages.map((msg, i) => (
@@ -204,12 +232,12 @@ export default function AskTheAssistant() {
           />
         </div>
 
-        {/* Clear conversation link — only shows after first reply */}
+        {/* Clear conversation — only shows after first reply */}
         {messages.length > 1 && (
           <div className="mt-2 text-center">
             <button
               onClick={clearConversation}
-              className="text-xs font-medium hover:opacity-70 transition-opacity"
+              className="text-xs font-semibold whitespace-nowrap hover:opacity-70 transition-opacity"
               style={{ color: "var(--text-secondary)" }}
             >
               ✕ Clear conversation
@@ -226,18 +254,19 @@ export default function AskTheAssistant() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={listening ? "Listening..." : "Ask a question about IBD..."}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              placeholder={placeholder}
               rows={2}
               className="w-full rounded-xl px-4 py-3 text-sm resize-none focus:outline-none"
               style={{
                 backgroundColor: "var(--bg-card)",
                 border: `1px solid ${listening ? "#2E8B6A" : "var(--border-color)"}`,
                 color: "var(--text-primary)",
-                // Extra right padding so text doesn't hide behind the ✕ button
                 paddingRight: input.trim() ? "2.5rem" : "1rem",
               }}
             />
-            {/* ✕ clear button — always rendered but hidden when empty, avoids iOS display issues */}
+            {/* ✕ always in DOM, opacity-hidden when empty — fixes iOS visibility */}
             <button
               onClick={clearInput}
               title="Clear"
@@ -247,7 +276,6 @@ export default function AskTheAssistant() {
                 backgroundColor: "#2E8B6A",
                 color: "#ffffff",
                 lineHeight: 1,
-                // Visible only when there's text — using opacity so it stays in the DOM on iOS
                 opacity: input.trim() ? 1 : 0,
                 pointerEvents: input.trim() ? "auto" : "none",
               }}
@@ -296,14 +324,17 @@ export default function AskTheAssistant() {
             >
               Send
             </button>
-            <span className="text-xs font-semibold whitespace-nowrap" style={{ color: "var(--text-secondary)" }}>
+            <span
+              className="text-xs font-semibold whitespace-nowrap"
+              style={{ color: "var(--text-secondary)" }}
+            >
               Press Enter to send
             </span>
           </div>
 
         </div>
 
-        {/* Styles — scrollbar always visible on iOS webkit, mic pulse animation */}
+        {/* Scrollbar + mic pulse styles */}
         <style>{`
           .chat-scroll::-webkit-scrollbar {
             width: 6px;
