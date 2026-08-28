@@ -1,5 +1,5 @@
 // app/about/page.tsx
-// Crohn's Compass — About & Disclaimer Page
+// IBD Compass — About & Disclaimer Page
 
 import Link from "next/link";
 import Nav from "../components/Nav";
@@ -177,10 +177,10 @@ export default function About() {
         <div className="rounded-2xl p-8 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
           <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--text-primary)" }}>Medical Disclaimer</h2>
           <div className="rounded-xl px-5 py-4 mb-4" style={{ backgroundColor: "var(--bg-accent)" }}>
-            <p className="text-sm font-semibold mb-2" style={{ color: "#7D6608" }}>
+            <p className="text-sm font-semibold mb-2" style={{ color: "var(--text-primary)" }}>
               ⚠️ Important — please read
             </p>
-            <p className="text-sm leading-relaxed" style={{ color: "#7D6608" }}>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--text-primary)" }}>
               IBD Compass is an information resource only. It does not provide
               medical advice, diagnosis, or treatment recommendations. Nothing on this
               site should be used as a substitute for professional medical care.

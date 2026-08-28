@@ -1,7 +1,7 @@
 "use client";
 import Nav from "../components/Nav";
 // app/mindfulness/page.tsx
-// Crohn's Compass — Mindfulness Page
+// IBD Compass — Mindfulness Page
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
@@ -680,7 +680,7 @@ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)" }}>
                     <p className="text-xs leading-relaxed mb-2" style={{ color: "var(--text-secondary)"
  }}>{detail}</p>
                     <div className="rounded-lg px-3 py-2" style={{ backgroundColor: "var(--bg-accent)" }}>
-                      <p className="text-xs" style={{ color: "#7D6608" }}>⚠️ Worth knowing: {caution}</p>
+                      <p className="text-xs" style={{ color: "var(--text-secondary)" }}>⚠️ Worth knowing: {caution}</p>
                     </div>
                   </div>
                 ))}

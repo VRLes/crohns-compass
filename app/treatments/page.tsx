@@ -1,7 +1,7 @@
 "use client";
 import Nav from "../components/Nav";
 // app/treatments/page.tsx
-// Crohn's Compass — Treatments Page
+// IBD Compass — Treatments Page
 
 import { useState } from "react";
 import Link from "next/link";
@@ -441,9 +441,9 @@ color: "var(--text-primary)" }}>
                 </span>
                                 {/* UC Note */}
                 {activeCondition === "UC" && treatment.ucNote && (
-                  <div className="mt-3 rounded-xl px-4 py-3" style={{ backgroundColor: "#eff6ff", borderLeft: "3px solid #3b82f6" }}>
-                    <p className="text-xs font-semibold mb-1" style={{ color: "#1e40af" }}>UC-specific</p>
-                    <p className="text-xs leading-relaxed" style={{ color: "#1e40af" }}>{treatment.ucNote}</p>
+                  <div className="mt-3 rounded-xl px-4 py-3" style={{ backgroundColor: "var(--bg-accent)", borderLeft: "3px solid #2E8B6A" }}>
+                    <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-primary)" }}>UC-specific</p>
+                    <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{treatment.ucNote}</p>
                   </div>
                 )}
 
