@@ -22,6 +22,29 @@ const EXAMPLE_QUESTIONS = [
   "What questions should I ask my gastroenterologist?",
 ];
 
+function renderMarkdown(content: string, textColor: string) {
+  return (
+    <div style={{ color: textColor }}>
+      {content.split("\n").map((line, i) => {
+        if (line.startsWith("### "))
+          return <h3 key={i} style={{ fontWeight: 700, fontSize: "0.95rem", marginTop: "0.75rem", marginBottom: "0.25rem" }}>{line.replace("### ", "")}</h3>;
+        if (line.startsWith("## "))
+          return <h2 key={i} style={{ fontWeight: 700, fontSize: "1rem", marginTop: "1rem", marginBottom: "0.25rem" }}>{line.replace("## ", "")}</h2>;
+        if (line.startsWith("# "))
+          return <h1 key={i} style={{ fontWeight: 700, fontSize: "1.1rem", marginTop: "1rem", marginBottom: "0.25rem" }}>{line.replace("# ", "")}</h1>;
+        if (line.startsWith("- ") || line.startsWith("* "))
+          return <li key={i} style={{ marginLeft: "1rem", listStyleType: "disc" }}>{line.replace(/^[-*] /, "").replace(/\*\*(.*?)\*\*/g, "$1")}</li>;
+        if (line.startsWith("---"))
+          return <hr key={i} style={{ border: "none", borderTop: "1px solid var(--border-color)", margin: "0.5rem 0" }} />;
+        if (line.trim() === "")
+          return <br key={i} />;
+        const boldLine = line.replace(/\*\*(.*?)\*\*/g, (_, t) => `<strong>${t}</strong>`);
+        return <p key={i} style={{ marginBottom: "0.25rem" }} dangerouslySetInnerHTML={{ __html: boldLine }} />;
+      })}
+    </div>
+  );
+}
+
 export default function AskTheAssistant() {
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
@@ -42,7 +65,6 @@ export default function AskTheAssistant() {
     );
   }, []);
 
-  // Cycle placeholder examples every 4 seconds — stops when user focuses textarea
   useEffect(() => {
     if (isFocused) {
       if (cycleRef.current) clearInterval(cycleRef.current);
@@ -57,13 +79,8 @@ export default function AskTheAssistant() {
   }, [isFocused]);
 
   useEffect(() => {
-    const container = chatContainerRef.current;
-    const lastAssistant = lastAssistantRef.current;
-    if (!container) return;
-    if (messages.length > 0 && messages[messages.length - 1].role === "assistant" && lastAssistant) {
-      container.scrollTop = lastAssistant.offsetTop - container.offsetTop;
-    } else {
-      container.scrollTop = container.scrollHeight;
+    if (messages.length > 1 && lastAssistantRef.current) {
+      lastAssistantRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [messages]);
 
@@ -153,7 +170,6 @@ export default function AskTheAssistant() {
     }
   };
 
-  // Placeholder — shows listening state, cycling example, or static prompt
   const placeholder = listening
     ? "Listening..."
     : isFocused
@@ -161,12 +177,12 @@ export default function AskTheAssistant() {
     : `Try asking: ${EXAMPLE_QUESTIONS[placeholderIndex]}`;
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg-page)" }}>
+    <div style={{ backgroundColor: "var(--bg-page)", minHeight: "100vh" }}>
 
       <Nav active="/ask-the-assistant" />
 
       {/* Page header */}
-      <div className="max-w-4xl mx-auto w-full px-6 pt-10 pb-6">
+      <div className="max-w-2xl mx-auto w-full px-6 pt-10 pb-6">
         <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Ask the Assistant</h1>
         <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
           Ask the Assistant anything — diet and food choices, medications and side effects, surgery and stoma care, mindfulness, complementary therapies, or the latest research. All answers are evidence-based and written in plain language. Available day and night.
@@ -179,76 +195,73 @@ export default function AskTheAssistant() {
         </div>
       </div>
 
-      {/* Chat section */}
-      <div className="max-w-4xl mx-auto w-full px-6 pb-6 flex flex-col" style={{ flex: "1 1 0", minHeight: 0 }}>
-
-        {/* Chat card — fills available height, scrolls inside */}
-        <div className="relative" style={{ flex: "1 1 0", minHeight: 0 }}>
-          <div
-            ref={chatContainerRef}
-            className="absolute inset-0 rounded-2xl p-6 flex flex-col gap-4 chat-scroll"
-            style={{
-              backgroundColor: "var(--bg-card)",
-              border: "1px solid var(--border-color)",
-              overflowY: "scroll",
-            }}
-          >
-            {messages.map((msg, i) => (
+      {/* Chat messages — natural page scroll */}
+      <div className="max-w-2xl mx-auto w-full px-6 pb-56">
+        <div className="flex flex-col gap-4" ref={chatContainerRef}>
+          {messages.map((msg, i) => (
+            <div
+              key={i}
+              ref={msg.role === "assistant" && i === messages.length - 1 ? lastAssistantRef : null}
+              className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+            >
               <div
-                key={i}
-                ref={msg.role === "assistant" && i === messages.length - 1 ? lastAssistantRef : null}
-                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                className="rounded-2xl px-5 py-3 text-sm leading-relaxed"
+                style={{
+                  maxWidth: "85%",
+                  backgroundColor: msg.role === "user" ? "#2E8B6A" : "var(--bg-card)",
+                  color: msg.role === "user" ? "#ffffff" : "var(--text-primary)",
+                  border: msg.role === "assistant" ? "1px solid var(--border-color)" : "none",
+                }}
               >
-                <div
-                  className="rounded-2xl px-5 py-3 text-sm leading-relaxed"
-                  style={{
-                    maxWidth: "85%",
-                    backgroundColor: msg.role === "user" ? "#2E8B6A" : "var(--bg-page)",
-                    color: msg.role === "user" ? "#ffffff" : "var(--text-primary)",
-                    whiteSpace: "pre-wrap",
-                  }}
-                >
-                  {msg.content}
-                </div>
+                {msg.role === "user" ? (
+                  <span style={{ whiteSpace: "pre-wrap" }}>{msg.content}</span>
+                ) : (
+                  renderMarkdown(msg.content, "var(--text-primary)")
+                )}
               </div>
-            ))}
-            {loading && (
-              <div className="flex justify-start">
-                <div className="rounded-2xl px-5 py-3 text-sm" style={{ backgroundColor: "var(--bg-page)", color: "var(--text-secondary)" }}>
-                  Thinking...
-                </div>
+            </div>
+          ))}
+          {loading && (
+            <div className="flex justify-start">
+              <div
+                className="rounded-2xl px-5 py-3 text-sm"
+                style={{
+                  backgroundColor: "var(--bg-card)",
+                  color: "var(--text-secondary)",
+                  border: "1px solid var(--border-color)",
+                }}
+              >
+                Thinking...
               </div>
-            )}
-            <div ref={bottomRef} />
-          </div>
-
-          {/* Fade gradient — signals more content below */}
-          <div
-            className="absolute bottom-0 left-0 right-0 rounded-b-2xl pointer-events-none"
-            style={{
-              height: "60px",
-              background: "linear-gradient(to bottom, transparent, var(--bg-card))",
-            }}
-          />
+            </div>
+          )}
+          <div ref={bottomRef} />
         </div>
 
-        {/* Clear conversation — only shows after first reply */}
+        {/* Clear conversation */}
         {messages.length > 1 && (
-          <div className="mt-2 text-center">
+          <div className="mt-4 text-center">
             <button
               onClick={clearConversation}
-              className="text-xs font-semibold whitespace-nowrap hover:opacity-70 transition-opacity"
+              className="text-xs font-semibold hover:opacity-70 transition-opacity"
               style={{ color: "var(--text-secondary)" }}
             >
               ✕ Clear conversation
             </button>
           </div>
         )}
+      </div>
 
-        {/* Input row — stacks on mobile, side-by-side on tablet+ */}
-        <div className="mt-3 flex flex-col sm:flex-row gap-3 sm:items-end">
+      {/* Sticky input bar */}
+      <div
+        className="fixed bottom-0 left-0 right-0 px-4 py-3 z-50"
+        style={{
+          backgroundColor: "var(--bg-card)",
+          borderTop: "1px solid var(--border-color)",
+        }}
+      >
+        <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-2 sm:items-end">
 
-          {/* Textarea with clear button */}
           <div className="flex-1 relative">
             <textarea
               value={input}
@@ -260,7 +273,7 @@ export default function AskTheAssistant() {
               rows={2}
               className="w-full rounded-xl px-4 py-3 text-sm resize-none focus:outline-none"
               style={{
-                backgroundColor: "var(--bg-card)",
+                backgroundColor: "var(--bg-page)",
                 border: `1px solid ${listening ? "#2E8B6A" : "var(--border-color)"}`,
                 color: "var(--text-primary)",
                 paddingRight: input.trim() ? "2.5rem" : "1rem",
@@ -283,10 +296,8 @@ export default function AskTheAssistant() {
             </button>
           </div>
 
-          {/* Mic + Send row — sit side-by-side under textarea on mobile, inline on tablet+ */}
-          <div className="flex gap-3 justify-center sm:contents">
+          <div className="flex gap-2 justify-center sm:contents">
 
-            {/* Mic button + label */}
             {speechSupported && (
               <div className="flex flex-col items-center gap-1 flex-1 sm:flex-none">
                 <button
@@ -294,7 +305,7 @@ export default function AskTheAssistant() {
                   title={listening ? "Tap to stop" : "Tap to speak"}
                   className="w-full sm:w-auto px-4 py-3 rounded-xl font-medium transition-all flex items-center justify-center"
                   style={{
-                    backgroundColor: listening ? "#922B21" : "var(--bg-card)",
+                    backgroundColor: listening ? "#922B21" : "var(--bg-page)",
                     color: listening ? "#ffffff" : "#2E8B6A",
                     border: `2px solid ${listening ? "#922B21" : "#2E8B6A"}`,
                     animation: listening ? "micPulse 1.5s ease-in-out infinite" : "none",
@@ -307,16 +318,12 @@ export default function AskTheAssistant() {
                     <line x1="9" y1="22" x2="15" y2="22" />
                   </svg>
                 </button>
-                <span
-                  className="text-xs font-semibold whitespace-nowrap"
-                  style={{ color: listening ? "#922B21" : "#2E8B6A" }}
-                >
+                <span className="text-xs font-semibold whitespace-nowrap" style={{ color: listening ? "#922B21" : "#2E8B6A" }}>
                   {listening ? "Tap to stop" : "Tap to speak"}
                 </span>
               </div>
             )}
 
-            {/* Send button + label */}
             <div className="flex flex-col items-center gap-1 flex-1 sm:flex-none">
               <button
                 onClick={sendMessage}
@@ -326,41 +333,28 @@ export default function AskTheAssistant() {
               >
                 Send
               </button>
-              <span
-                className="text-xs font-semibold whitespace-nowrap"
-                style={{ color: "var(--text-secondary)" }}
-              >
+              <span className="text-xs font-semibold whitespace-nowrap" style={{ color: "var(--text-secondary)" }}>
                 Press Enter to send
               </span>
             </div>
 
           </div>
-
         </div>
-
-        {/* Scrollbar + mic pulse styles */}
-        <style>{`
-          .chat-scroll::-webkit-scrollbar {
-            width: 6px;
-          }
-          .chat-scroll::-webkit-scrollbar-track {
-            background: transparent;
-          }
-          .chat-scroll::-webkit-scrollbar-thumb {
-            background-color: #2E8B6A;
-            border-radius: 999px;
-          }
-          @keyframes micPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(146, 43, 33, 0.4); }
-            50% { box-shadow: 0 0 0 8px rgba(146, 43, 33, 0); }
-          }
-        `}</style>
-
       </div>
 
-      <footer className="border-t py-6 text-center" style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}>
-        <p className="text-sm flex items-center justify-center gap-2 flex-wrap" style={{ color: "var(--text-secondary)" }}>
-          <span>IBD Compass — Evidence-based information with hope at its heart</span>
+      <style>{`
+        @keyframes micPulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(146, 43, 33, 0.4); }
+          50% { box-shadow: 0 0 0 8px rgba(146, 43, 33, 0); }
+        }
+      `}</style>
+
+      <footer
+        className="border-t py-6 text-center"
+        style={{ borderColor: "var(--border-color)", backgroundColor: "var(--footer-bg)" }}
+      >
+        <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+          IBD Compass — Evidence-based information with hope at its heart
         </p>
       </footer>
 
