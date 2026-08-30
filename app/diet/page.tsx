@@ -239,7 +239,7 @@ const recipes: Recipe[] = [
 const evidenceColors: Record<EvidenceType, { bg: string; text: string; dot: string }> = {
   "Strong clinical": { bg: "#EBF5FB", text: "#1A5276", dot: "#2980B9" },
   "Promising":       { bg: "#E9F7EF", text: "#1E8449", dot: "#27AE60" },
-  "Traditional use": { bg: "#FEF9E7", text: "#7D6608", dot: "#F1C40F" },
+  "Traditional use": { bg: "#F5E6D3", text: "#7A5C2E", dot: "#B8895A" },
   "Anecdotal":       { bg: "#F4F6F7", text: "#566573", dot: "#95A5A6" },
   "Newly emerging":  { bg: "#FDF2E9", text: "#A04000", dot: "#E67E22" },
 };

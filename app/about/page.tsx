@@ -158,7 +158,7 @@ export default function About() {
             {[
               { label: "Strong clinical", bg: "#D4EDE4", text: "#1B4F3A", detail: "Supported by multiple randomised controlled trials or meta-analyses. The highest standard of clinical evidence." },
               { label: "Promising", bg: "#D6EAF8", text: "#1A5276", detail: "Supported by positive early studies but more research is needed before firm conclusions can be drawn." },
-              { label: "Traditional use", bg: "#FEF9E7", text: "#7D6608", detail: "Used historically in traditional medicine systems. Limited modern clinical evidence but contextualised alongside what science currently shows." },
+              { label: "Traditional use", bg: "#F5E6D3", text: "#7A5C2E", detail: "Used historically in traditional medicine systems. Limited modern clinical evidence but contextualised alongside what science currently shows." },
               { label: "Anecdotal", bg: "#F5EEF8", text: "#6C3483", detail: "Reported by patients and communities but not yet studied in formal clinical trials." },
               { label: "Newly emerging", bg: "#FDEDEC", text: "#922B21", detail: "Very recent research — promising but not yet widely accepted or replicated. Presented with appropriate caution." },
             ].map(({ label, bg, text, detail }) => (

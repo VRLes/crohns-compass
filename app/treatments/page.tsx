@@ -173,7 +173,7 @@ interface Treatment {
 ];  const evidenceColors: Record<EvidenceType, { bg: string; text: string; dot: string }> = {
   "Strong clinical": { bg: "#e0f2fe", text: "#0c4a6e", dot: "#38bdf8" },
   "Promising":       { bg: "#fef9c3", text: "#713f12", dot: "#fde047" },
-  "Traditional use": { bg: "#f0fdf4", text: "#14532d", dot: "#4ade80" },
+  "Traditional use": { bg: "#F5E6D3", text: "#7A5C2E", dot: "#B8895A" },
   "Anecdotal":       { bg: "#f5f5f4", text: "#44403c", dot: "#a8a29e" },
   "Newly emerging":  { bg: "#fff7ed", text: "#7c2d12", dot: "#fb923c" },
 };
