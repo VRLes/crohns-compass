@@ -80,7 +80,7 @@ export default function AskTheAssistant() {
 
   useEffect(() => {
     if (messages.length > 1 && lastAssistantRef.current) {
-         lastAssistantRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });                 
+          lastAssistantRef.current.scrollIntoView({ behavior: "smooth", block: "start" });                 
     }
   }, [messages]);
 
@@ -196,7 +196,7 @@ export default function AskTheAssistant() {
       </div>
 
       {/* Chat messages — natural page scroll */}
-      <div className="max-w-2xl mx-auto w-full px-6 pb-56">
+      <div className="max-w-2xl mx-auto w-full px-6 pb-80">
         <div className="flex flex-col gap-4" ref={chatContainerRef}>
           {messages.map((msg, i) => (
             <div
