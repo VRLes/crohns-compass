@@ -80,7 +80,7 @@ export default function AskTheAssistant() {
 
   useEffect(() => {
     if (messages.length > 1 && lastAssistantRef.current) {
-      lastAssistantRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+         lastAssistantRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });                 
     }
   }, [messages]);
 
