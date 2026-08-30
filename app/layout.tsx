@@ -18,8 +18,8 @@ export const metadata: Metadata = {
     default: "IBD Compass — Evidence-based information with hope at its heart",
     template: "%s | IBD Compass",
   },
-  description: "IBD Compass provides accurate, evidence-based information about Crohn's disease — treatments, diet, research, mindfulness and more. Written with care for patients, families and carers in Australia and beyond.",
-  keywords: ["Crohn's disease", "IBD", "inflammatory bowel disease", "Crohn's treatments", "Crohn's diet", "Australia"],
+  description: "IBD Compass provides accurate, evidence-based information about IBD (Crohn's disease and ulcerative colitis) — treatments, diet, research, mindfulness and more. Written with care for patients, families and carers in Australia and beyond.",
+    keywords: ["IBD", "Crohn's disease", "ulcerative colitis", "inflammatory bowel disease", "IBD treatments", "IBD diet", "Australia"],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
