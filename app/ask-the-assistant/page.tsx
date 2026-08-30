@@ -201,7 +201,7 @@ export default function AskTheAssistant() {
           {messages.map((msg, i) => (
             <div
               key={i}
-              ref={msg.role === "assistant" && i === messages.length - 1 ? lastAssistantRef : null}
+              ref={msg.role === "user" && i === messages.length - 2 ? lastAssistantRef : null}
               className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
