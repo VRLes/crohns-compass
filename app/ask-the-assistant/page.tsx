@@ -202,7 +202,7 @@ export default function AskTheAssistant() {
                 <div
                   className="rounded-2xl px-5 py-3 text-sm leading-relaxed"
                   style={{
-                    maxWidth: "80%",
+                    maxWidth: "85%",
                     backgroundColor: msg.role === "user" ? "#2E8B6A" : "var(--bg-page)",
                     color: msg.role === "user" ? "#ffffff" : "var(--text-primary)",
                     whiteSpace: "pre-wrap",
@@ -245,8 +245,8 @@ export default function AskTheAssistant() {
           </div>
         )}
 
-        {/* Input row */}
-        <div className="mt-3 flex gap-3 items-end">
+        {/* Input row — stacks on mobile, side-by-side on tablet+ */}
+        <div className="mt-3 flex flex-col sm:flex-row gap-3 sm:items-end">
 
           {/* Textarea with clear button */}
           <div className="flex-1 relative">
@@ -266,7 +266,6 @@ export default function AskTheAssistant() {
                 paddingRight: input.trim() ? "2.5rem" : "1rem",
               }}
             />
-            {/* ✕ always in DOM, opacity-hidden when empty — fixes iOS visibility */}
             <button
               onClick={clearInput}
               title="Clear"
@@ -284,52 +283,57 @@ export default function AskTheAssistant() {
             </button>
           </div>
 
-          {/* Mic button + label */}
-          {speechSupported && (
-            <div className="flex flex-col items-center gap-1">
+          {/* Mic + Send row — sit side-by-side under textarea on mobile, inline on tablet+ */}
+          <div className="flex gap-3 justify-center sm:contents">
+
+            {/* Mic button + label */}
+            {speechSupported && (
+              <div className="flex flex-col items-center gap-1 flex-1 sm:flex-none">
+                <button
+                  onClick={toggleListening}
+                  title={listening ? "Tap to stop" : "Tap to speak"}
+                  className="w-full sm:w-auto px-4 py-3 rounded-xl font-medium transition-all flex items-center justify-center"
+                  style={{
+                    backgroundColor: listening ? "#922B21" : "var(--bg-card)",
+                    color: listening ? "#ffffff" : "#2E8B6A",
+                    border: `2px solid ${listening ? "#922B21" : "#2E8B6A"}`,
+                    animation: listening ? "micPulse 1.5s ease-in-out infinite" : "none",
+                  }}
+                >
+                  <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="9" y="2" width="6" height="12" rx="3" />
+                    <path d="M5 10a7 7 0 0014 0" />
+                    <line x1="12" y1="19" x2="12" y2="22" />
+                    <line x1="9" y1="22" x2="15" y2="22" />
+                  </svg>
+                </button>
+                <span
+                  className="text-xs font-semibold whitespace-nowrap"
+                  style={{ color: listening ? "#922B21" : "#2E8B6A" }}
+                >
+                  {listening ? "Tap to stop" : "Tap to speak"}
+                </span>
+              </div>
+            )}
+
+            {/* Send button + label */}
+            <div className="flex flex-col items-center gap-1 flex-1 sm:flex-none">
               <button
-                onClick={toggleListening}
-                title={listening ? "Tap to stop" : "Tap to speak"}
-                className="px-4 py-3 rounded-xl font-medium transition-all"
-                style={{
-                  backgroundColor: listening ? "#922B21" : "var(--bg-card)",
-                  color: listening ? "#ffffff" : "#2E8B6A",
-                  border: `2px solid ${listening ? "#922B21" : "#2E8B6A"}`,
-                  animation: listening ? "micPulse 1.5s ease-in-out infinite" : "none",
-                }}
+                onClick={sendMessage}
+                disabled={loading || !input.trim()}
+                className="w-full sm:w-auto px-6 py-3 rounded-xl text-white text-sm font-medium transition-opacity disabled:opacity-50"
+                style={{ backgroundColor: "#2E8B6A" }}
               >
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="9" y="2" width="6" height="12" rx="3" />
-                  <path d="M5 10a7 7 0 0014 0" />
-                  <line x1="12" y1="19" x2="12" y2="22" />
-                  <line x1="9" y1="22" x2="15" y2="22" />
-                </svg>
+                Send
               </button>
               <span
                 className="text-xs font-semibold whitespace-nowrap"
-                style={{ color: listening ? "#922B21" : "#2E8B6A" }}
+                style={{ color: "var(--text-secondary)" }}
               >
-                {listening ? "Tap to stop" : "Tap to speak"}
+                Press Enter to send
               </span>
             </div>
-          )}
 
-          {/* Send button + label */}
-          <div className="flex flex-col items-center gap-1">
-            <button
-              onClick={sendMessage}
-              disabled={loading || !input.trim()}
-              className="px-6 py-3 rounded-xl text-white text-sm font-medium transition-opacity disabled:opacity-50"
-              style={{ backgroundColor: "#2E8B6A" }}
-            >
-              Send
-            </button>
-            <span
-              className="text-xs font-semibold whitespace-nowrap"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              Press Enter to send
-            </span>
           </div>
 
         </div>
