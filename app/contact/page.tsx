@@ -16,7 +16,7 @@ export default function ContactPage() {
       name: (form.elements.namedItem("name") as HTMLInputElement).value,
       email: (form.elements.namedItem("email") as HTMLInputElement).value,
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
-      subject: "Crohn's Compass – Feedback / Review Request",
+            subject: "IBD Compass – Feedback / Review Request",
     };
 
     try {
@@ -189,15 +189,9 @@ export default function ContactPage() {
           color: "var(--text-muted)",
         }}
       >
-        <p>
-          Crohn's Compass — For informational purposes only. Always consult your gastroenterologist.{" "}
-          <span
-            className="text-xs font-medium px-2 py-0.5 rounded-full"
-            style={{ backgroundColor: "var(--bg-accent)", color: "var(--text-primary)" }}
-          >
-            UC Coming Soon
-          </span>
-        </p>
+             <p>
+          IBD Compass — For informational purposes only. Always consult your gastroenterologist.
+        </p>   
       </footer>
     </div>
   );

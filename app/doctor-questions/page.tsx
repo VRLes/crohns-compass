@@ -1,7 +1,7 @@
 "use client";
 import Nav from "../components/Nav";
 // app/doctor-questions/page.tsx
-// Crohn's Compass — Doctor Questions Page
+// IBD Compass — Doctor Questions Page
 
 import { useState } from "react";
 import Link from "next/link";
