@@ -30,7 +30,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="max-w-4xl mx-auto px-6 mb-16">
+      <div className="max-w-4xl mx-auto px-6 mb-4">
         <div className="rounded-2xl px-8 py-5 text-center" style={{ backgroundColor: "var(--bg-accent)" }}>
           <p className="text-sm leading-relaxed" style={{ color: "var(--text-primary)" }}>
             🌿 Everything here complements — never replaces — the care of your gastroenterologist.
@@ -38,6 +38,13 @@ export default function Home() {
           </p>
         </div>
       </div>
+            <div className="max-w-4xl mx-auto px-6 mb-16">
+        <div className="rounded-2xl px-8 py-5 text-center" style={{ backgroundColor: "var(--bg-accent)" }}>
+          <p className="text-sm italic leading-relaxed" style={{ color: "var(--text-primary)" }}>
+            💚 &ldquo;We never know what the person next to us or the people around us are going through — so let&apos;s be a little more kind to one another, and kind to ourselves.&rdquo;
+          </p>
+        </div>
+      </div>      
 
       <section className="max-w-6xl mx-auto px-6 pb-20">
         <div className="grid md:grid-cols-3 gap-6">
