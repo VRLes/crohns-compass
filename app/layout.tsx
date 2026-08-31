@@ -1,4 +1,4 @@
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -18,8 +18,25 @@ export const metadata: Metadata = {
     default: "IBD Compass — Evidence-based information with hope at its heart",
     template: "%s | IBD Compass",
   },
-  description: "IBD Compass provides accurate, evidence-based information about IBD (Crohn's disease and ulcerative colitis) — treatments, diet, research, mindfulness and more. Written with care for patients, families and carers in Australia and beyond.",
-    keywords: ["IBD", "Crohn's disease", "ulcerative colitis", "inflammatory bowel disease", "IBD treatments", "IBD diet", "Australia"],
+  description:
+    "IBD Compass provides accurate, evidence-based information about IBD (Crohn's disease and ulcerative colitis) — treatments, diet, research, mindfulness and more. Written with care for patients, families and carers in Australia and beyond.",
+  keywords: [
+    "IBD",
+    "Crohn's disease",
+    "ulcerative colitis",
+    "inflammatory bowel disease",
+    "IBD treatments",
+    "IBD diet",
+    "Australia",
+  ],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "IBD Compass",
+  },
+  icons: {
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -27,12 +44,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      suppressHydrationWarning  
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
       </body>
     </html>
