@@ -4,7 +4,9 @@ import { useState } from "react";
 import Nav from "../components/Nav";
 
 export default function ContactPage() {
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -15,8 +17,9 @@ export default function ContactPage() {
       access_key: "d9432812-9e44-4847-bc09-e30828950547",
       name: (form.elements.namedItem("name") as HTMLInputElement).value,
       email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
-            subject: "IBD Compass – Feedback / Review Request",
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement)
+        .value,
+      subject: "IBD Compass – Feedback / Review Request",
     };
 
     try {
@@ -37,28 +40,40 @@ export default function ContactPage() {
       <Nav active="/contact" />
 
       <main className="max-w-2xl mx-auto px-6 py-12">
-
         {/* Header */}
         <div className="mb-10">
-          <h1 className="text-3xl font-bold mb-3" style={{ color: "var(--text-primary)" }}>
+          <h1
+            className="text-3xl font-bold mb-3"
+            style={{ color: "var(--text-primary)" }}
+          >
             Get in Touch
           </h1>
-          <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-            We welcome feedback from patients, carers, and healthcare professionals —
-            including gastroenterologists interested in reviewing the content.
+          <p
+            className="text-base leading-relaxed"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            We welcome feedback from patients, carers, and healthcare
+            professionals — including gastroenterologists interested in
+            reviewing the content.
           </p>
         </div>
 
         {/* Form card */}
         <div
           className="rounded-2xl p-8 shadow-sm"
-          style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)" }}
+          style={{
+            backgroundColor: "var(--bg-card)",
+            border: "1px solid var(--border-color)",
+          }}
         >
           {status === "success" ? (
             /* Success state */
             <div className="text-center py-8">
               <div className="text-4xl mb-4">✅</div>
-              <h2 className="text-xl font-semibold mb-2" style={{ color: "var(--text-primary)" }}>
+              <h2
+                className="text-xl font-semibold mb-2"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Message sent
               </h2>
               <p style={{ color: "var(--text-secondary)" }}>
@@ -74,7 +89,6 @@ export default function ContactPage() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
-
               {/* Name */}
               <div>
                 <label
@@ -150,7 +164,8 @@ export default function ContactPage() {
               {/* Error message */}
               {status === "error" && (
                 <p className="text-sm" style={{ color: "#e05252" }}>
-                  Something went wrong. Please try again or email us directly at ibdcompass@proton.me
+                  Something went wrong. Please try again or email us directly at
+                  ibdcompass@proton.me
                 </p>
               )}
 
@@ -167,17 +182,24 @@ export default function ContactPage() {
               >
                 {status === "sending" ? "Sending…" : "Send Message"}
               </button>
-
             </form>
           )}
         </div>
 
         {/* Fallback note */}
-        <p className="text-center text-sm mt-6" style={{ color: "var(--text-muted)" }}>
+        <p
+          className="text-center text-sm mt-6"
+          style={{ color: "var(--text-muted)" }}
+        >
           Prefer email?{" "}
-           <a href="mailto:ibdcompass@proton.me" style={{ color: "#2E8B6A" }} className="underline">ibdcompass@proton.me</a>
+          <a
+            href="mailto:ibdcompass@proton.me"
+            style={{ color: "#2E8B6A" }}
+            className="underline"
+          >
+            ibdcompass@proton.me
+          </a>
         </p>
-
       </main>
 
       {/* Footer — matches all other pages */}
@@ -189,9 +211,10 @@ export default function ContactPage() {
           color: "var(--text-muted)",
         }}
       >
-             <p>
-          IBD Compass — For informational purposes only. Always consult your gastroenterologist.
-        </p>   
+        <p>
+          IBD Compass — For informational purposes only. Always consult your
+          gastroenterologist.
+        </p>
       </footer>
     </div>
   );
