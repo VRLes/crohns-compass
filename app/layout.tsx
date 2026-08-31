@@ -29,17 +29,22 @@ export const metadata: Metadata = {
     "IBD diet",
     "Australia",
   ],
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "IBD Compass",
-  },
   icons: {
-    apple: "/apple-touch-icon.png",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    icon: [
+      { url: "/icon.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
