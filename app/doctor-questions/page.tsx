@@ -169,7 +169,7 @@ const questions: Question[] = [
     id: "q24",
     category: "Planning Ahead",
     question: "Am I eligible for any government support, concession cards, or NDIS assistance?",
-    whyItMatters: "In Australia, people with Crohn's disease may be eligible for a Health Care Card, Centrelink support, or in some cases NDIS assistance depending on the impact of their condition. Your gastroenterologist or a social worker can help navigate what support is available.",
+    whyItMatters: "In Australia, people with IBD may be eligible for a Health Care Card, Centrelink support, or in some cases NDIS assistance depending on the impact of their condition. Your gastroenterologist or a social worker can help navigate what support is available.",
   },
   {
     id: "q25",

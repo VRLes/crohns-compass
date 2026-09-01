@@ -58,6 +58,37 @@ export default function ContactPage() {
           </p>
         </div>
 
+        {/* Data handling note */}
+        <div
+          className="rounded-xl px-5 py-4 mb-6 text-sm leading-relaxed"
+          style={{
+            backgroundColor: "var(--bg-accent)",
+            color: "var(--text-secondary)",
+          }}
+        >
+          We only use your name and email to reply to you, and your message
+          is sent via Web3Forms to our team inbox — it isn&apos;t stored anywhere
+          else or shared with third parties. Please don&apos;t include personal
+          medical details here; this form isn&apos;t reviewed by a clinician. For
+          health questions, try our{" "}
+          <a
+            href="/ask-the-assistant"
+            className="underline"
+            style={{ color: "#2E8B6A" }}
+          >
+            Assistant
+          </a>
+          . See our{" "}
+          <a
+            href="/about#privacy"
+            className="underline"
+            style={{ color: "#2E8B6A" }}
+          >
+            Privacy
+          </a>{" "}
+          statement for more.
+        </div>
+
         {/* Form card */}
         <div
           className="rounded-2xl p-8 shadow-sm"
@@ -77,7 +108,7 @@ export default function ContactPage() {
                 Message sent
               </h2>
               <p style={{ color: "var(--text-secondary)" }}>
-                Thanks for reaching out. We'll be in touch soon.
+                Thanks for reaching out. We&apos;ll be in touch soon.
               </p>
               <button
                 onClick={() => setStatus("idle")}

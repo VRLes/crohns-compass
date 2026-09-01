@@ -446,7 +446,8 @@ export default function About() {
         </div>
         {/* Privacy */}
         <div
-          className="rounded-2xl p-8 border"
+          id="privacy"
+          className="rounded-2xl p-8 border scroll-mt-24"
           style={{
             backgroundColor: "var(--bg-card)",
             borderColor: "var(--border-color)",
@@ -471,7 +472,7 @@ export default function About() {
             style={{ color: "var(--text-secondary)" }}
           >
             We do not display advertising and we do not sell data. This site
-            exists solely to help people living with Crohn&apos;s disease access
+            exists solely to help people living with IBD access
             better information.
           </p>
         </div>

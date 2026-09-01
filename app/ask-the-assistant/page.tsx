@@ -1,5 +1,6 @@
 "use client";
 import Nav from "../components/Nav";
+import FeedbackWidget from "../components/FeedbackWidget";
 // app/ask-the-assistant/page.tsx
 // IBD Compass — AI Chat Assistant
 
@@ -18,7 +19,7 @@ const WELCOME_MESSAGE: Message = {
 
 const EXAMPLE_QUESTIONS = [
   "What diet helps reduce IBD flares?",
-  "Are probiotics safe for Crohn's disease?",
+  "Are probiotics safe for IBD?",
   "What questions should I ask my gastroenterologist?",
 ];
 
@@ -202,7 +203,7 @@ export default function AskTheAssistant() {
             <div
               key={i}
               ref={msg.role === "user" && i === messages.length - 2 ? lastAssistantRef : null}
-              className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
             >
               <div
                 className="rounded-2xl px-5 py-3 text-sm leading-relaxed"
@@ -219,6 +220,11 @@ export default function AskTheAssistant() {
                   renderMarkdown(msg.content, "var(--text-primary)")
                 )}
               </div>
+              {msg.role === "assistant" && i !== 0 && (
+                <div style={{ maxWidth: "85%" }}>
+                  <FeedbackWidget source="assistant" />
+                </div>
+              )}
             </div>
           ))}
           {loading && (

@@ -9,10 +9,10 @@ import Link from "next/link";
 type Tab = "breathe" | "listen" | "calm";
 type BreathPhase = "inhale" | "hold-in" | "exhale" | "hold-out" | "ready";
 type BiauralCategory =
-  | "Pain Relief"
+  | "Comfort"
   | "Sleep"
   | "Anxiety"
-  | "Flare Support"
+  | "Rest & Comfort"
   | "Gentle Focus";
 type NoiseType = "white" | "pink" | "brown";
 type VoiceFile = "john" | "julie" | "les" | "sarah";
@@ -24,7 +24,7 @@ interface AromaProfile {
 }
 
 const aromaProfiles: Record<BiauralCategory, AromaProfile> = {
-  "Pain Relief": {
+  Comfort: {
     oils: ["Frankincense", "Myrrh"],
     description:
       "Deeply grounding and anti-inflammatory. Diffuse together for a warm, resinous calm.",
@@ -39,7 +39,7 @@ const aromaProfiles: Record<BiauralCategory, AromaProfile> = {
     description:
       "Gentle and calming. Roman Chamomile has natural anti-spasmodic properties that ease both mind and gut tension.",
   },
-  "Flare Support": {
+  "Rest & Comfort": {
     oils: ["Frankincense", "Myrrh"],
     description:
       "Ancient healing oils used for thousands of years for inflammation and comfort. Diffuse near your rest space.",
@@ -55,25 +55,25 @@ const binauralFrequencies: Record<
   BiauralCategory,
   { hz: number; description: string }
 > = {
-  "Pain Relief": {
+  Comfort: {
     hz: 40,
     description:
-      "Gamma waves — emerging research suggests 40Hz may help modulate pain perception and promote neural healing.",
+      "Gamma waves — some people find this frequency soothing during periods of discomfort. Not a treatment for pain.",
   },
   Sleep: {
     hz: 3,
     description:
-      "Delta waves — the brain frequency of deep, restorative sleep. Let your mind drift and your body heal.",
+      "Delta waves — the brain frequency associated with deep sleep. A gentle aid to help your mind drift and unwind.",
   },
   Anxiety: {
     hz: 10,
     description:
       "Alpha waves — the relaxed, present state. Gentle and grounding without sedation.",
   },
-  "Flare Support": {
+  "Rest & Comfort": {
     hz: 6,
     description:
-      "Theta waves — deep rest and body awareness. Supports the rest-and-digest nervous system response.",
+      "Theta waves — associated with deep rest and body awareness. Many people find this frequency calming during difficult days.",
   },
   "Gentle Focus": {
     hz: 14,
@@ -798,6 +798,13 @@ export default function Mindfulness() {
                 >
                   {binauralPlaying ? "Stop" : "Play"}
                 </button>
+                <p
+                  className="text-xs italic mt-4"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  Binaural beats are a relaxation tool, not a treatment. Not
+                  a substitute for medical care.
+                </p>
               </div>
             </div>
 
@@ -930,10 +937,10 @@ export default function Mindfulness() {
               <div className="space-y-4">
                 {[
                   {
-                    symptom: "Pain & Flare Support",
+                    symptom: "Comfort & Rest Support",
                     oils: "Frankincense + Myrrh",
                     detail:
-                      "Two of the oldest healing resins known to humanity. Diffuse together for a warm, grounding environment during difficult days.",
+                      "Traditionally used for warmth and grounding. Diffuse together to create a comforting environment during difficult days.",
                     caution: "Some people may be sensitive to these oils.",
                   },
                   {
