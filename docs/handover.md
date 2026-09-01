@@ -1,6 +1,68 @@
 # IBD Compass — Handover Note
 
-**Date:** Monday 31 August 2026
+**Date:** Tuesday 1 September 2026
+**Live URL:** ibd-compass.vercel.app
+**Local:** ~/Projects/ibd-compass (Windows, VS Code) → `npm run dev`
+**Commit:** Anonymous feedback widget + TGA/privacy wording fixes (latest pushed)
+
+---
+
+## ✅ Session — Privacy/wording fixes + Anonymous Feedback feature
+
+**Goal:** Tighten Contact page privacy transparency, fix remaining "Crohn's disease" → "IBD" wording leftovers, remove unsourced therapeutic claims from the Mindfulness binaural beats feature, and add an anonymous "was this helpful?" mechanism to the Assistant.
+
+**What was built:**
+
+- **Contact page** — added a data-handling note above the form: explains messages go via Web3Forms to the team inbox only, asks users not to include personal medical details, links to `/about#privacy` and `/ask-the-assistant`
+- **About page** — added `id="privacy"` anchor to the Privacy card for deep-linking; fixed "Crohn's disease" → "IBD" in the Privacy card text
+- **Doctor Questions page** — fixed "Crohn's disease" → "IBD" in the Health Care Card/NDIS eligibility line (a generic support statement, not Crohn's-specific)
+- **Ask the Assistant page** — fixed "Crohn's disease" → "IBD" in one example prompt chip
+- **Mindfulness page** — Binaural Beats section:
+  - Renamed clinical-sounding categories: "Pain Relief" → "Comfort", "Flare Support" → "Rest & Comfort" (also relabels the shared Aromatherapy pairing buttons, since they share the same category selector)
+  - Removed unsourced healing claims: "promote neural healing", "your body heal", "supports the rest-and-digest nervous system response"
+  - Added disclaimer under the Play/Stop button: "Binaural beats are a relaxation tool, not a treatment. Not a substitute for medical care."
+  - Aromatherapy table row "Pain & Flare Support" → "Comfort & Rest Support"; removed "oldest healing resins known to humanity" claim
+- **New anonymous feedback feature:**
+  - `app/components/FeedbackWidget.tsx` — Yes / Somewhat / No buttons under each Assistant response; optional comment field for Somewhat/No (with a "don't include medical details" note)
+  - Stores **aggregate counts only** — never the question/answer content, to stay consistent with the site's existing privacy claim that Assistant conversations aren't stored beyond the session
+  - `app/api/feedback/route.ts` — POST records a vote (+ optional comment), GET returns totals (passphrase-gated)
+  - `app/lib/redis.ts` — Upstash Redis client, connected via Vercel's Storage integration (free tier)
+  - `/internal/feedback` — unlisted, `noindex`, passphrase-gated dashboard to view totals and comments
+  - New env vars: Upstash Redis credentials (auto-injected by the Vercel integration) + `FEEDBACK_VIEW_PASSPHRASE`
+
+**Tested and working:**
+
+- ✅ Feedback widget confirmed end-to-end on the live Vercel deployment — a "Yes" vote was recorded and visible via `/internal/feedback`
+- ✅ TypeScript + ESLint clean on all new/changed files
+- ✅ Local `npm run build` succeeded
+
+---
+
+## 🐛 Debugging notes — what went wrong and why
+
+**Problem — patch conflicts from parallel AI sessions**
+This session's changes were built in a separate sandbox (not the real local repo) and packaged as a git patch to apply via `git am` on the Windows machine. The patch failed twice — each time because another AI tool (Claude Code) had made real, uncommitted local changes to files (`app/about/page.tsx`, then separately `app/mindfulness/page.tsx`) that hadn't been pushed to GitHub yet, so the patch was built against stale code.
+
+**Fix:** Each time, committed and pushed the uncommitted local work first, then rebuilt the patch fresh against the updated GitHub code before reapplying.
+
+**Lesson:** When more than one AI tool/session touches the same local repo without pushing regularly, run `git status` before generating or applying a patch. Uncommitted local work needs to be pushed (or explicitly discarded) first — otherwise patches fail, or worse, risk silently overwriting real work. Consider pushing more often between sessions to avoid this pileup.
+
+---
+
+## ⬜ Pending / Recommended Next (updated)
+
+1. **Before ibdcompass.com.au goes live** — one-hour paid consult with Australian health-law solicitor ($300–500) for proper legal sign-off on TGA compliance
+2. **Hardcoded colour audit** — Contact and Doctor Questions pages still use `#2E8B6A`, `#C5E3D8`, `#e05252`
+3. ~~Visual bug — faded "N" icon overlapping left edge of Research card 1~~ ✅ Fixed (confirmed working)
+4. **Gastroenterologist review** — outreach for clinical sign-off on knowledge base
+5. **Mobile design review** — Research, Diet (full scroll), Mindfulness
+6. **Naturopath grep** — search codebase for remaining "naturopath" / "complementary practitioner" references (note: a related "Crohn's disease" → "IBD" wording pass was done this session, but the naturopath-specific search is still outstanding)
+7. **Android icon test** — verify home screen icon on an Android device
+8. **No standalone `/privacy` page exists yet** — Contact page currently links to `/about#privacy` as an interim measure; worth revisiting once the legal consult (#1) happens
+
+---
+
+
 **Live URL:** ibd-compass.vercel.app
 **Local:** ~/Projects/ibd-compass → `npm run dev`
 **Commit:** Force Vercel rebuild (latest)
