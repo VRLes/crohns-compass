@@ -6,6 +6,11 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { redis, redisConfigured } from "../../lib/redis";
+import {
+  feedbackRatelimit,
+  feedbackViewRatelimit,
+  getClientIp,
+} from "../../lib/ratelimit";
 
 type Vote = "yes" | "somewhat" | "no";
 const VALID_VOTES: Vote[] = ["yes", "somewhat", "no"];
@@ -19,6 +24,17 @@ export async function POST(req: NextRequest) {
       { success: false, error: "Feedback storage isn't configured yet." },
       { status: 503 },
     );
+  }
+
+  if (feedbackRatelimit) {
+    const ip = getClientIp(req);
+    const { success } = await feedbackRatelimit.limit(ip);
+    if (!success) {
+      return NextResponse.json(
+        { success: false, error: "Too many requests. Please slow down." },
+        { status: 429 },
+      );
+    }
   }
 
   let body: { vote?: string; source?: string; comment?: string };
@@ -59,7 +75,11 @@ export async function POST(req: NextRequest) {
       }),
     );
     // Cap the list so it can't grow unbounded.
-    await redis.ltrim(`feedback:${source}:comments`, 0, MAX_STORED_COMMENTS - 1);
+    await redis.ltrim(
+      `feedback:${source}:comments`,
+      0,
+      MAX_STORED_COMMENTS - 1,
+    );
   }
 
   return NextResponse.json({ success: true });
@@ -73,8 +93,25 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  if (feedbackViewRatelimit) {
+    const ip = getClientIp(req);
+    const { success } = await feedbackViewRatelimit.limit(ip);
+    if (!success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Too many attempts. Please wait a minute and try again.",
+        },
+        { status: 429 },
+      );
+    }
+  }
+
   const key = req.nextUrl.searchParams.get("key");
-  if (!process.env.FEEDBACK_VIEW_PASSPHRASE || key !== process.env.FEEDBACK_VIEW_PASSPHRASE) {
+  if (
+    !process.env.FEEDBACK_VIEW_PASSPHRASE ||
+    key !== process.env.FEEDBACK_VIEW_PASSPHRASE
+  ) {
     return NextResponse.json(
       { success: false, error: "Not authorised." },
       { status: 401 },
@@ -90,13 +127,15 @@ export async function GET(req: NextRequest) {
     redis.lrange(`feedback:${source}:comments`, 0, MAX_STORED_COMMENTS - 1),
   ]);
 
-  const comments = rawComments.map((c) => {
-    try {
-      return JSON.parse(c as string);
-    } catch {
-      return null;
-    }
-  }).filter(Boolean);
+  const comments = rawComments
+    .map((c) => {
+      try {
+        return JSON.parse(c as string);
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean);
 
   return NextResponse.json({
     success: true,

@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { chatRatelimit, getClientIp } from "../../lib/ratelimit";
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -51,9 +52,49 @@ LEGAL & REGULATORY
 - End responses with a path forward — never leave someone feeling stuck or hopeless
 - If asked for medical, legal, or financial advice, decline gently and redirect to the appropriate qualified professional`;
 
+const MAX_MESSAGES = 40; // caps how long a single conversation can grow
+const MAX_MESSAGE_LENGTH = 4000; // characters per message
+
 export async function POST(request: Request) {
   try {
+    if (chatRatelimit) {
+      const ip = getClientIp(request);
+      const { success } = await chatRatelimit.limit(ip);
+      if (!success) {
+        return Response.json(
+          {
+            error:
+              "You're sending messages a little quickly. Please wait a moment and try again.",
+          },
+          { status: 429 },
+        );
+      }
+    }
+
     const { messages } = await request.json();
+
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return Response.json({ error: "Invalid request." }, { status: 400 });
+    }
+    if (messages.length > MAX_MESSAGES) {
+      return Response.json(
+        {
+          error:
+            "This conversation has gotten quite long — please start a new one.",
+        },
+        { status: 400 },
+      );
+    }
+    for (const m of messages) {
+      if (
+        typeof m !== "object" ||
+        m === null ||
+        typeof m.content !== "string" ||
+        m.content.length > MAX_MESSAGE_LENGTH
+      ) {
+        return Response.json({ error: "Invalid request." }, { status: 400 });
+      }
+    }
 
     const response = await client.messages.create({
       model: "claude-sonnet-4-6",
