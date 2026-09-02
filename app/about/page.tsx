@@ -463,17 +463,44 @@ export default function About() {
             className="text-sm leading-relaxed mb-3"
             style={{ color: "var(--text-secondary)" }}
           >
-            IBD Compass does not collect, store, or share any personal health
-            information. Conversations with the AI Assistant are not stored or
-            used for any purpose beyond the immediate session.
+            We don&apos;t require an account, we don&apos;t show ads, and we
+            don&apos;t sell your data.
+          </p>
+          <p
+            className="text-sm leading-relaxed mb-3"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Your conversations with the AI Assistant are sent to
+            Anthropic&apos;s Claude API to generate a response — the same way
+            any AI chatbot works. We don&apos;t store your conversation history
+            on our own servers beyond your current session. Please avoid
+            including identifying details (like your full name) when chatting
+            with the Assistant.
+          </p>
+          <p
+            className="text-sm leading-relaxed mb-3"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            The Contact form sends your name, email and message via Web3Forms to
+            our team inbox only — please don&apos;t include personal medical
+            details there.
+          </p>
+          <p
+            className="text-sm leading-relaxed mb-3"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            The optional feedback widget lets you rate an Assistant response and
+            add an optional comment. We store aggregate vote counts and any
+            comments you choose to add — please don&apos;t include personal
+            medical details in comments either.
           </p>
           <p
             className="text-sm leading-relaxed"
             style={{ color: "var(--text-secondary)" }}
           >
-            We do not display advertising and we do not sell data. This site
-            exists solely to help people living with IBD access
-            better information.
+            We are working through a full privacy policy with legal advice. In
+            the meantime, if you have questions about how your information is
+            handled, contact us at ibdcompass@proton.me.
           </p>
         </div>
         {/* Contact & Feedback */}
@@ -555,8 +582,8 @@ export default function About() {
             IBD Compass — Version 1.0 — August 2026
           </p>
           <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
-            Currently in review by gastroenterologists and the Crohn&apos;s &
-            Colitis Association of Australia
+            Not yet formally reviewed by a gastroenterologist or clinical body —
+            we&apos;re actively seeking that review.
           </p>
         </div>
       </div>
