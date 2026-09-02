@@ -180,7 +180,7 @@ const questions: Question[] = [
     id: "q20",
     category: "Lifestyle & Diet",
     question:
-      "Should I be seeing a psychologist or mental health professional as part of my Crohn's care?",
+      "Should I be seeing a psychologist or mental health professional as part of my IBD care?",
     whyItMatters:
       "Stress is a known IBD flare trigger and living with a chronic condition affects mental health. Psychological support — including cognitive behavioural therapy and gut-directed therapies — has evidence for improving quality of life in IBD. A Mental Health Treatment Plan from your GP may provide Medicare-subsidised sessions.",
   },
